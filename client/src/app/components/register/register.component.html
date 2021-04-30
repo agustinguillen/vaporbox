@@ -1,0 +1,60 @@
+<div class="row mt-5">
+    <h1 class="text-center mb-2 brand">VAPORBOX</h1>
+
+    
+    <div class="col-xl-6 col-lg-6">
+        <img src="../../../assets/img/illustration2.svg" alt="Ilustracion" id="illustration-register" class="col-10 mt-5 mx-xl-5 mx-lg-5">
+    </div>
+    
+    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-5 form-container">
+        
+        <h3 class="mb-2 section-title">Crea tu cuenta</h3>
+
+        <div class="alert alert-success" *ngIf="status == 'success'">
+            Registro completado con éxito, ya podés <a [routerLink]="['/login']">iniciar sesión</a> aquí
+        </div>
+        <div class="alert alert-danger" *ngIf="status == 'error'">
+            El registro no ha podido completarse, quizás tu nombre de usuario o email ya está en uso, intentalo de nuevo!
+        </div>
+
+        <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="col-lg-12 mt-3">
+            <label for="name">Nombre</label>
+            <div class="col-lg-12">
+                <input type="text" name="name" #name="ngModel" [(ngModel)]="user.name" class="form-control" required/>
+                <span *ngIf="!name.valid && name.touched">El nombre es obligatorio</span>
+            </div>
+    
+            <div class="col-lg-12 mt-3">
+                <label for="surname">Apellido</label>
+                <input type="text" name="surname" #surname="ngModel" [(ngModel)]="user.surname" class="form-control" required/>
+                <span *ngIf="!surname.valid && surname.touched">El apellido es obligatorio</span>
+            </div>
+    
+            <div class="col-lg-12 mt-3">
+                <label for="nick">Nombre de Usuario</label>
+                <input type="text" name="nick" #nick="ngModel" [(ngModel)]="user.nick" class="form-control" required/>
+                <span *ngIf="!nick.valid && nick.touched">El nombre de usuario es obligatorio</span>
+            </div>
+    
+            <div class="col-lg-12 mt-3">
+                <label for="email">Email</label>
+                <input type="email" name="email" #email="ngModel" [(ngModel)]="user.email" class="form-control" required pattern="[a-z0-9-_%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/>
+                <span *ngIf="!email.valid && email.touched">El email es obligatorio y debe ser válido</span>
+            </div>
+    
+            <div class="col-lg-12 mt-3">
+                <label for="password">Contraseña</label>
+                <input type="password" name="password" #password="ngModel" [(ngModel)]="user.password" class="form-control" required/>
+                <span *ngIf="!password.valid && password.touched">La contraseña es obligatoria</span>
+            </div>
+            <div class="text-center">
+                <small>¿Ya tenés una cuenta en Vaporbox? Iniciá sesión <a [routerLink]="['/login']">aquí</a> </small>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-light mt-3" [disabled]="!registerForm.form.valid">Registrarse</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+

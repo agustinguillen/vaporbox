@@ -1,0 +1,48 @@
+$violet: #6e2e81;
+$pink: #DD517F;
+$lightblue: #7998EE;
+$blue: #556DC8;
+$orange: #E68E36;
+
+.brand{
+    color: $violet;
+    font-weight: 900;
+    font-style: italic;
+    text-shadow: #DD517F;
+}
+
+.section-title{
+    color: $pink;
+}
+
+#illustration-register{
+    width: 30rem;
+    margin: 0 auto;
+    padding: 0 auto;
+    position: relative;
+    left: 15%;
+}
+
+.form-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 0 auto;
+    label{
+        color: $violet;
+        font-size: 1rem;
+        margin-left: 15px;
+    }
+    .form-control{
+        border-radius: 50px;
+        background-color: whitesmoke;
+    }
+    span{
+            color: $pink;
+            font-size: smaller;
+            margin-left: 15px;
+        }
+}
+
+
