@@ -254,14 +254,25 @@ function updateUser(req, res){
     if(userId != req.user.sub){
         return res.status(500).send({message: "No tienes permiso para actualizar los datos del usuario"})
     }
+    //Evitar datos de usuarios duplicados
+    User.findOne({ $or: [
+        {email: update.email.toLowerCase()},
+        {nick: update.nick.toLowerCase()}
+    ]}).exec((err, user)=>{
+        if(user && user._id != userId){
+         return res.status(500).send({ message: 'Email o password no disponibles'});
+        }else{
+            // { new:true} devuelve el objeto actualizado
+            User.findByIdAndUpdate(userId, update, {new: true}, (err,userUpdated)=>{
+                if(err) return res.status(500).send({message:'Error en la petición'});
+        
+                if(!userUpdated) return res.status(404).send({message: "No se ha podido actualizar el usuario"});
+        
+                return res.status(200).send({user: userUpdated});
+            });
+        }  
+    });
 
-    User.findByIdAndUpdate(userId, update, {new: true}, (err,userUpdated)=>{
-        if(err) return res.status(500).send({message:'Error en la petición'});
-
-        if(!userUpdated) return res.status(404).send({message: "No se ha podido actualizar el usuario"});
-
-        return res.status(200).send({user: userUpdated});
-    })
 }
 
 //Subir archivos de imagen/avatar de usuario

@@ -24,7 +24,7 @@ html{
         overflow: auto;
         overflow-x: hidden;
         background: rgb(223, 222, 222);
-        background: linear-gradient(53deg, rgba(121,152,238,0.3) 23%, rgba(230,142,54,0.3) 100%) no-repeat;
+        background: linear-gradient(53deg, rgba(121,152,238,0.6) 23%, rgba(230,142,54,0.6) 100%) no-repeat;
         h1, h2, h3, h4, h5, p, .navbar-brand, label{
             font-family: 'Raleway';
         }
@@ -32,23 +32,23 @@ html{
 }
 
 ::-webkit-scrollbar{
-    width: 15px;
-    ::-webkit-scrollbar-thumb{
-        background-color: $pink;
-    }
-    ::-webkit-scrollbar-track{
-        background-color: $violet;
-    }
+    background: rgb(248, 248, 248);
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: $pink;
+    border-radius: 10px;
 }
 
 ::-moz-scrollbar{
-    width: 15px;
-    ::-moz-scrollbar-thumb{
-        background-color: $pink;
-    }
-    ::-moz-scrollbar-track{
-        background-color: $violet;
-    }
+    background: rgb(248, 248, 248);
+    width: 10px;
+}
+
+::-moz-scrollbar-thumb{
+    background-color: $pink;
+    border-radius: 10px;
 }
 
 @import './app/components/register/register.component.scss';

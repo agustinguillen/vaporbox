@@ -6,6 +6,7 @@ $orange: #E68E36;
 
 nav{
     border-bottom: 3px solid $pink;
+    max-height: 70px;
     .navbar-header{
         .navbar-brand{
             font-size: 1.7rem;
@@ -27,6 +28,18 @@ nav{
         color: $violet !important;
         &:hover{
             color: $orange !important;
+        }
+    }
+    .avatar{
+        height: 50px;
+        width: 50px;
+        border-radius: 100%;
+        overflow: hidden;
+        margin-right: 10px;
+        img{
+            width: 110%;
+            height: auto;
+            margin-right: 70%;
         }
     }
     .dropdown-menu{

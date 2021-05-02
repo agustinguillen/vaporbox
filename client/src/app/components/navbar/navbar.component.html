@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class= "container-fluid">
         <div class="navbar-header mx-xl-5 mx-lg-5">
-          <a href="#" class="navbar-brand">Vaporbox</a>
+          <a [routerLink]="['/home']" class="navbar-brand">Vaporbox</a>
         </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -31,6 +31,7 @@
           <ul class="nav navbar navbar-right mx-5" *ngIf="identity">
                 <li class="avatar">
                     <!--Imagen de usuario-->
+                    <img src="{{ url + 'get-image-user/' + identity.image}}" alt="Avatar de usuario logueado" *ngIf="identity && identity.image">
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#">
