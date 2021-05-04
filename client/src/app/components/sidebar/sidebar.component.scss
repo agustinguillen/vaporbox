@@ -1,0 +1,75 @@
+$violet: #6e2e81;
+$pink: #DD517F;
+$lightblue: #7998EE;
+$blue: #556DC8;
+$orange: #E68E36;
+
+#new-publication{
+    .form-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        margin: 0 auto 0 auto;
+        label{
+            color: $violet;
+            font-size: 1rem;
+            margin-left: 15px;
+        }
+        .form-control{
+            margin-bottom: 15px;
+            border-radius: 50px;
+            background-color: whitesmoke;
+        }
+        span{
+                color: whitesmoke;
+                font-size: smaller;
+                margin-left: 15px;
+                margin-top: 0;
+            }
+        .btn-default{
+            background-color: $violet !important;
+            color: whitesmoke;
+        }
+    }
+}
+
+#user-card{
+    width: 90%;
+    height: 40%;
+    border-radius: 50px;
+    background-color: $pink;
+    .avatar{
+        width: 100px;
+        height: 100px;
+        border-radius: 100%;
+        overflow: hidden;
+        margin: 20px auto;
+        img{
+            width: 110%;
+            height: auto;
+        }
+    }
+    .name-surname{
+        a{
+            text-decoration: none;
+            color: whitesmoke;
+            font-family: 'Raleway';
+            font-weight: bolder;
+            font-size: 1.5rem;
+        }
+    }
+    .stats{
+        .following-data{
+            margin: 20px;
+            padding: 5px;
+            a{
+                text-decoration: none;
+                color: whitesmoke;
+                &:hover{
+                    color: $violet;
+                }
+            }
+        }
+    }
+}

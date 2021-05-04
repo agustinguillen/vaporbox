@@ -1,0 +1,43 @@
+<app-navbar></app-navbar>
+<div class="mt-5 col-xl-4 col-lg-4 pull-right">
+    <app-sidebar (sent)="refresh($event)"></app-sidebar>
+</div>
+<div class="mt-5 col-xl-8 col-lg-8 pull-left">
+    <h3 class="text-center section-title">Timeline</h3>
+    <div class="text-center">
+        <button class="btn btn-sm btn-info" (click)="refresh($event)">Mostrar nuevas</button><br>
+    </div>
+    <div class="publications">
+        <div *ngFor="let publication of publications" class="item-publication">
+            <div class="card card-default">
+                <div class="card-body">
+                    <div class="image-user pull-left">
+                        <a href="#">
+                            <img src="{{url + 'get-image-user/' + publication.user.image}}" alt="Imagen de usuario" *ngIf="publication.user.image">
+                            <img class="default-user-image" src="assets/img/default-user.jpg" alt="Imagen de usuario" *ngIf="!publication.user.image">
+                        </a>
+                    </div>
+                    <div>
+                        <span class="name-surname">
+                            {{publication.user.name + ' ' + publication.user.surname}}
+                        </span>
+                        <span class="date">
+                                {{ (publication.created_at | amFromUnix) | amLocale: 'es' | amTimeAgo }}
+                        </span>
+                    </div>
+                    <div class="publication-text pull-left">
+                        {{publication.text}}
+                    </div>
+                </div>
+            </div>   
+        </div>
+        <div class="text-center">
+            <button class="btn btn-sm btn-default"
+            (click)="viewMore()"
+            >
+                Ver más
+            </button>
+        </div>
+    </div>
+    
+</div>

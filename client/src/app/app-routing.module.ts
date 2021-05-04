@@ -6,6 +6,8 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
+import { UsersComponent } from './components/users/users.component';
+import { TimelineComponent } from './components/timeline/timeline.component';
 
 const routes: Routes = [
     {
@@ -27,6 +29,22 @@ const routes: Routes = [
     {
       path: 'user-edit',
       component: UserEditComponent
+    },
+    {
+      path: 'users',
+      component: UsersComponent
+    },
+    {
+      path: 'users/:page',
+      component: UsersComponent
+    },
+    {
+      path: 'timeline',
+      component: TimelineComponent
+    },
+    {
+      path: '**',
+      component: HomeComponent
     }
 ];
 

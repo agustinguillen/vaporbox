@@ -6,7 +6,6 @@ $orange: #E68E36;
 
 nav{
     border-bottom: 3px solid $pink;
-    max-height: 70px;
     .navbar-header{
         .navbar-brand{
             font-size: 1.7rem;
@@ -39,7 +38,6 @@ nav{
         img{
             width: 110%;
             height: auto;
-            margin-right: 70%;
         }
     }
     .dropdown-menu{

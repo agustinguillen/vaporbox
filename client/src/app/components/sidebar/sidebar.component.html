@@ -1,0 +1,68 @@
+<div id="new-publication">
+    <h3 class="mb-3 section-title">Crear publicación</h3>
+    <div class="alert alert-success" *ngIf="status == 'success'">
+        Se ha publicado correctamente.
+    </div>
+    <div class="alert alert-danger" *ngIf="status == 'error'">
+        Publicación no enviada.
+    </div>
+    <div class="form-container mb-3">
+        <form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm); sendPublication($event);" class="col xl-10 col-lg-10">
+            <textarea name="text" 
+            placeholder="¿Qué estás pensando hoy?" 
+            #text='ngModel' 
+            [(ngModel)]="publication.text" 
+            class="form-control" required>
+            </textarea>
+    
+            <input type="file" placeholder="Compartir imagen" class="form-control"/>
+    
+            <button type="submit" class="btn btn-default" [disabled]="!newPubForm.form.valid">Publicar</button>
+        </form>
+    </div>
+</div>
+<div id="user-card" class="card card-default text-center mt-5">
+    <div class="avatar pull-left">
+        <img src="{{url + 'get-image-user/' + identity.image}}" alt="Imagen de usuario" *ngIf="identity.image">
+        <img src="assets/default-user.jpg" alt="Imagen de usuario" *ngIf="!identity.image">
+    </div>
+    <div class="name-surname pull-right">
+        <a>{{ identity.name + ' ' + identity.surname }}</a>
+        <p>{{ "@"+identity.nick }}</p>
+    </div>
+    <div class="stats d-flex justify-content-around" *ngIf="stats">
+            <div class="following-data">
+                <a href="#">
+                    <span class="label-stats">
+                        Siguiendo
+                    </span><br>
+                    <span class="number-stats">
+                        {{ stats.following }}
+                    </span>
+                </a>
+            </div>
+            <div class="following-data">
+                <a href="#">
+                    <span class="label-stats">
+                        Seguidores
+                    </span><br>
+                    <span class="number-stats">
+                        {{ stats.followed }}
+                    </span>
+                </a>
+            </div>
+            <div class="following-data following-data-publications">
+                <a href="#">
+                    <span class="label-stats">
+                        Publicaciones
+                    </span><br>
+                    <span class="number-stats" *ngIf="stats.publications">
+                        {{ stats.publications }}
+                    </span>
+                    <span class="number-stats" *ngIf="!stats.publications">
+                        0
+                    </span>
+                </a>
+            </div>
+    </div>
+</div>

@@ -16,13 +16,13 @@
                 </a>
               </li>
               <li class="nav-item mx-xl-3 mx-lg-3">
-                <a href="#" class="nav-link">
+                <a [routerLink]="['/timeline']" class="nav-link">
                   <i class="fa fa-list"></i>
                   Timeline
                 </a>
               </li>
               <li class="nav-item mx-xl-3 mx-lg-3">
-                <a href="#" class="nav-link">
+                <a [routerLink]="['/users/']" class="nav-link">
                   <i class="fa fa-users"></i>
                   Usuarios
                 </a>
@@ -31,7 +31,7 @@
           <ul class="nav navbar navbar-right mx-5" *ngIf="identity">
                 <li class="avatar">
                     <!--Imagen de usuario-->
-                    <img src="{{ url + 'get-image-user/' + identity.image}}" alt="Avatar de usuario logueado" *ngIf="identity && identity.image">
+                    <img src="{{ url + 'get-image-user/' + identity.image }}" alt="Avatar de usuario logueado" *ngIf="identity && identity.image">
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#">
