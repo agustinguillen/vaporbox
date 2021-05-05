@@ -12,6 +12,8 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { FollowingComponent } from './components/following/following.component';
 import { FollowersComponent } from './components/followers/followers.component';
 
+import { UserGuard } from './services/user.guard';
+
 const routes: Routes = [
     {
       path: '',
@@ -27,40 +29,48 @@ const routes: Routes = [
     },
     {
       path: 'home',
-      component: HomeComponent
+      component: HomeComponent,
+      canActivate: [UserGuard]
     },
     {
       path: 'profile/:id',
-      component: ProfileComponent
+      component: ProfileComponent,
+      canActivate: [UserGuard]
     },
     {
       path: 'user-edit',
-      component: UserEditComponent
+      component: UserEditComponent,
+      canActivate: [UserGuard]
     },
     {
       path: 'users',
-      component: UsersComponent
+      component: UsersComponent,
+      canActivate: [UserGuard]
     },
     {
       path: 'users/:page',
-      component: UsersComponent
+      component: UsersComponent,
+      canActivate: [UserGuard]
     },
     {
       path: 'timeline',
-      component: TimelineComponent
+      component: TimelineComponent,
+      canActivate: [UserGuard]
     },
     {
       path: 'following/:id/:page',
-      component: FollowingComponent
+      component: FollowingComponent,
+      canActivate: [UserGuard]
     },
     {
       path: 'followers/:id/:page',
-      component: FollowersComponent
-    },
-    {
+      component: FollowersComponent,
+      canActivate: [UserGuard]
+    }
+    /*{
       path: '**',
       component: HomeComponent
-    }
+    }*/
 ];
 
 @NgModule({

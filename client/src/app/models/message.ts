@@ -4,8 +4,8 @@ export class Message{
         public text:string,
         public viewed:string,
         public created_at:string,
-        public emmiter:string,
-        public receiver:string
+        public emitter,
+        public receiver
     ) {
     }
 }

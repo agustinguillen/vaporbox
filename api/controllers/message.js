@@ -38,7 +38,7 @@ function getReceivedMessages(req, res){
 
     let itemsPerPage = 4;
 
-    Message.find({receiver: userId}).populate('emitter', 'name surname nick _id image').paginate(page, itemsPerPage, (err, messages, total)=>{
+    Message.find({receiver: userId}).sort('-created_at').populate('emitter', 'name surname nick _id image').paginate(page, itemsPerPage, (err, messages, total)=>{
         if(err) return res.status(500).send({message: "Error en la petición"});
         
         if(!messages) return res.status(404).send({message: "No hay mensajes"});
@@ -46,7 +46,7 @@ function getReceivedMessages(req, res){
         return res.status(200).send({
             total: total,
             pages: Math.ceil(total/itemsPerPage),
-            messages
+            messages: messages
         });
     });
 }
@@ -61,7 +61,7 @@ function getEmitMessages(req, res){
 
     let itemsPerPage = 4;
 
-    Message.find({emitter: userId}).populate('emitter receiver', 'name surname nick _id image').paginate(page, itemsPerPage, (err, messages, total)=>{
+    Message.find({emitter: userId}).sort('-created_at').populate('emitter receiver', 'name surname nick _id image').paginate(page, itemsPerPage, (err, messages, total)=>{
         if(err) return res.status(500).send({message: "Error en la petición"});
         
         if(!messages) return res.status(404).send({message: "No hay mensajes"});
@@ -69,7 +69,7 @@ function getEmitMessages(req, res){
         return res.status(200).send({
             total: total,
             pages: Math.ceil(total/itemsPerPage),
-            messages
+            messages: messages
         });
     });
 }

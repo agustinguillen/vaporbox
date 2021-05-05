@@ -5,6 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { MomentModule } from 'angular2-moment';
 
+import { MessagesModule } from './messages/messages.module';
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components//register/register.component';
@@ -18,6 +20,10 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { PublicationsComponent } from './components/publications/publications.component';
 import { FollowingComponent } from './components/following/following.component';
 import { FollowersComponent } from './components/followers/followers.component';
+
+import { UserGuard } from './services/user.guard';
+import { UserService } from './services/user.service';
+
 
 
 @NgModule({
@@ -41,9 +47,11 @@ import { FollowersComponent } from './components/followers/followers.component';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    MomentModule
+    MomentModule,
+    MessagesModule
   ],
-  providers: [],
+  exports: [],
+  providers: [ UserService, UserGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
