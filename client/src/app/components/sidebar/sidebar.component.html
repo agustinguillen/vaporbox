@@ -7,7 +7,7 @@
         Publicación no enviada.
     </div>
     <div class="form-container mb-3">
-        <form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm); sendPublication($event);" class="col xl-10 col-lg-10">
+        <form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm, $event)" class="col xl-10 col-lg-10">
             <textarea name="text" 
             placeholder="¿Qué estás pensando hoy?" 
             #text='ngModel' 
@@ -15,7 +15,7 @@
             class="form-control" required>
             </textarea>
     
-            <input type="file" placeholder="Compartir imagen" class="form-control"/>
+            <input type="file" placeholder="Subir imagen" class="form-control" (change)="fileChangeEvent($event)"/>
     
             <button type="submit" class="btn btn-default" [disabled]="!newPubForm.form.valid">Publicar</button>
         </form>
@@ -27,12 +27,12 @@
         <img src="assets/default-user.jpg" alt="Imagen de usuario" *ngIf="!identity.image">
     </div>
     <div class="name-surname pull-right">
-        <a>{{ identity.name + ' ' + identity.surname }}</a>
+        <a [routerLink]="['/profile', identity._id]">{{ identity.name + ' ' + identity.surname }}</a>
         <p>{{ "@"+identity.nick }}</p>
     </div>
     <div class="stats d-flex justify-content-around" *ngIf="stats">
             <div class="following-data">
-                <a href="#">
+                <a [routerLink]="['/following', identity._id, 1]">
                     <span class="label-stats">
                         Siguiendo
                     </span><br>
@@ -42,7 +42,7 @@
                 </a>
             </div>
             <div class="following-data">
-                <a href="#">
+                <a [routerLink]="['/followers', identity._id, 1]">
                     <span class="label-stats">
                         Seguidores
                     </span><br>
@@ -52,7 +52,7 @@
                 </a>
             </div>
             <div class="following-data following-data-publications">
-                <a href="#">
+                <a [routerLink]="['/profile', identity._id]">
                     <span class="label-stats">
                         Publicaciones
                     </span><br>

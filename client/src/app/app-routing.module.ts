@@ -8,6 +8,9 @@ import { HomeComponent } from './components/home/home.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UsersComponent } from './components/users/users.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { FollowingComponent } from './components/following/following.component';
+import { FollowersComponent } from './components/followers/followers.component';
 
 const routes: Routes = [
     {
@@ -27,6 +30,10 @@ const routes: Routes = [
       component: HomeComponent
     },
     {
+      path: 'profile/:id',
+      component: ProfileComponent
+    },
+    {
       path: 'user-edit',
       component: UserEditComponent
     },
@@ -41,6 +48,14 @@ const routes: Routes = [
     {
       path: 'timeline',
       component: TimelineComponent
+    },
+    {
+      path: 'following/:id/:page',
+      component: FollowingComponent
+    },
+    {
+      path: 'followers/:id/:page',
+      component: FollowersComponent
     },
     {
       path: '**',

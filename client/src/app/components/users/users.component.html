@@ -6,13 +6,13 @@
             <div class="card card-default mb-3">
                 <div class="card-body">
                     <div class="image-user pull-left">
-                        <a href="#">
+                        <a [routerLink]="['/profile/',user._id]">
                             <img src="{{url + 'get-image-user/' + user.image}}" alt="Imagen de usuario" *ngIf="user.image">
                             <img class="default-user-image" src="assets/img/default-user.jpg" alt="Imagen de usuario" *ngIf="!user.image">
                         </a>
                     </div>
                     <div class="user-name pull-left mt-3">
-                        <p><a href="#">{{user.name + ' ' + user.surname}}</a></p>
+                        <p><a [routerLink]="['/profile/',user._id]">{{user.name + ' ' + user.surname}}</a></p>
                         <p class="username"><small>{{'@'+user.nick}}</small></p>
                     </div>
                     <!--seguir y dejar de seguir-->

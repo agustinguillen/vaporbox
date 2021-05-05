@@ -41,10 +41,23 @@ $orange: #E68E36;
                     color: $violet;
                     font-weight: bold;
                     font-family: 'Raleway';
+                    text-decoration: none;
                 }
                 .date{
                     font-size: smaller;
                     color: $lightblue;
+                }
+                .publication-text{
+                    padding-left: 80px;
+                    padding-right: 80px;
+                }
+                .publication-img{
+                    width: 60vw;
+                    padding-left: 80px;
+                    padding-right: 80px;
+                    img{
+                        max-width: 100%;
+                    }
                 }
             }
         }
@@ -53,5 +66,69 @@ $orange: #E68E36;
         background-color: $violet;
         color: whitesmoke;
         border-radius: 50px;
+        &:hover{
+            background-color: $pink;
+        }
+    }
+    .btn-danger{
+        background-color: $pink;
+        color: whitesmoke;
+        border-radius: 50px;
+        margin-bottom: 1rem;
+    }
+    .btn-light{
+        color: $violet;
+        border-radius: 50px;
+        &:hover{
+            background-color: rgb(226, 226, 226);
+            border-color:  rgb(226, 226, 226);
+        }
+    }
+
+    .modal{
+        .modal-dialog{
+            background-color: rgb(223, 222, 222);
+            border-radius: 70px;
+            border: 5px solid $pink;
+            overflow: hidden;
+            .modal-content{
+                padding: 1rem;
+                .modal-header{
+                    h5{
+                        font-weight: bold;
+                    }
+                    .btn-close-modal{
+                        background: none;
+                        border: none;
+                        &:focus,&:active {
+                            outline: none !important;
+                            box-shadow: none;
+                        }
+                    }
+                }
+                .modal-body{
+                    p{
+                        font-weight: 400;
+                    }
+                    .publication-modal{
+                        color: grey;
+                        font-weight: 200;
+                        padding: 1.5rem;
+                        padding-bottom: 0;
+                        font-size: 1rem;
+                    }
+                    .publication-img-modal{
+                        img{
+                            width: 10rem;
+                            height: auto;
+                            padding: 0 0 1rem 1.5rem;
+                        }
+                    }
+                }
+                .modal-footer{
+                    
+                }
+            }
+        }
     }
 }

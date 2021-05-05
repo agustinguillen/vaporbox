@@ -18,23 +18,62 @@
                         </a>
                     </div>
                     <div>
-                        <span class="name-surname">
-                            {{publication.user.name + ' ' + publication.user.surname}}
-                        </span>
+                        <div class="pull-right" *ngIf="publication.user._id == identity._id">
+                            <button id="{{publication._id}}" type="button" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteModal'+publication._id" class="btn"><i class="fa fa-close"></i></button>
+                        </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade" [id]="'deleteModal'+publication._id" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteModalLabel">¿Deseas borrar esta publicación?</h5>
+                                            <button type="button" class="btn-close-modal" data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Una vez que borres esta publicación no podrás recuperarla.</p>
+                                            <div class="publication-modal">
+                                                {{publication.text}}
+                                            </div><br>
+                                            <div class="publication-img-modal" *ngIf="publication.file != 'null'">
+                                                <img src="{{ url + 'get-image-pub/' + publication.file}}" alt="Imagen de publicación"/>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="button" class="btn btn-default" (click)="deletePublication(publication._id)" data-bs-dismiss="modal"><i class="fa fa-trash mx-2"></i>Borrar publicación</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <a [routerLink]="['/profile', publication.user._id]" class="name-surname">
+                                {{publication.user.name + ' ' + publication.user.surname}}
+                        </a>
                         <span class="date">
                                 {{ (publication.created_at | amFromUnix) | amLocale: 'es' | amTimeAgo }}
+                        </span><br>
+                        <span>
+                            {{'@'+publication.user.nick}}
                         </span>
-                    </div>
+                    </div><br>
                     <div class="publication-text pull-left">
                         {{publication.text}}
+                    </div><br>
+                    <div class="text-center" *ngIf="publication.file != 'null'">
+                        <button class="btn btn-sm btn-default" (click)="showThisImage(publication._id)" *ngIf="showImage != publication._id"><i class="fa fa-image"></i></button>
+                        <button class="btn btn-sm btn-danger" (click)="hideThisImage(publication._id)" *ngIf="showImage == publication._id"><i class="fa fa-image"></i></button>
+                    </div>
+                    <div class="publication-img d-flex justify-content-center" *ngIf="publication.file != 'null' && showImage == publication._id">
+                        <img src="{{ url + 'get-image-pub/' + publication.file}}" alt="Imagen de publicación"/>
                     </div>
                 </div>
             </div>   
         </div>
-        <div class="text-center">
+        <div class="text-center mb-5" *ngIf="publications && publications.length">
             <button class="btn btn-sm btn-default"
             (click)="viewMore()"
-            >
+            *ngIf="!noMore">
                 Ver más
             </button>
         </div>

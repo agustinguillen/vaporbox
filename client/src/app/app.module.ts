@@ -14,6 +14,10 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UsersComponent } from './components/users/users.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { PublicationsComponent } from './components/publications/publications.component';
+import { FollowingComponent } from './components/following/following.component';
+import { FollowersComponent } from './components/followers/followers.component';
 
 
 @NgModule({
@@ -26,7 +30,11 @@ import { TimelineComponent } from './components/timeline/timeline.component';
     UserEditComponent,
     UsersComponent,
     SidebarComponent,
-    TimelineComponent
+    TimelineComponent,
+    ProfileComponent,
+    PublicationsComponent,
+    FollowingComponent,
+    FollowersComponent
   ],
   imports: [
     BrowserModule,

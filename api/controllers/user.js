@@ -121,17 +121,20 @@ function getUser(req, res){
 
 }
 
-async function followThisUser(identity_user_id, user_id){
-    let following = await Follow.findOne({'user':identity_user_id, "followed": user_id}).exec((err, follow)=>{
-        if(err) return handleError(err);
+async function followThisUser(identity_user_id, user_id) {
+    var following = await Follow.findOne({ "user": identity_user_id, "followed": user_id }).exec().then((follow) => {
         return follow;
+    }).catch((err) => {
+        return handleError(err);
     });
-
-    let followed = await Follow.findOne({'user':user_id, "followed": identity_user_id}).exec((err, follow)=>{
-        if(err) return handleError(err);
+ 
+    var followed = await Follow.findOne({ "user": user_id, "followed": identity_user_id }).exec().then((follow) => {
         return follow;
+    }).catch((err) => {
+        return handleError(err);
     });
-
+ 
+ 
     return {
         following: following,
         followed: followed
@@ -165,6 +168,10 @@ function getUsers(req, res){
         });
     });
 }
+
+
+
+
 
 async function followUsersIds(user_id){
     let following = await Follow.find({"user": user_id}).select({"_id":0, "__v":0, "user":0})
@@ -222,7 +229,6 @@ async function getCountFollow(user_id) {
     let following = await Follow.countDocuments({ user: user_id })
         .exec()
         .then((count) => {
-            console.log(count);
             return count;
         })
         .catch((err) => { return handleError(err); });
@@ -282,7 +288,6 @@ function uploadImage(req,res){
 
     if(req.file){
         let file_path = req.file.path;
-        console.log(req.file);
         
         let file_split = file_path.split('\\');
         
@@ -290,7 +295,6 @@ function uploadImage(req,res){
         
         let ext_split = file_name.split('\.');
         let file_ext = ext_split[1];
-        console.log(file_ext);
 
         if(userId != req.user.sub){
             return removeFilesOfUploads(res, file_path, "No tienes permiso para actualizar los datos del usuario");

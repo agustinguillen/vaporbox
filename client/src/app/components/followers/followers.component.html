@@ -1,0 +1,52 @@
+<app-navbar></app-navbar>
+<div class="mt-5 col-xl-12 col-lg-12 pull-left">
+    <h3 class="mb-3 text-center section-title" *ngIf="user">Seguidores de {{user.name}}</h3>
+    <div class="people" *ngIf="followers">
+        <div *ngFor="let follow of followers" class="item-user d-flex justify-content-center">
+            <div class="card card-default mb-3">
+                <div class="card-body">
+                    <div class="image-user pull-left">
+                        <a [routerLink]="['/profile/',follow.user._id]">
+                            <img src="{{url + 'get-image-user/' + follow.user.image}}" alt="Imagen de usuario" *ngIf="follow.user.image">
+                            <img class="default-user-image" src="assets/img/default-user.jpg" alt="Imagen de usuario" *ngIf="!follow.user.image">
+                        </a>
+                    </div>
+                    <div class="user-name pull-left mt-3">
+                        <p><a [routerLink]="['/profile/', follow.user._id]">{{follow.user.name + ' ' + follow.user.surname}}</a></p>
+                        <p class="username"><small>{{'@'+follow.user.nick}}</small></p>
+                    </div>
+                    <!--seguir y dejar de seguir-->
+                    <div class="pull-right" *ngIf="follow.user._id != identity._id">
+                        
+                        <button class="btn btn-default" 
+                        *ngIf="follows.indexOf(follow.user._id) < 0"
+                        (click)="followUser(follow.user._id)">
+                            <i class="fa fa-user-plus"></i>Seguir
+                        </button>
+
+                        <button class="btn btn-primary" *ngIf="follows.indexOf(follow.user._id) >= 0"
+                            (mouseenter)="mouseEnter(follow.user._id)"
+                            (mouseleave)="mouseLeave(follow.user._id)"
+                            (click)="unfollowUser(follow.user._id)"
+                            >
+                            <span *ngIf="follow.user._id == followMouseOver; else following">
+                                <i class="fa fa-user-times"></i>Dejar de seguir
+                            </span>
+                            <ng-template #following>
+                                <i class="fa fa-check"></i>Siguiendo
+                            </ng-template>
+                            
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Paginación-->
+    <div class="d-flex justify-content-center">
+        <ul class="pagination">
+            <li *ngIf="page > 1"><a [routerLink]="['/followers', userPageId, prev_page]">Anterior</a></li>
+            <li *ngIf="pages != page"><a [routerLink]="['/followers', userPageId, next_page]">Siguiente</a></li>
+        </ul>
+    </div>
+</div>
