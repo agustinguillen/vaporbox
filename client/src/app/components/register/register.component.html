@@ -1,14 +1,15 @@
-<div class="row mt-5">
-    <h1 class="text-center mb-2 brand">VAPORBOX</h1>
+<div @fade class="row register-container">
+    <h1 class="text-center mt-5 brand">V a p o r b o x</h1>
 
     
-    <div class="col-xl-6 col-lg-6">
+    <div id="illustration-slogan" class="col-lg-5 d-flex flex-column justify-content-center text-center">
         <img src="../../../assets/img/illustration2.svg" alt="Ilustracion" id="illustration-register" class="col-10 mt-5 mx-xl-5 mx-lg-5">
+        <h5 class="mt-5">Sé quién quieras ser</h5>
     </div>
     
-    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-5 form-container">
+    <div class="col-lg-4 mb-5 form-container">
         
-        <h3 class="mb-2 section-title">Crea tu cuenta</h3>
+        <h3 class="section-title">Crea tu cuenta</h3>
 
         <div class="alert alert-success" *ngIf="status == 'success'">
             Registro completado con éxito, ya podés <a [routerLink]="['/login']">iniciar sesión</a> aquí
@@ -17,7 +18,7 @@
             El registro no ha podido completarse, quizás tu nombre de usuario o email ya está en uso, intentalo de nuevo!
         </div>
 
-        <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="col-lg-12 mt-3">
+        <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="col-lg-12">
             <label for="name">Nombre</label>
             <div class="col-lg-12">
                 <input type="text" name="name" #name="ngModel" [(ngModel)]="user.name" class="form-control" required/>
@@ -51,7 +52,8 @@
                 <small>¿Ya tenés una cuenta en Vaporbox? Iniciá sesión <a [routerLink]="['/login']">aquí</a> </small>
             </div>
             <div class="text-center">
-                <button type="submit" class="btn btn-light mt-3" [disabled]="!registerForm.form.valid">Registrarse</button>
+                <button type="submit" class="btn btn-default mt-3" [disabled]="!registerForm.form.valid">Registrarse</button>
+                <button type="button" class="btn btn-light mt-3" [routerLink]="['/login']">Iniciar Sesión</button>
             </div>
         </form>
     </div>

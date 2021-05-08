@@ -4,45 +4,124 @@ $lightblue: #7998EE;
 $blue: #556DC8;
 $orange: #E68E36;
 
-.brand{
-    color: $violet;
-    font-weight: 900;
-    font-style: italic;
-    text-shadow: #DD517F;
-}
 
-.section-title{
-    color: $pink;
-}
+.register-container{
+    @media (min-width: 992px){
+        height: 100vh;
+        max-height: 90vh;
+    }
 
-#illustration-register{
-    width: 30rem;
-    margin: 0 auto;
-    padding: 0 auto;
-    position: relative;
-    left: 15%;
-}
-
-.form-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto 0 auto;
-    label{
+    .brand{
         color: $violet;
-        font-size: 1rem;
-        margin-left: 15px;
+        font-weight: 900;
+        font-style: italic;
+        text-shadow: #DD517F;
     }
-    .form-control{
-        border-radius: 50px;
-        background-color: whitesmoke;
+
+    @media (max-width: 1300px){
+        .brand{
+            height: fit-content;
+            margin-top: 10vh;
+        }
     }
-    span{
+    
+   
+    #illustration-slogan{
+        padding: 0;
+
+        
+        #illustration-register{
+            width: 50vw;
+            margin: 0 auto;
+            padding: 0 0;
+        }
+
+        h5{
+            color: $blue;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        @media (max-width: 991.9px){
+            margin-bottom: 10%;
+        }
+
+        @media (min-width: 992px) {
+            max-height: 800px;
+            padding-bottom: 20vh;
+            margin-left: 10vw;
+            #illustration-register{
+                width: 30vw;
+                margin-left: 10vw;
+            }
+
+            h5{
+                margin-left: 0%;
+            }
+        }
+        
+    }
+    
+    .form-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto 0 auto;
+
+        
+        .section-title{
             color: $pink;
-            font-size: smaller;
+        }
+        label{
+            color: $violet;
+            font-size: 1rem;
+            margin: 0;
             margin-left: 15px;
         }
+        .form-control{
+            border-radius: 50px;
+            height: 30px;
+            background-color: whitesmoke;
+            font-size: small;
+            &:active, &:focus{
+                border: none;
+                outline: none;
+            }
+        }
+        span{
+                color: $pink;
+                font-size: smaller;
+                margin: 0;
+                padding: 0;
+                margin-left: 15px;
+        }
+    
+        .btn-light{
+            
+            &:hover{
+               background-color: rgb(211, 211, 211); 
+               border: rgb(211, 211, 211);
+            }
+        }
+    
+        .btn-default{
+            margin-right: 10px;
+            &:hover{
+                color: whitesmoke;
+                background-color: $pink;
+            }
+        }
+
+        @media (max-width:380px){
+            padding: 0 10vw;
+        }
+
+        @media (min-width: 992px) {
+            max-height: 800px;
+            padding-bottom: 5vh;
+        }
+    }
 }
 
 

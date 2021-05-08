@@ -13,20 +13,19 @@ $orange: #E68E36;
 }
 
 html{
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     margin: 0;
     padding: 0;
-    overflow: auto;
     body{
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        overflow-x: hidden;
+        max-width: 100vw;
+        min-height: 100vh;
         background: rgb(223, 222, 222);
         background: linear-gradient(53deg, rgba(121,152,238,0.6) 23%, rgba(230,142,54,0.6) 100%) no-repeat;
+        background-attachment: fixed;
         h1, h2, h3, h4, h5, p, .navbar-brand, label, a{
             font-family: 'Raleway';
+            color: $violet;
         }
         .btn:focus,.btn:active {
             outline: none !important;
@@ -35,13 +34,18 @@ html{
         .btn-default{
             background-color: $violet;
             color: whitesmoke;
+            border-radius: 50px;
+        }
+        .btn-light{
+            border-radius: 50px;
         }
     }
 }
 
 ::-webkit-scrollbar{
     background: rgb(248, 248, 248);
-    width: 10px;
+    width: 0.7vw;
+    height: 0;
 }
 
 ::-webkit-scrollbar-thumb{
@@ -51,15 +55,11 @@ html{
 
 ::-moz-scrollbar{
     background: rgb(248, 248, 248);
-    width: 10px;
+    width: 0.7vw;
+    height: 0;
 }
 
 ::-moz-scrollbar-thumb{
     background-color: $pink;
     border-radius: 10px;
 }
-
-@import './app/components/register/register.component.scss';
-@import './app/components/login/login.component.scss';
-@import './app/components/navbar/navbar.component.scss';
-@import './app/components/home/home.component.scss';

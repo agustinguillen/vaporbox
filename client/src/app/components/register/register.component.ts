@@ -2,11 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
+  animations: [ 
+    trigger('fade', [
+      state('void', style({ opacity: 0 })),
+      transition(':enter, :leave', [
+        animate(500)
+      ])
+    ])
+   ],
   providers: [UserService]
 })
 export class RegisterComponent implements OnInit {
@@ -19,7 +28,7 @@ export class RegisterComponent implements OnInit {
     private _userService: UserService
   ) {
 
-    this.user = new User( "", "", "", "", "", "", "ROLE_USER", "");
+    this.user = new User( "", "", "", "", "", "", "ROLE_USER", "", "");
 
    }
 

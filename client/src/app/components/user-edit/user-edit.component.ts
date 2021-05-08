@@ -5,11 +5,20 @@ import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { UploadService } from '../../services/upload.service';
 import { GLOBAL } from '../../services/global';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-user-edit',
   templateUrl: './user-edit.component.html',
   styleUrls: ['./user-edit.component.scss'],
+  animations: [ 
+    trigger('fade', [
+      state('void', style({ opacity: 0 })),
+      transition(':enter, :leave', [
+        animate(500)
+      ])
+    ])
+   ],
   providers: [ UserService, UploadService ]
 })
 export class UserEditComponent implements OnInit {
@@ -33,7 +42,6 @@ export class UserEditComponent implements OnInit {
    }
 
   ngOnInit(): void {
-      console.log(this.user);
   }
 
   onSubmit(){
@@ -70,6 +78,21 @@ export class UserEditComponent implements OnInit {
   public filesToUpload:Array<File>
   fileChangeEvent(fileInput:any){
       this.filesToUpload = <Array<File>>fileInput.target.files;
+  }
+
+  deleteUser(id){
+    this._userService.deleteUser(id).subscribe(
+      response => {
+        if(response){
+          localStorage.clear();
+          this.identity = null;
+          this._router.navigate(['/register']);
+        }
+      },
+      error => {
+        console.log(<any>error);
+      }
+    );
   }
 
 }

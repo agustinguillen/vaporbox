@@ -4,33 +4,92 @@ $lightblue: #7998EE;
 $blue: #556DC8;
 $orange: #E68E36;
 
+.user-edit-container{
+    margin-top: 7vh;
+    .form-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto 0 auto;
+        @media (max-width:430px){
+            padding: 0 10vw;
+        }
+        label{
+            color: $violet;
+            font-size: 1rem;
+            margin-left: 15px;
+        }
+        .form-control{
+            border-radius: 50px;
+            background-color: whitesmoke;
+        }
+        span{
+            color: $pink;
+            font-size: smaller;
+            margin-left: 15px;
+        }
+    
+        .loaded-img{
+            width: 200px;
+        }
+        .btn-default{
+            background-color: $violet;
+            color: whitesmoke;
+            &:hover{
+                background-color: $pink;
+            }
+        }
+        .btn-light{
+            border-radius: 50px;
+            &:hover{
+                background-color: rgb(212, 212, 212);
+                border-color: rgb(212, 212, 212);
+            }
+            i{
+                margin-right: 5px;
+            }
+        }
+    }
 
-.form-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto 0 auto;
-    label{
-        color: $violet;
-        font-size: 1rem;
-        margin-left: 15px;
-    }
-    .form-control{
-        border-radius: 50px;
-        background-color: whitesmoke;
-    }
-    span{
-        color: $pink;
-        font-size: smaller;
-        margin-left: 15px;
-    }
-
-    .loaded-img{
-        width: 200px;
-    }
-    .btn-default{
-        background-color: $pink;
-        color: whitesmoke;
+    .modal{
+        .modal-dialog{
+            background-color: rgb(223, 222, 222);
+            border-radius: 70px;
+            border: 5px solid $pink;
+            overflow: hidden;
+            .modal-content{
+                padding: 1rem;
+                .modal-header{
+                    h5{
+                        font-weight: bold;
+                    }
+                    .btn-close-modal{
+                        background: none;
+                        border: none;
+                        &:focus,&:active {
+                            outline: none !important;
+                            box-shadow: none;
+                        }
+                    }
+                }
+                .modal-body{
+                    p{
+                        font-weight: 400;
+                    }
+                    .user-delete-modal{
+                        color: grey;
+                        font-weight: 200;
+                        padding: 1.5rem;
+                        padding-bottom: 0;
+                        font-size: 1rem;
+                        p{
+                            color: $blue;
+                            font-weight: 600;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

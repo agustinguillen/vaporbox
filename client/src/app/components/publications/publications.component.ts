@@ -21,7 +21,6 @@ export class PublicationsComponent implements OnInit {
   public total;
   public pages;
   public itemsPerPage;
-  public showImage;
   public publications: Publication[];
   @Input() user:string;
 
@@ -79,14 +78,6 @@ export class PublicationsComponent implements OnInit {
          this.noMore = true;
      }
      this.getPublications(this.user, this.page, true);
-  }
-
-  showThisImage(id){
-    this.showImage = id;
-  }
-
-  hideThisImage(id){
-    this.showImage = 0;
   }
 
 }

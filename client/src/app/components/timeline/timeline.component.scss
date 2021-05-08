@@ -4,130 +4,164 @@ $lightblue: #7998EE;
 $blue: #556DC8;
 $orange: #E68E36;
 
-
-.btn-info{
-    background-color: rgb(248, 248, 248, 0.5);
-    border: none;
-    border-radius: 50px;
-    color: grey;
-}
-.publications{
-    .item-publication{
-        margin: 2rem;
-        .card-default{
-            border-radius: 50px;
-            border: 3px solid $pink;
-            background-color: rgb(248, 248, 248);
-            box-shadow: 10px 10px 9px 0px rgba(0,0,0,0.22);
-            -webkit-box-shadow: 10px 10px 9px 0px rgba(0,0,0,0.22);
-            -moz-box-shadow: 10px 10px 9px 0px rgba(0,0,0,0.22);
-            .card-body{
-                padding: 1rem;
-                .image-user{
-                    width: 60px;
-                    height: 60px;
-                    border-radius: 100%;
-                    overflow: hidden;
-                    margin-right: 20px;
-                    img{
-                        width: 110%;
-                        height: auto;
+.timeline-container{
+    margin-top: 7vh;
+    .btn-info{
+        background-color: rgb(248, 248, 248, 0.5);
+        border: none;
+        border-radius: 50px;
+        color: grey;
+    }
+    .publications{
+        .item-publication{
+            margin: 2vh 5vw;
+            .card-default{
+                border-radius: 50px;
+                border: none;
+                background-color: rgb(248, 248, 248, 0.5);
+                box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.22);
+                -webkit-box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.22);
+                -moz-box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.22);
+                .card-body{
+                    padding: 1rem;
+                    .fa-close{
+                        color: $violet;
+                        &:hover{
+                            color: $pink;
+                        }
                     }
-                    .default-user-image{
-                        width: 100%;
+                    .image-user{
+                        width: 60px;
+                        height: 60px;
+                        border-radius: 100%;
+                        overflow: hidden;
+                        margin-right: 20px;
+                        img{
+                            width: 110%;
+                            height: auto;
+                        }
+                        .default-user-image{
+                            width: 100%;
+                        }
                     }
-                }
-                .name-surname{
-                    color: $violet;
-                    font-weight: bold;
-                    font-family: 'Raleway';
-                    text-decoration: none;
-                }
-                .date{
-                    font-size: smaller;
-                    color: $lightblue;
-                }
-                .publication-text{
-                    padding-left: 80px;
-                    padding-right: 80px;
-                }
-                .publication-img{
-                    width: 60vw;
-                    padding-left: 80px;
-                    padding-right: 80px;
-                    img{
-                        max-width: 100%;
+                    .name-surname{
+                        color: $violet;
+                        font-weight: bold;
+                        font-family: 'Raleway';
+                        text-decoration: none;
+                    }
+                    .date{
+                        font-size: smaller;
+                        color: $lightblue;
+                    }
+                    .publication-text{
+                        padding-left: 80px;
+                        padding-right: 5vw;
+                    }
+                    .publication-img{
+                        width: 100%;                    
+                        img{
+                            max-width: 100%;
+                            padding: 15px 80px;
+                            @media (max-width: 576px){
+                                padding-right: 15px;
+                            }
+                        }
+                    }
+                    .likes-save{
+                        padding: 15px 80px;
+                        .likes{
+                            i{
+                                color: $violet;
+                                &:hover{
+                                    cursor: pointer;
+                                    color: $pink;
+                                }
+                            }
+                        }
+                        .save{
+                            i{
+                                color: $violet;
+                                &:hover{
+                                    cursor: pointer;
+                                    color: $pink;
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
-    }
-    .btn-default{
-        background-color: $violet;
-        color: whitesmoke;
-        border-radius: 50px;
-        &:hover{
-            background-color: $pink;
+        .btn-default{
+            background-color: $violet;
+            color: whitesmoke;
+            border-radius: 50px;
+            &:hover{
+                background-color: $pink;
+            }
         }
-    }
-    .btn-danger{
-        background-color: $pink;
-        color: whitesmoke;
-        border-radius: 50px;
-        margin-bottom: 1rem;
-    }
-    .btn-light{
-        color: $violet;
-        border-radius: 50px;
-        &:hover{
-            background-color: rgb(226, 226, 226);
-            border-color:  rgb(226, 226, 226);
+        
+        .btn-light{
+            color: $violet;
+            border-radius: 50px;
+            &:hover{
+                background-color: rgb(226, 226, 226);
+                border-color:  rgb(226, 226, 226);
+            }
         }
-    }
-
-    .modal{
-        .modal-dialog{
-            background-color: rgb(223, 222, 222);
-            border-radius: 70px;
-            border: 5px solid $pink;
-            overflow: hidden;
-            .modal-content{
-                padding: 1rem;
-                .modal-header{
-                    h5{
-                        font-weight: bold;
+    
+        .modal{
+            .modal-dialog{
+                background-color: rgb(223, 222, 222);
+                border-radius: 70px;
+                border: 5px solid $pink;
+                overflow: hidden;
+                .modal-content{
+                    padding: 1rem;
+                    .modal-header{
+                        h5{
+                            font-weight: bold;
+                        }
+                        .btn-close-modal{
+                            background: none;
+                            border: none;
+                            &:focus,&:active {
+                                outline: none !important;
+                                box-shadow: none;
+                            }
+                        }
                     }
-                    .btn-close-modal{
-                        background: none;
-                        border: none;
-                        &:focus,&:active {
-                            outline: none !important;
-                            box-shadow: none;
+                    .modal-body{
+                        p{
+                            font-weight: 400;
+                        }
+                        .publication-modal{
+                            color: grey;
+                            font-weight: 200;
+                            padding: 1.5rem;
+                            padding-bottom: 0;
+                            font-size: 1rem;
+                        }
+                        .publication-img-modal{
+                            img{
+                                width: 10rem;
+                                height: auto;
+                                padding: 0 0 1rem 1.5rem;
+                            }
                         }
                     }
                 }
-                .modal-body{
-                    p{
-                        font-weight: 400;
-                    }
-                    .publication-modal{
-                        color: grey;
-                        font-weight: 200;
-                        padding: 1.5rem;
-                        padding-bottom: 0;
-                        font-size: 1rem;
-                    }
-                    .publication-img-modal{
-                        img{
-                            width: 10rem;
-                            height: auto;
-                            padding: 0 0 1rem 1.5rem;
-                        }
-                    }
-                }
-                .modal-footer{
-                    
-                }
+            }
+        }
+        p{
+            color: $blue;
+            font-size: 1.5rem;
+        }
+        a{
+            color: $violet;
+            text-decoration: none;
+            &:hover{
+                color: $pink;
             }
         }
     }

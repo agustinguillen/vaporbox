@@ -33,6 +33,7 @@ function saveUser(req, res){
             user.email = params.email;
             user.role = 'ROLE_USER';
             user.image = null;
+            user.bio = '';
 
             //Controlar que no existan usuarios duplicados
             User.find({ $or: [
@@ -240,10 +241,12 @@ async function getCountFollow(user_id) {
         })
         .catch((err) => { return handleError(err); });
 
-    let publications = await Publication.count({"user": user_id}).exec((err, count)=>{
-        if(err) return handleError(err);
-        return count;
-    });
+    let publications = await Publication.countDocuments({ user: user_id})
+        .exec()
+        .then((count) => {
+            return count;
+        })
+        .catch((err) => { return handleError(err); });
  
     return { following: following, followed: followed, publications: publications }
  
@@ -337,6 +340,44 @@ function getImageFile(req, res){
     })
 }
 
+function deleteUser(req, res) {
+    let userId = req.params.id;
+
+    deleteFollows(userId);
+ 
+    User.find({ '_id': userId })
+        .deleteOne((err, userRemoved) => {
+            if (err) return res.status(500).send({ message: 'Error al borrar publicaciones' });
+            if (!userRemoved) return res.status(404).send({ message: 'No se ha borrado la cuenta' });
+ 
+            if (userRemoved.n == 1) {
+                return res.status(200).send({ message: 'Cuenta eliminada correctamente' });
+            } else {
+                return res.status(404).send({ message: 'Error al eliminar la cuenta' });
+            }
+ 
+        });
+
+    
+}
+
+function deleteFollows(id){
+    Follow.find({ $or: [
+        {user: id},
+        {followed: id}
+    ]}).deleteMany((err, followsRemoved) =>{
+        if (err) return res.status(500).send({ message: 'Error al borrar follows' });
+        if (!followsRemoved) return res.status(404).send({ message: 'No se han encontrado follows' });
+
+        if(followsRemoved.n >= 1){
+            return res.status(200).send({ message: 'Follow eliminado correctamente' });
+        } else {
+            return res.status(404).send({ message: 'Error al eliminar follows' });
+        }
+    
+    });
+}
+
 module.exports = {
     home,
     pruebas,
@@ -347,5 +388,6 @@ module.exports = {
     getCounters,
     updateUser,
     uploadImage,
-    getImageFile
+    getImageFile,
+    deleteUser
 }

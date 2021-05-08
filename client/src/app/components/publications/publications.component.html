@@ -23,11 +23,7 @@
                     {{publication.text}}
                 </div><br>
                 <div class="d-flex flex-column justify-content-center">
-                    <div class="text-center" *ngIf="publication.file != 'null'">
-                        <button class="btn btn-sm btn-default" (click)="showThisImage(publication._id)" *ngIf="showImage != publication._id"><i class="fa fa-image"></i></button>
-                        <button class="btn btn-sm btn-danger" (click)="hideThisImage(publication._id)" *ngIf="showImage == publication._id"><i class="fa fa-image"></i></button>
-                    </div><br>
-                    <div class="publication-img d-flex justify-content-center" *ngIf="publication.file != 'null' && showImage == publication._id">
+                    <div class="publication-img d-flex justify-content-center" *ngIf="publication.file != 'null'">
                         <img src="{{ url + 'get-image-pub/' + publication.file}}" alt="Imagen de publicación"/>
                     </div>
                 </div>
@@ -37,7 +33,7 @@
     <div class="text-center mb-5" *ngIf="publications && publications.length">
         <button class="btn btn-sm btn-default "
         (click)="viewMore()"
-        *ngIf="!noMore">
+        *ngIf="noMore">
             Ver más
         </button>
     </div>

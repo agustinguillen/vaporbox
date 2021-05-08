@@ -113,7 +113,7 @@ function getPublication(req, res){
 }
 
 function deletePublication(req, res) {
-    var publicationId = req.params.id;
+    let publicationId = req.params.id;
  
     Publication.find({ 'user': req.user.sub, '_id': publicationId })
         .remove((err, publicationRemoved) => {

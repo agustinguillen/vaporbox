@@ -4,72 +4,153 @@ $lightblue: #7998EE;
 $blue: #556DC8;
 $orange: #E68E36;
 
-#new-publication{
-    .form-container{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        margin: 0 auto 0 auto;
-        label{
-            color: $violet;
-            font-size: 1rem;
-            margin-left: 15px;
-        }
-        .form-control{
-            margin-bottom: 15px;
-            border-radius: 50px;
-            background-color: whitesmoke;
-        }
-        span{
-                color: whitesmoke;
-                font-size: smaller;
-                margin-left: 15px;
-                margin-top: 0;
-            }
-        .btn-default{
-            background-color: $violet !important;
-            color: whitesmoke;
-        }
-    }
-}
+.sidebar-container{
 
-#user-card{
-    width: 90%;
-    height: 40%;
-    border-radius: 50px;
-    background-color: $pink;
-    .avatar{
-        width: 100px;
-        height: 100px;
-        border-radius: 100%;
-        overflow: hidden;
-        margin: 20px auto;
-        img{
-            width: 110%;
-            height: auto;
-        }
-    }
-    .name-surname{
-        a{
-            text-decoration: none;
+    .btn-default{
+        background-color: $violet;
+        color: whitesmoke;
+        &:hover{
+            background-color: $pink;
             color: whitesmoke;
-            font-family: 'Raleway';
-            font-weight: bolder;
-            font-size: 1.5rem;
         }
     }
-    .stats{
-        .following-data{
-            margin: 20px;
-            padding: 5px;
-            a{
-                text-decoration: none;
+
+    #new-publication{
+        .alert{
+            border-radius: 50px;
+            margin: 5px;
+            padding: 5px 10px;
+            color: whitesmoke;
+        }
+        .alert-danger{
+            background-color: $orange;
+        }
+        .form-container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 0 auto 0 auto;
+            label{
+                color: $violet;
+                font-size: 1rem;
+                margin-left: 15px;
+            }
+            .form-control{
+                margin-bottom: 15px;
+                border-radius: 50px;
+                background-color: whitesmoke;
+            }
+            span{
+                    color: whitesmoke;
+                    font-size: smaller;
+                    margin-left: 15px;
+                    margin-top: 0;
+                }
+            .btn-default{
+                background-color: $violet;
                 color: whitesmoke;
                 &:hover{
+                    background-color: $pink;
+                    color: whitesmoke;
+                }
+            }
+
+            
+        }
+
+        
+          
+          
+
+    }
+    
+    #user-card{
+        width: 90%;
+        height: 40%;
+        border: none;
+        border-radius: 50px;
+        background-color: transparent;
+        .avatar{
+            width: 100px;
+            height: 100px;
+            border-radius: 100%;
+            overflow: hidden;
+            margin: 20px auto;
+            img{
+                width: 110%;
+                height: auto;
+            }
+            .default-img{
+                width: 100%;
+            }
+        }
+        .name-surname{
+            a{
+                text-decoration: none;
+                color: $pink;
+                font-family: 'Raleway';
+                font-weight: bolder;
+                font-size: 1.5rem;
+            }
+        }
+        .stats{
+            @media (max-width: 1350px) {
+                flex-wrap: wrap;            
+            }
+            .following-data{
+                margin: 10px 20px;
+                padding: 5px;
+    
+                a{
+                    text-decoration: none;
                     color: $violet;
+                    font-weight: 600;
+                    &:hover{
+                        color: $pink;
+                    }
                 }
             }
         }
     }
+
+    @media (max-width: 992px){
+        background-color: $pink;
+        overflow: hidden;   
+        position: fixed;
+        bottom: 0;   
+        width: 100%;
+        padding: 0 10vw;
+        display: flex;
+        justify-content: center;
+        
+
+        .btn-default{
+            background-color: $pink;
+            &:hover, &:active{
+                background-color: transparent;
+                color: whitesmoke;
+            }
+        }
+
+        #new-publication{
+            background-color: transparent;
+            margin: 0;
+            h3{
+                display: none;
+            }
+            .form-container{
+                .form-control{
+                    height: fit-content;
+                    margin-top: 3vh;
+                }
+            }
+        }
+
+        #user-card{
+            display: none;
+        }
+    }
 }
+
+  

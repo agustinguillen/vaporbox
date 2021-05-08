@@ -3,11 +3,20 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+  animations: [ 
+    trigger('fade', [
+      state('void', style({ opacity: 0 })),
+      transition(':enter, :leave', [
+        animate(500)
+      ])
+    ])
+   ],
   providers: [ UserService ]
 })
 export class LoginComponent implements OnInit {
@@ -22,7 +31,7 @@ export class LoginComponent implements OnInit {
     private _userService: UserService
   ) {
 
-    this.user = new User( "", "", "", "", "", "", "ROLE_USER", ""); 
+    this.user = new User( "", "", "", "", "", "", "ROLE_USER", "", ""); 
 
    }
 
@@ -90,7 +99,7 @@ export class LoginComponent implements OnInit {
         response => {
           localStorage.setItem('stats', JSON.stringify(response));
           this.status = 'success'; 
-          this._router.navigate(['/home']);
+          this._router.navigate(['/timeline']);
           
         },
         error => {

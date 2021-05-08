@@ -31,5 +31,6 @@ api.get('/counters/:id?', md_auth.ensureAuth, UserController.getCounters);
 api.put('/update-user/:id', md_auth.ensureAuth, UserController.updateUser);
 api.post('/upload-image-user/:id', [md_auth.ensureAuth, upload.single('image')], UserController.uploadImage);
 api.get('/get-image-user/:imageFile', UserController.getImageFile);
+api.delete('/user/:id', md_auth.ensureAuth, UserController.deleteUser);
 
 module.exports = api;

@@ -4,70 +4,104 @@ $lightblue: #7998EE;
 $blue: #556DC8;
 $orange: #E68E36;
 
-.people{
-    .item-user{
-        .card-default{
-            width: 50vw;
+.following-container{
+    margin-top: 14vh;
+    .people{
+        .item-user{
+            .card-default{
+                width: 60vw;
+                min-width: 290px;
+                border-radius: 50px;
+                border: 1px solid $pink;
+                background-color: rgb(248, 248, 248, 0.5);
+                box-shadow: 10px 10px 9px 0px rgba(0,0,0,0.22);
+                -webkit-box-shadow: 10px 10px 9px 0px rgba(0,0,0,0.22);
+                -moz-box-shadow: 10px 10px 9px 0px rgba(0,0,0,0.22);
+                .card-body{
+                    .image-user{
+                        width: 7em;
+                        height: 7em;
+                        border-radius: 100%;
+                        overflow: hidden;
+                        margin-right: 20px;
+                        @media (max-width: 992px){
+                            width: 4em;
+                            height: 4em;
+                        }
+                        img{
+                            width: 110%;
+                            height: auto;
+                        }
+                        .default-user-image{
+                            width: 100%;
+                        }
+                    }
+                    .user-name{
+                        a{
+                            text-decoration: none;
+                            color: $violet;
+                            font-family: 'Raleway';
+                            font-weight: bolder;
+                        }
+                        .username{
+                            color: $pink;
+                            font-family: 'Raleway';
+                        }
+                        .bio{
+                            font-size: small;
+                        }
+    
+                    }
+                    .btn{
+                        @media (max-width:576px){
+                            .fa{
+                                margin-left: 5px;
+                            }
+                            .button-text{
+                                display: none;
+                            }
+                           
+                        }
+                    }
+                    .btn-default{
+                        background-color: $pink;
+                        color: whitesmoke;
+                        border-radius: 50px;
+                        margin-right: 10px;
+                        .fa-user-plus{
+                            margin-right: 5px;
+                        }
+                        &:hover{
+                            background-color: #c9124f;  
+                        }
+                    }
+                    .btn-primary{
+                        background-color: $lightblue;
+                        color: whitesmoke;
+                        border: $lightblue;
+                        border-radius: 50px;
+                        margin-right: 10px;
+                        .fa-user-times{
+                            margin-right: 5px;
+                        }
+                        .fa-check{
+                            margin-right: 5px;
+                        }
+                        &:hover{
+                            background-color: $blue; 
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .pagination{
+        .btn-default{
+            color: whitesmoke;
             border-radius: 50px;
-            border: 3px solid $pink;
-            background-color: rgb(248, 248, 248);
-            box-shadow: 10px 10px 9px 0px rgba(0,0,0,0.22);
-            -webkit-box-shadow: 10px 10px 9px 0px rgba(0,0,0,0.22);
-            -moz-box-shadow: 10px 10px 9px 0px rgba(0,0,0,0.22);
-            .card-body{
-                .image-user{
-                    width: 100px;
-                    height: 100px;
-                    border-radius: 100%;
-                    overflow: hidden;
-                    margin-right: 20px;
-                    img{
-                        width: 110%;
-                        height: auto;
-                    }
-                    .default-user-image{
-                        width: 100%;
-                    }
-                }
-                .user-name{
-                    a{
-                        text-decoration: none;
-                        color: $violet;
-                        font-family: 'Raleway';
-                        font-weight: bolder;
-                    }
-                    .username{
-                        color: $pink;
-                        font-family: 'Raleway';
-                    }
-                }
-                .btn-default{
-                    background-color: $pink;
-                    color: whitesmoke;
-                    border-radius: 50px;
-                    margin-right: 10px;
-                    .fa-user-plus{
-                        margin-right: 5px;
-                    }
-                    &:hover{
-                        background-color: #c9124f;  
-                    }
-                }
-                .btn-primary{
-                    background-color: $blue;
-                    color: whitesmoke;
-                    border-radius: 50px;
-                    margin-right: 10px;
-                    .fa-user-times{
-                        margin-right: 5px;
-                    }
-                    .fa-check{
-                        margin-right: 5px;
-                    }
-                    &:hover{
-                        background-color: #1f3fb4; 
-                    }
-                }
+            &:hover{
+                background-color: $pink;
             }
         }
     }

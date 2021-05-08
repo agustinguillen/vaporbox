@@ -5,11 +5,20 @@ import { UploadService } from '../../services/upload.service';
 import { UserService } from '../../services/user.service';
 import { PublicationService } from '../../services/publication.service';
 import { Publication } from '../../models/publication';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-timeline',
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.scss'],
+  animations: [ 
+    trigger('fade', [
+      state('void', style({ opacity: 0 })),
+      transition(':enter, :leave', [
+        animate(500)
+      ])
+    ])
+   ],
   providers: [ UserService, UploadService, PublicationService ]
 })
 export class TimelineComponent implements OnInit {
@@ -22,7 +31,7 @@ export class TimelineComponent implements OnInit {
   public pages;
   public itemsPerPage;
   public publications: Publication[];
-  public showImage;
+  public innerWidth;
 
   constructor(
     private _route: ActivatedRoute,
@@ -37,6 +46,7 @@ export class TimelineComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.innerWidth = window.innerWidth;
     this.getPublications(this.page);
   }
 
@@ -84,15 +94,7 @@ export class TimelineComponent implements OnInit {
     this.page = 1
     this.getPublications(this.page);
   }
-
   
-  showThisImage(id){
-    this.showImage = id;
-  }
-
-  hideThisImage(id){
-    this.showImage = 0;
-  }
 
   deletePublication(id){
     this._publicationService.deletePublication(this.token, id).subscribe(
