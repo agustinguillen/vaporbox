@@ -30,6 +30,8 @@ export class ProfileComponent implements OnInit {
   public url;
   public following;
   public followed;
+  public savedPublications;
+  public isSaved:boolean;
 
   constructor(
     private _route:ActivatedRoute,
@@ -42,6 +44,7 @@ export class ProfileComponent implements OnInit {
     this.url = GLOBAL.url;
     this.followed = false;
     this.following = false;
+    this.savedPublications = false;
    }
 
   ngOnInit(): void {
@@ -128,6 +131,14 @@ export class ProfileComponent implements OnInit {
 
   mouseLeave(){
     this.followUserOver = 0;
+  }
+
+  showSavedPublications(){
+     if(!this.savedPublications){
+        this.savedPublications = true;
+     }else{
+        this.savedPublications = false;
+     }
   }
 
 }

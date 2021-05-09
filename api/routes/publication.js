@@ -28,6 +28,8 @@ api.get('/publication/:id', md_auth.ensureAuth, PublicationController.getPublica
 api.delete('/publication/:id', md_auth.ensureAuth, PublicationController.deletePublication);
 api.post('/upload-image-pub/:id', [md_auth.ensureAuth, upload.single('image')], PublicationController.uploadImage);
 api.get('/get-image-pub/:imageFile', PublicationController.getImageFile);
+api.put('/saved-publication/:id', md_auth.ensureAuth, PublicationController.savedPublication);
+api.get('/get-saved-publications/:id/:page?', md_auth.ensureAuth, PublicationController.getSavedPublications);
 
 
 module.exports = api;

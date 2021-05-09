@@ -74,6 +74,15 @@
         </div>
     </div>
     <div class="col-xl-10 col-lg-10 offset-xl-1 offset-lg-1" *ngIf="user">
-        <app-publications [user]="user._id"></app-publications>
+        <div class="col-6 offset-3 form-check form-switch d-flex justify-content-center mb-3">
+            <input 
+                    class="form-check-input mx-3" 
+                    type="checkbox" 
+                    id="flexSwitchCheckDefault"
+                    (change)="showSavedPublications()">
+            <label><strong>Guardados</strong></label>
+        </div>
+        <app-publications *ngIf="!savedPublications" [user]="user._id"></app-publications>
+        <app-saved-publications *ngIf="savedPublications"></app-saved-publications>
     </div>
 </div>

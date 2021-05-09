@@ -1,0 +1,43 @@
+<div class="publications">
+    <div *ngFor="let publication of savedPublications" class="item-publication">
+        <div class="card card-default" *ngIf="savedPublications">
+            <div class="card-body">
+                <div class="image-user pull-left">
+                    <a href="#">
+                        <img src="{{url + 'get-image-user/' + publication.user.image}}" alt="Imagen de usuario" *ngIf="publication.user.image">
+                        <img class="default-user-image" src="assets/img/default-user.jpg" alt="Imagen de usuario" *ngIf="!publication.user.image">
+                    </a>
+                </div>
+                <div>
+                    <span class="name-surname">
+                        {{publication.user.name + ' ' + publication.user.surname}}
+                    </span>
+                    <span class="date">
+                            {{ (publication.created_at | amFromUnix) | amLocale: 'es' | amTimeAgo }}
+                    </span><br>
+                    <span>
+                        {{'@'+ publication.user.nick}}
+                    </span>
+                </div><br>
+                <div class="publication-text pull-left">
+                    {{publication.text}}
+                </div><br>
+                <div class="d-flex flex-column justify-content-center">
+                    <div class="publication-img d-flex justify-content-center" *ngIf="publication.file != 'null'">
+                        <img src="{{ url + 'get-image-pub/' + publication.file}}" alt="Imagen de publicación"/>
+                    </div>
+                </div>
+            </div>
+        </div>   
+    </div>
+    <div class="text-center mb-5">
+        <button class="btn btn-sm btn-default "
+        (click)="viewMore()"
+        *ngIf="noMore">
+            Ver más
+        </button>
+    </div>
+    <div class="text-center mt-3" *ngIf="!savedPublications">
+        <p>No hay publicaciones para mostrar</p>
+    </div>
+</div>

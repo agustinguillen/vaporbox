@@ -79,14 +79,19 @@ $orange: #E68E36;
                                 }
                             }
                         }
-                        .save{
-                            i{
+                        .saved{
+                                color: $pink;
+                                &:hover{
+                                    cursor: pointer;
+                                    color: $blue;
+                                }
+                        }
+                        .unsaved{
                                 color: $violet;
                                 &:hover{
                                     cursor: pointer;
-                                    color: $pink;
+                                    color: $blue;
                                 }
-                            }
                         }
                     }
                 }

@@ -101,9 +101,9 @@ function getPublicationsUser(req, res){
 }
 
 function getPublication(req, res){
-    let publicatonId = req.params.id;
+    let publicationId = req.params.id;
 
-    Publication.findById(publicatonId, (err, publication)=>{
+    Publication.findById(publicationId, (err, publication)=>{
         if(err) return res.status(500).send({message: "Error al devolver publicaciones"});
 
         if(!publication) return res.status(404).send({message: "No existe la publicación"});
@@ -189,6 +189,78 @@ function getImageFile(req, res){
     })
 }
 
+function savedPublication(req, res){
+    let userId = req.user.sub;
+    let publicationId = req.params.id;
+
+    Publication.findOne({ $and: [
+        {_id: publicationId},
+        {saves: userId}
+    ]}).exec((err, isSaved)=>{
+        if(isSaved){
+
+            Publication.findByIdAndUpdate({'_id': publicationId}, {$pull: {saves: {$in: [userId.toString()]} }}, {new: true}, (err, publicationUnsaved) =>{
+                if(err) return res.status(500).send({message:'Error en la petición'});
+        
+                if(!publicationUnsaved) return res.status(404).send({message: "No se pudieron guardar los cambios en la base de datos"});
+                
+                return res.status(200).send({message: "Unsaved"});
+            });
+
+        }else{
+            
+            Publication.findByIdAndUpdate({'_id': publicationId}, {$push: {saves: userId}}, {new: true}, (err, publicationSaved) =>{
+                if(err) return res.status(500).send({message:'Error en la petición'});
+        
+                if(!publicationSaved) return res.status(404).send({message: "No se ha podido guardar la publicación"});
+                
+                return res.status(200).send({message: "Saved"});
+            });
+        }
+    });
+}
+
+function getSavedPublications(req, res){
+    let userId = req.user.sub;
+
+    let page = 1;
+    if(req.params.page){
+        page = req.params.page;
+    }
+
+    let user = req.user.sub;
+    if(req.params.user){
+        user = req.params.user;
+    }
+
+    let itemsPerPage = 4;
+
+    Follow.find({user: req.user.sub}).populate('followed').exec((err, follows)=>{
+        if(err) return res.status(500).send({message: "Error al devolver el seguimiento"});
+
+        let follows_clean = [];
+
+        follows.forEach((follow)=>{
+            follows_clean.push(follow.followed);
+        });
+        follows_clean.push(req.user.sub);
+
+        Publication.find({saves: userId}).populate('user').paginate(page, itemsPerPage, (err, saved_publications, total)=>{
+            if(err) return res.status(500).send({message: "Error al devolver publicaciones guardadas"});
+
+            if(!saved_publications) return res.status(404).send({message: "No hay publicaciones guardadas para mostrar"});
+
+            return res.status(200).send({
+                total_items: total,
+                pages: Math.ceil(total/itemsPerPage),
+                page: page,
+                items_per_page: itemsPerPage,
+                saved_publications
+            })
+        });
+    });
+}
+
 module.exports = {
     probando,
     savePublication,
@@ -197,5 +269,7 @@ module.exports = {
     getPublication,
     deletePublication,
     uploadImage,
-    getImageFile
+    getImageFile,
+    savedPublication,
+    getSavedPublications
 }

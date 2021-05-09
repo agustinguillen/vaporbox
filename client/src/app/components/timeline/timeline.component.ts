@@ -21,17 +21,19 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
    ],
   providers: [ UserService, UploadService, PublicationService ]
 })
-export class TimelineComponent implements OnInit {
+export class TimelineComponent implements OnInit{
   public identity;
   public token;
   public url: string;
   public status: string;
+  public statusSaved: boolean;
   public page;
   public total;
   public pages;
   public itemsPerPage;
   public publications: Publication[];
   public innerWidth;
+  
 
   constructor(
     private _route: ActivatedRoute,
@@ -100,6 +102,26 @@ export class TimelineComponent implements OnInit {
     this._publicationService.deletePublication(this.token, id).subscribe(
       response => {
         this.refresh();
+      },
+      error => {
+        console.log(<any>error);
+      }
+    )
+  }
+
+  savePublication(publication){
+    this._publicationService.savePublication(publication).subscribe(
+      response => {
+        if(response && response.message === "Saved"){
+          console.log(response);
+          this.statusSaved = true;
+          this.getPublications(this.page);
+        }
+        else if(response && response.message === "Unsaved"){
+          console.log(response);
+          this.statusSaved = false;
+          this.getPublications(this.page);
+        }
       },
       error => {
         console.log(<any>error);

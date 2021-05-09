@@ -4,6 +4,7 @@ export class Publication{
         public text:string,
         public file:string,
         public created_at:string,
-        public user:any
+        public user:any,
+        public saves:any[]
     ){}
 }

@@ -23,6 +23,7 @@ import { FollowersComponent } from './components/followers/followers.component';
 
 import { UserGuard } from './services/user.guard';
 import { UserService } from './services/user.service';
+import { SavedPublicationsComponent } from './components/saved-publications/saved-publications.component';
 
 
 
@@ -40,7 +41,8 @@ import { UserService } from './services/user.service';
     ProfileComponent,
     PublicationsComponent,
     FollowingComponent,
-    FollowersComponent
+    FollowersComponent,
+    SavedPublicationsComponent
   ],
   imports: [
     BrowserModule,

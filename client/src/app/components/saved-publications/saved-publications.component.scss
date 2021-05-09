@@ -1,0 +1,75 @@
+$violet: #6e2e81;
+$pink: #DD517F;
+$lightblue: #7998EE;
+$blue: #556DC8;
+$orange: #E68E36;
+
+.publications{
+    .item-publication{
+        margin: 2vh 5vw;
+        .card-default{
+            border-radius: 50px;
+            border: none;
+            background-color: rgb(248, 248, 248, 0.5);
+            box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.22);
+            -webkit-box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.22);
+            -moz-box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.22);
+            .card-body{
+                padding: 1rem;
+                .image-user{
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 100%;
+                    overflow: hidden;
+                    margin-right: 20px;
+                    img{
+                        width: 110%;
+                        height: auto;
+                    }
+                    .default-user-image{
+                        width: 100%;
+                    }
+                }
+                .name-surname{
+                    color: $violet;
+                    font-weight: bold;
+                    font-family: 'Raleway';
+                }
+                .date{
+                    font-size: smaller;
+                    color: $lightblue;
+                }
+                .publication-text{
+                    padding-left: 80px;
+                }
+                .publication-img{
+                    width: 100%;                    
+                    img{
+                        width: 100%;
+                        height: auto;
+                        max-height: 450px;
+                        padding: 15px 80px;
+                        @media (max-width: 576px){
+                            padding-right: 15px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .btn-default{
+        background-color: $violet;
+        color: whitesmoke;
+        border-radius: 50px;
+    }
+    .btn-danger{
+        background-color: $pink;
+        color: whitesmoke;
+        border-radius: 50px;
+        margin-bottom: 1rem;
+    }
+    p{
+        color: $blue;
+        font-size: 1.5rem;
+    }
+}

@@ -69,8 +69,9 @@
                             <div class="likes">
                                 <i class="fa fa-thumbs-up"></i>
                             </div>
-                            <div class="save">
-                                <i class="fa fa-bookmark"></i>
+                            <div (click)="savePublication(publication)">
+                                <i class="fa fa-bookmark saved" *ngIf="publication.saves.includes(identity._id)"></i>
+                                <i class="fa fa-bookmark unsaved" *ngIf="!publication.saves.includes(identity._id)"></i>
                             </div>
                         </div>
                     </div>
