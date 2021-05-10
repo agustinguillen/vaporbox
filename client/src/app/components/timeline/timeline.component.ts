@@ -32,7 +32,8 @@ export class TimelineComponent implements OnInit{
   public pages;
   public itemsPerPage;
   public publications: Publication[];
-  public innerWidth;
+  public isDisabled: boolean;
+  public showMessageSaved: boolean;
   
 
   constructor(
@@ -45,10 +46,11 @@ export class TimelineComponent implements OnInit{
     this.token = this._userService.getToken();
     this.url = GLOBAL.url;
     this.page = 1;
+    this.isDisabled = false;
+    this.showMessageSaved = false;
    }
 
   ngOnInit(): void {
-    this.innerWidth = window.innerWidth;
     this.getPublications(this.page);
   }
 
@@ -94,6 +96,7 @@ export class TimelineComponent implements OnInit{
 
   refresh(event = null){
     this.page = 1
+    this.isDisabled = false;
     this.getPublications(this.page);
   }
   
@@ -101,6 +104,7 @@ export class TimelineComponent implements OnInit{
   deletePublication(id){
     this._publicationService.deletePublication(this.token, id).subscribe(
       response => {
+        this.isDisabled = false;
         this.refresh();
       },
       error => {
@@ -110,16 +114,22 @@ export class TimelineComponent implements OnInit{
   }
 
   savePublication(publication){
+
+    if(!publication.saves.includes(this.identity._id)){
+      this.showMessageSaved = true;
+      setTimeout(()=>{ this.showMessageSaved = false }, 3000)
+    }
+
     this._publicationService.savePublication(publication).subscribe(
       response => {
         if(response && response.message === "Saved"){
-          console.log(response);
           this.statusSaved = true;
+          this.isDisabled = true;
           this.getPublications(this.page);
         }
         else if(response && response.message === "Unsaved"){
-          console.log(response);
           this.statusSaved = false;
+          this.isDisabled = true;
           this.getPublications(this.page);
         }
       },

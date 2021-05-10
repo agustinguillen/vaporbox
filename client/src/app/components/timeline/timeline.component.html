@@ -11,7 +11,7 @@
                     Podés encontrar usuarios <a [routerLink]="['/users']">aquí</a></p>
             </div>
             <div *ngFor="let publication of publications" class="item-publication">
-                <div class="card card-default" *ngIf="publications">
+                <div [@.disabled]="isDisabled" class="card card-default" *ngIf="publications">
                     <div @fade class="card-body">
                         <div class="image-user pull-left">
                             <a href="#">
@@ -70,13 +70,17 @@
                                 <i class="fa fa-thumbs-up"></i>
                             </div>
                             <div (click)="savePublication(publication)">
-                                <i class="fa fa-bookmark saved" *ngIf="publication.saves.includes(identity._id)"></i>
-                                <i class="fa fa-bookmark unsaved" *ngIf="!publication.saves.includes(identity._id)"></i>
+                                <i [id]="'save'+publication._id" class="fa fa-bookmark saved" *ngIf="publication.saves.includes(identity._id)"></i>
+                                <i [id]="'unsave'+publication._id" class="fa fa-bookmark unsaved" *ngIf="!publication.saves.includes(identity._id)"></i><br>        
                             </div>
                         </div>
+                        
                     </div>
-                </div>   
+                </div>
             </div>
+            <div @fade class="message-saved text-center" *ngIf='showMessageSaved'>
+                <span>Podés encontrar las publicaciones guardadas en tu <a [routerLink]="['/profile', identity._id]">perfil</a></span>
+            </div> 
             <div class="text-center mb-5" *ngIf="publications && publications.length">
                 <button class="btn btn-sm btn-default"
                 (click)="viewMore()"

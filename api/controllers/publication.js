@@ -245,7 +245,7 @@ function getSavedPublications(req, res){
         });
         follows_clean.push(req.user.sub);
 
-        Publication.find({saves: userId}).populate('user').paginate(page, itemsPerPage, (err, saved_publications, total)=>{
+        Publication.find({saves: userId}).sort('-created_at').populate('user').paginate(page, itemsPerPage, (err, saved_publications, total)=>{
             if(err) return res.status(500).send({message: "Error al devolver publicaciones guardadas"});
 
             if(!saved_publications) return res.status(404).send({message: "No hay publicaciones guardadas para mostrar"});
