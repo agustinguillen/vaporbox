@@ -1,0 +1,63 @@
+$violet: #6e2e81;
+$pink: #DD517F;
+$lightblue: #7998EE;
+$blue: #556DC8;
+$orange: #E68E36;
+
+.notifications-container{
+    margin-top: 14vh;
+    .notifications{
+        .item-notifications{
+            margin: 0 5vw;
+            .card-default{
+                width: 50vw;
+                border: none;
+                background: transparent;
+                border-bottom: 1px solid $pink;
+                .card-body{
+                    padding: 1rem 3rem;
+                    p{
+                        padding: 0;
+                        margin: 0;
+                        img{
+                            width: 40px;
+                            border-radius: 100%;
+                            margin: 10px;
+                        }    
+                        small{
+                            color: $blue;
+                            img{
+                                border-radius: 0;
+                                width: 60px;
+                            }
+                        }
+                    }
+                    small{
+                        color: $pink;
+                        opacity: 0.8;
+                    }
+                }
+            }
+            @media (max-width: 768px){
+                margin: 0;
+                padding: 0;
+                .card-default{
+                    width: 85vw;
+                    margin: 0;
+                    .card-body{
+                        p{
+                            img{
+                                width: 25px;
+                            }
+                            small{
+                                img{
+                                    width: 40px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -30,6 +30,7 @@ api.post('/upload-image-pub/:id', [md_auth.ensureAuth, upload.single('image')], 
 api.get('/get-image-pub/:imageFile', PublicationController.getImageFile);
 api.put('/saved-publication/:id', md_auth.ensureAuth, PublicationController.savedPublication);
 api.get('/get-saved-publications/:id/:page?', md_auth.ensureAuth, PublicationController.getSavedPublications);
+api.put('/like-publication/:id', md_auth.ensureAuth, PublicationController.likePublication);
 
 
 module.exports = api;

@@ -18,9 +18,9 @@
                     </small>
                 </div>
             </div>
-        </div><br>
-        <div class="text-center">
-            <button class="btn btn-default" *ngIf="!following && user._id != identity._id" (click)="followUser(user._id)"><i class="fa fa-user-plus"></i>Seguir</button>
+        </div>
+        <div class="mt-3 text-center">
+            <button class="btn btn-default" *ngIf="!following && user._id != identity._id" (click)="followUser(user._id, user)"><i class="fa fa-user-plus"></i>Seguir</button>
             <button class="btn btn-primary" 
                 *ngIf="following" 
                 (click)="unfollowUser(user._id)"
@@ -75,14 +75,23 @@
     </div>
     <div class="col-xl-10 col-lg-10 offset-xl-1 offset-lg-1" *ngIf="user">
         <div class="col-6 offset-3 form-check form-switch d-flex justify-content-center mb-3">
-            <input 
-                    class="form-check-input mx-3" 
-                    type="checkbox" 
-                    id="flexSwitchCheckDefault"
-                    (change)="showSavedPublications()">
-            <label><strong>Guardados</strong></label>
+            <div *ngIf="user._id === identity._id">
+                <input 
+                        class="form-check-input mx-3" 
+                        type="checkbox" 
+                        id="flexSwitchCheckDefault"
+                        (change)="showSavedPublications()"
+                        >
+                <label>
+                    <strong *ngIf="savedPublications">Guardadas</strong>
+                    <strong *ngIf="!savedPublications">Mis publicaciones</strong>
+                </label>
+            </div>
+            <div *ngIf="user._id !== identity._id">
+                <label><strong>Publicaciones de {{user.name}}</strong></label>
+            </div>
         </div>
         <app-publications *ngIf="!savedPublications" [user]="user._id"></app-publications>
-        <app-saved-publications *ngIf="savedPublications"></app-saved-publications>
+        <app-saved-publications *ngIf="savedPublications" [user]="user._id"></app-saved-publications>
     </div>
 </div>

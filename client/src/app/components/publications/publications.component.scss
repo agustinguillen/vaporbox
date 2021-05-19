@@ -45,23 +45,104 @@ $orange: #E68E36;
                 .publication-img{
                     width: 100%;                    
                     img{
-                        width: 100%;
+                        width: 80%;
                         height: auto;
-                        max-height: 450px;
                         padding: 15px 80px;
                         @media (max-width: 576px){
                             padding-right: 15px;
                         }
                     }
                 }
+
+                .likes-save{
+                    padding: 15px 80px;
+                    .like{
+                        color: $pink;
+                        &:hover{
+                            cursor: pointer;
+                            color: $blue;
+                        }
+                    }
+                    .dislike{
+                        color: $violet;
+                        &:hover{
+                            cursor: pointer;
+                            color: $blue;
+                        }
+                    }
+                    .likes-number{
+                        color: $violet;
+                        margin-left: 7px;
+                    }
+                    .saved{
+                        color: $pink;
+                        &:hover{
+                        cursor: pointer;
+                        color: $blue;
+                        }
+                    }
+                    .unsaved{
+                        color: $violet;
+                        &:hover{
+                            cursor: pointer;
+                            color: $blue;
+                        }
+                    }
+
+                }
             }
         }
     }
+
+    .message-saved{
+        background-color: $pink;
+        position: fixed;
+        bottom: 5%;
+        left: 35%;
+        width: 35%;
+        padding: 30px;
+        border-radius: 50px;
+        @media (max-width: 992px){
+            bottom: 10%;
+            left: 25%;
+            width: 50%;
+        }
+        @media (max-width: 576px){
+            left: 12.5%;
+            width: 75%;
+        }
+        span{
+            font-size:medium;
+            color: whitesmoke;
+            font-weight: 600;
+            a{
+                font-weight: 700;
+                color: $violet;
+                &:hover{
+                    color: $lightblue;
+                }
+            }
+        }
+    }
+    
     .btn-default{
         background-color: $violet;
         color: whitesmoke;
         border-radius: 50px;
+        &:hover{
+            background-color: $pink;
+        }
     }
+    
+    .btn-light{
+        color: $violet;
+        border-radius: 50px;
+        &:hover{
+            background-color: rgb(226, 226, 226);
+            border-color:  rgb(226, 226, 226);
+        }
+    }
+
     .btn-danger{
         background-color: $pink;
         color: whitesmoke;
@@ -71,5 +152,55 @@ $orange: #E68E36;
     p{
         color: $blue;
         font-size: 1.5rem;
+    }
+    a{
+        color: $violet;
+        text-decoration: none;
+        &:hover{
+            color: $pink;
+        }
+    }
+    .modal{
+        .modal-dialog{
+            background-color: rgb(223, 222, 222);
+            border-radius: 70px;
+            border: 5px solid $pink;
+            overflow: hidden;
+            .modal-content{
+                padding: 1rem;
+                .modal-header{
+                    h5{
+                        font-weight: bold;
+                    }
+                    .btn-close-modal{
+                        background: none;
+                        border: none;
+                        &:focus,&:active {
+                            outline: none !important;
+                            box-shadow: none;
+                        }
+                    }
+                }
+                .modal-body{
+                    p{
+                        font-weight: 400;
+                    }
+                    .publication-modal{
+                        color: grey;
+                        font-weight: 200;
+                        padding: 1.5rem;
+                        padding-bottom: 0;
+                        font-size: 1rem;
+                    }
+                    .publication-img-modal{
+                        img{
+                            width: 10rem;
+                            height: auto;
+                            padding: 0 0 1rem 1.5rem;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

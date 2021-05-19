@@ -10,6 +10,8 @@ import { TimelineComponent } from './components/timeline/timeline.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { FollowingComponent } from './components/following/following.component';
 import { FollowersComponent } from './components/followers/followers.component';
+import { ChatComponent } from './components/chat/chat.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 import { UserGuard } from './services/user.guard';
 
@@ -59,6 +61,16 @@ const routes: Routes = [
     {
       path: 'followers/:id/:page',
       component: FollowersComponent,
+      canActivate: [UserGuard]
+    },
+    {
+      path: 'chat',
+      component: ChatComponent,
+      canActivate: [UserGuard]
+    },
+    {
+      path: 'notifications',
+      component: NotificationsComponent,
       canActivate: [UserGuard]
     }
     /*{

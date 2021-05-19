@@ -4,31 +4,48 @@ import { GLOBAL } from '../../services/global';
 import { UploadService } from '../../services/upload.service';
 import { UserService } from '../../services/user.service';
 import { PublicationService } from '../../services/publication.service';
+import { NotificationService } from '../../services/notification.service';
 import { Publication } from '../../models/publication';
+import { trigger, state, style, animate, transition } from '@angular/animations';
+import { io } from 'socket.io-client';
 
 @Component({
   selector: 'app-publications',
   templateUrl: './publications.component.html',
   styleUrls: ['./publications.component.scss'],
-  providers: [ UserService, UploadService, PublicationService ]
+  animations: [ 
+    trigger('fade', [
+      state('void', style({ opacity: 0 })),
+      transition(':enter, :leave', [
+        animate(500)
+      ])
+    ])
+   ],
+  providers: [ UserService, UploadService, PublicationService, NotificationService ]
 })
 export class PublicationsComponent implements OnInit {
+  private socket = io("ws://localhost:3000");
   public identity;
   public token;
   public url: string;
   public status: string;
+  public statusSaved: boolean;
+  public statusLiked: boolean;
   public page;
   public total;
   public pages;
   public itemsPerPage;
   public publications: Publication[];
+  public isDisabled: boolean;
+  public showMessageSaved: boolean;
   @Input() user:string;
 
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
     private _userService: UserService,
-    private _publicationService: PublicationService
+    private _publicationService: PublicationService,
+    private _notificationService: NotificationService
   ) {  
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
@@ -79,6 +96,90 @@ export class PublicationsComponent implements OnInit {
      }
      this.getPublications(this.user, this.page, true);
   }
+
+  refresh(event = null){
+    this.page = 1
+    this.isDisabled = false;
+    this.getPublications(this.user, this.page);
+  }
+  
+
+  deletePublication(id){
+    this._publicationService.deletePublication(this.token, id).subscribe(
+      response => {
+        this.isDisabled = false;
+        this.refresh();
+      },
+      error => {
+        console.log(<any>error);
+      }
+    )
+  }
+
+
+  savePublication(publication){
+
+    if(!publication.saves.includes(this.identity._id)){
+      this.showMessageSaved = true;
+      setTimeout(()=>{ this.showMessageSaved = false }, 3000)
+    }
+
+    this._publicationService.savePublication(publication).subscribe(
+      response => {
+        if(response && response.message === "Saved"){
+          this.statusSaved = true;
+          this.isDisabled = true;
+          this.getPublications(this.user, this.page);
+
+        }
+        else if(response && response.message === "Unsaved"){
+          this.statusSaved = false;
+          this.isDisabled = true;
+          this.getPublications(this.user, this.page);
+        }
+      },
+      error => {
+        console.log(<any>error);
+      }
+    )
+  }
+  
+  likePublication(publication){
+
+    this._publicationService.likePublication(publication).subscribe(
+      response => {
+        if(response && response.message === "Like"){
+          console.log(response);
+          this.statusLiked = true;
+          this.isDisabled = true;
+          this.getPublications(this.user, this.page);
+          this.saveNotification(publication);
+        }
+        else if(response && response.message === "Dislike"){
+          console.log(response);
+          this.statusLiked = false;
+          this.isDisabled = true;
+          this.getPublications(this.user, this.page);
+        }
+      },
+      error => {
+        console.log(<any>error);
+      }
+    )
+  }
+
+  saveNotification(publication){
+    this._notificationService.saveNotification(this.token, publication, 'like-publication').subscribe(
+      response => {
+        console.log(response);
+        this.socket.emit("notificationPublication", response)
+      },
+      error => {
+        console.log(<any>error);
+      }
+    )
+  }
+
 
 }
 

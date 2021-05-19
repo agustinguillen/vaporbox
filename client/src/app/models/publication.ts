@@ -5,6 +5,7 @@ export class Publication{
         public file:string,
         public created_at:string,
         public user:any,
-        public saves:any[]
+        public saves:any[],
+        public likes:any[]
     ){}
 }

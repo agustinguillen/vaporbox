@@ -41,6 +41,13 @@ export class PublicationService{
         return this._http.get(this.url + 'publications/' + page, {headers: headers})
     }
 
+    getPublication(publication: Publication):Observable<any>{
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                       .set('Authorization', this.getToken());
+        
+        return this._http.get(this.url + 'publication/' + publication._id, {headers: headers})
+    }
+
     getPublicationsUser(token, user_id, page = 1):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('Authorization', token);
@@ -51,7 +58,7 @@ export class PublicationService{
     deletePublication(token, id):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('Authorization', token);
-
+        
         return this._http.delete(this.url + 'publication/' + id, {headers: headers})
     }
 
@@ -68,6 +75,14 @@ export class PublicationService{
                                        .set('Authorization', this.getToken());
         
         return this._http.get(this.url + 'get-saved-publications/' + id + '/' + page, {headers: headers})
+    }
+
+    likePublication(publication: Publication):Observable<any>{
+        let params = JSON.stringify(publication);
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                       .set('Authorization', this.getToken());
+        
+        return this._http.put(this.url + 'like-publication/' + publication._id, params, {headers: headers})
     }
 
 }

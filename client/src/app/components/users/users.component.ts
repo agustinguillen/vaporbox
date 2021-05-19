@@ -4,6 +4,7 @@ import { User } from '../../models/user';
 import { Follow } from '../../models/follow';
 import { UserService } from '../../services/user.service';
 import { FollowService } from '../../services/follow.service';
+import { NotificationService } from '../../services/notification.service';
 import { GLOBAL } from '../../services/global';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
@@ -19,7 +20,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
       ])
     ])
    ],
-  providers: [ UserService, FollowService ]
+  providers: [ UserService, FollowService, NotificationService ]
 })
 export class UsersComponent implements OnInit {
   public url = GLOBAL.url;
@@ -39,7 +40,9 @@ export class UsersComponent implements OnInit {
   constructor(  private _route:ActivatedRoute,
                 private _router:Router,
                 private _userService:UserService,
-                private _followService:FollowService ) 
+                private _followService:FollowService,
+                private _notificationService: NotificationService
+              ) 
     { 
       this.identity = this._userService.getIdentity();
       this.token = this._userService.getToken();
@@ -85,9 +88,7 @@ export class UsersComponent implements OnInit {
           this.total = response.total;
           this.users = response.users;
           this.pages = response.pages;
-          this.follows = response.users_following;
-
-          
+          this.follows = response.users_following;       
 
           if(page > this.pages){
             this._router.navigate(['/users/', 1])
@@ -113,7 +114,7 @@ export class UsersComponent implements OnInit {
     this.followMouseOver = 0;
   }
 
-  followUser(followed){
+  followUser(followed, user){
     let follow = new Follow('', this.identity._id, followed);
 
     this._followService.addFollow(this.token, follow).subscribe(
@@ -127,6 +128,7 @@ export class UsersComponent implements OnInit {
           localStorage.removeItem('stats');
           this.getCounters();
           this._userService.getStats();
+          this.saveNotification(user);
         },
         error=>{
           let errorMessage = <any>error;
@@ -174,6 +176,17 @@ export class UsersComponent implements OnInit {
         }
         
     )
-}
+  }
+
+  saveNotification(follower){
+    this._notificationService.saveNotification(this.token, follower, 'new-follow').subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.log(<any>error);
+      }
+    );
+  }
 
 }

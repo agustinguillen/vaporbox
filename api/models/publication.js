@@ -8,7 +8,8 @@ let PublicationSchema = Schema({
     file: String,
     created_at: String,
     user: { type: Schema.ObjectId, ref: 'User' },
-    saves: [{ type: Schema.ObjectId, ref: 'User' }]
+    saves: [{ type: Schema.ObjectId, ref: 'User' }],
+    likes: [{ type: Schema.ObjectId, ref: 'User' }]
 });
 
 module.exports = mongoose.model('Publication', PublicationSchema);

@@ -45,14 +45,50 @@ $orange: #E68E36;
                 .publication-img{
                     width: 100%;                    
                     img{
-                        width: 100%;
+                        width: 80%;
                         height: auto;
-                        max-height: 450px;
                         padding: 15px 80px;
                         @media (max-width: 576px){
                             padding-right: 15px;
                         }
                     }
+                }
+
+                .likes-save{
+                    padding: 15px 80px;
+                    .like{
+                        color: $pink;
+                        &:hover{
+                            cursor: pointer;
+                            color: $blue;
+                        }
+                    }
+                    .dislike{
+                        color: $violet;
+                        &:hover{
+                            cursor: pointer;
+                            color: $blue;
+                        }
+                    }
+                    .likes-number{
+                        color: $violet;
+                        margin-left: 7px;
+                    }
+                    .saved{
+                        color: $pink;
+                        &:hover{
+                        cursor: pointer;
+                        color: $blue;
+                        }
+                    }
+                    .unsaved{
+                        color: $violet;
+                        &:hover{
+                            cursor: pointer;
+                            color: $blue;
+                        }
+                    }
+
                 }
             }
         }

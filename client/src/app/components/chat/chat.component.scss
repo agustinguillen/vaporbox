@@ -1,0 +1,170 @@
+$violet: #6e2e81;
+$pink: #DD517F;
+$lightblue: #7998EE;
+$blue: #556DC8;
+$orange: #E68E36;
+
+.chat-container{
+    margin-top: 14vh;
+    .row{
+        .subtitle{
+            margin-bottom: 2rem;
+        }
+        #followers-list{
+            border-radius: 50px;
+            width: 95%;
+            ul{
+                list-style: none;
+                background-color: rgba(212, 212, 212, 0.5);
+                border-radius: 50px;
+                margin-left: 5%;
+                &:hover{
+                    background-color: rgba(202, 202, 202, 0.5);
+                    cursor: pointer;
+                    
+                }
+                a{
+                    text-decoration: none;
+                    padding: 5px 5px;
+                    &:hover{
+                        color: $pink;
+                    }
+                    i{
+                        padding-right: 5px;
+                    }
+                    .online{
+                        color: rgb(0, 163, 0) !important;
+                    }
+                    small{
+                        margin-left: 10px;
+                        color: $blue;
+                    }
+                }
+            }
+        }
+        form{
+            margin-left: 5%;
+            margin-right: 5%;
+            #chat-input{
+                background-color: $lightblue;
+                border-radius: 50px;
+                width: 95%;
+                height: 10vh;
+                margin: 2vh;
+                display: flex;
+                justify-content: center;
+                @media (max-width: 768px){
+                    margin-bottom: 5vh;
+                }
+                textarea{
+                    background-color: rgba(212, 212, 212, 0.5);
+                    border-radius: 50px;
+                    border: none;
+                    margin: 2vh;
+                    width: 90%;
+                    height: 5vh;
+                    color: $violet;
+                    overflow: hidden;
+                    &:active, &:focus{
+                        border: none;
+                        outline: none;
+                    }
+                }
+                button{
+                    width: 30%;
+                    height: 6vh;
+                    margin: 2vh;
+                    &:hover{
+                        background-color: $pink;
+                        color: whitesmoke;
+                    }
+                }
+            }
+        }
+        
+        #chat{
+            #chat-screen{
+                margin-left: 5%;
+                background-color: rgba(212, 212, 212, 0.5);
+                border-radius: 50px;
+                width: 90%;
+                height: 55vh;
+                overflow: scroll;
+                &::-webkit-scrollbar{
+                    border-radius: 50px;
+                    background-color: rgba(202, 202, 202, 0.3);
+                }
+                &::-webkit-scrollbar-track{
+                    height: 30vh;
+                }
+                &::-webkit-scrollbar-thumb{
+                    background-color: $pink;
+                }
+                #illustration-chat{
+                    display: flex;
+                    justify-content: center;
+                    img{
+                        padding: 5%;
+                        width: 45%;
+                        @media (max-width: 768px){
+                            width: 75%;
+                            padding: 7.5%;
+                        }
+                    }
+                }
+                .received-messages{
+                    background-color: $violet;
+                    width: 35vw;
+                    height: fit-content;
+                    padding: 0.5vw;
+                    margin: 0.5vw 2vw;
+                    border-radius: 25px;
+                    @media (max-width: 992px){
+                        width: 50vw;
+                        padding: 2vw;
+                    }
+                    .emitter-name{
+                        font-weight: bold;
+                        padding: 0.2vw;
+                        margin: 0;
+                    }
+                    p{
+                        color: whitesmoke;
+                        padding: 0.2vw;
+                    }
+                    small{
+                        color: #e083a2;
+                        padding: 0.5vw;
+                    }
+                }
+                .sent-messages{
+                    background-color: $pink;
+                    width: 35vw;
+                    height: fit-content;
+                    padding: 0.5vw;
+                    margin: 0.5vw 2vw;
+                    border-radius: 25px;
+                    @media (max-width: 992px){
+                        width: 50vw;
+                        padding: 2vw;
+                    }
+                    .emitter-name{
+                        font-weight: bold;
+                        padding: 0.2vw;
+                        margin: 0;
+                    }
+                    p{
+                        color: whitesmoke;
+                        padding: 0.2vw;
+                    }
+                    small{
+                        color: $violet;
+                        padding: 0.5vw;
+                    }
+                }
+            }
+            
+
+        }
+    }
+}

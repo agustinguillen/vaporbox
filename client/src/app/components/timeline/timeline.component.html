@@ -66,12 +66,16 @@
                             <img src="{{ url + 'get-image-pub/' + publication.file}}" alt="Imagen de publicación"/>
                         </div>
                         <div class="likes-save d-flex justify-content-around">
-                            <div class="likes">
-                                <i class="fa fa-thumbs-up"></i>
+                            <div (click)="likePublication(publication)">
+                                <i class="fa fa-thumbs-up like" *ngIf="publication.likes.includes(identity._id)"></i>
+                                <i class="fa fa-thumbs-up dislike" *ngIf="!publication.likes.includes(identity._id)"></i>
+                                <span class="likes-number" *ngIf="publication.likes.length < 1">Da el primer like!</span>
+                                <span class="likes-number" *ngIf="publication.likes.length === 1">Le gusta a {{publication.likes.length}} persona</span>
+                                <span class="likes-number" *ngIf="publication.likes.length > 1">Le gusta a {{publication.likes.length}} personas</span>
                             </div>
                             <div (click)="savePublication(publication)">
-                                <i [id]="'save'+publication._id" class="fa fa-bookmark saved" *ngIf="publication.saves.includes(identity._id)"></i>
-                                <i [id]="'unsave'+publication._id" class="fa fa-bookmark unsaved" *ngIf="!publication.saves.includes(identity._id)"></i><br>        
+                                <i class="fa fa-bookmark saved" *ngIf="publication.saves.includes(identity._id)"></i>
+                                <i class="fa fa-bookmark unsaved" *ngIf="!publication.saves.includes(identity._id)"></i><br>        
                             </div>
                         </div>
                         
@@ -84,7 +88,7 @@
             <div class="text-center mb-5" *ngIf="publications && publications.length">
                 <button class="btn btn-sm btn-default"
                 (click)="viewMore()"
-                *ngIf="!noMore">
+                *ngIf="noMore">
                     Ver más
                 </button>
             </div>

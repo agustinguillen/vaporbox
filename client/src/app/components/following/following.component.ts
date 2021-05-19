@@ -4,13 +4,14 @@ import { User } from '../../models/user';
 import { Follow } from '../../models/follow';
 import { UserService } from '../../services/user.service';
 import { FollowService } from '../../services/follow.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { GLOBAL } from '../../services/global';
 
 @Component({
   selector: 'app-following',
   templateUrl: './following.component.html',
   styleUrls: ['./following.component.scss'],
-  providers: [ UserService, FollowService ]
+  providers: [ UserService, FollowService, NotificationService ]
 })
 export class FollowingComponent implements OnInit {
   public url = GLOBAL.url;
@@ -33,7 +34,8 @@ export class FollowingComponent implements OnInit {
   constructor(  private _route:ActivatedRoute,
                 private _router:Router,
                 private _userService:UserService,
-                private _followService:FollowService ) 
+                private _followService:FollowService,
+                private _notificationService:NotificationService ) 
     { 
       this.identity = this._userService.getIdentity();
       this.token = this._userService.getToken();
@@ -129,7 +131,7 @@ export class FollowingComponent implements OnInit {
     this.followMouseOver = 0;
   }
 
-  followUser(followed){
+  followUser(followed, user){
     let follow = new Follow('', this.identity._id, followed);
 
     this._followService.addFollow(this.token, follow).subscribe(
@@ -143,6 +145,7 @@ export class FollowingComponent implements OnInit {
           localStorage.removeItem('stats');
           this.getCounters();
           this._userService.getStats();
+          this.saveNotification(user);
         },
         error=>{
           let errorMessage = <any>error;
@@ -191,5 +194,17 @@ export class FollowingComponent implements OnInit {
         
     )
   }
+
+  saveNotification(follower){
+    this._notificationService.saveNotification(this.token, follower, 'new-follow').subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.log(<any>error);
+      }
+    );
+  }
+
 
 }

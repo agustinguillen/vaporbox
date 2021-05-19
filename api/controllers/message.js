@@ -7,6 +7,7 @@ let User = require('../models/user');
 let Follow = require('../models/follow');
 let Message = require('../models/message');
 
+
 function saveMessage(req, res){
     let params = req.body;
 
@@ -28,51 +29,26 @@ function saveMessage(req, res){
     });
 }
 
-function getReceivedMessages(req, res){
+function getMessages(req, res){
     let userId = req.user.sub;
+    let otherId = req.params.id;
 
-    let page = 1;
-    if(req.params.page){
-        page = req.params.page;
-    }
-
-    let itemsPerPage = 4;
-
-    Message.find({receiver: userId}).sort('-created_at').populate('emitter', 'name surname nick _id image').paginate(page, itemsPerPage, (err, messages, total)=>{
+    Message.find({$or: 
+        [
+        {emitter: otherId, receiver: userId},
+        {emitter: userId, receiver: otherId}
+        ]
+    }).sort('created_at').populate('emitter receiver', 'name surname nick _id image').exec((err, messages)=>{
         if(err) return res.status(500).send({message: "Error en la petición"});
         
         if(!messages) return res.status(404).send({message: "No hay mensajes"});
         
         return res.status(200).send({
-            total: total,
-            pages: Math.ceil(total/itemsPerPage),
             messages: messages
         });
     });
 }
 
-function getEmitMessages(req, res){
-    let userId = req.user.sub;
-
-    let page = 1;
-    if(req.params.page){
-        page = req.params.page;
-    }
-
-    let itemsPerPage = 4;
-
-    Message.find({emitter: userId}).sort('-created_at').populate('emitter receiver', 'name surname nick _id image').paginate(page, itemsPerPage, (err, messages, total)=>{
-        if(err) return res.status(500).send({message: "Error en la petición"});
-        
-        if(!messages) return res.status(404).send({message: "No hay mensajes"});
-        
-        return res.status(200).send({
-            total: total,
-            pages: Math.ceil(total/itemsPerPage),
-            messages: messages
-        });
-    });
-}
 
 function getUnviewedMessages(req, res){
     let userId = req.user.sub;
@@ -100,8 +76,7 @@ function setViewedMessages(req, res){
 
 module.exports = {
     saveMessage,
-    getReceivedMessages,
-    getEmitMessages,
+    getMessages,
     getUnviewedMessages,
     setViewedMessages
 }

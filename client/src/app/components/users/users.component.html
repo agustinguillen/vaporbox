@@ -2,7 +2,7 @@
 <div @fade class="users-container col-xl-12 col-lg-12">
     <div class="mt-5">
         <h3 class="mb-3 text-center section-title">Usuarios</h3>
-        <div class="people">
+        <div class="people mt-5">
             <div *ngFor="let user of users" class="item-user d-flex justify-content-center">
                 <div *ngIf="user" class="card card-default mb-3">
                     <div class="card-body">
@@ -22,7 +22,7 @@
                             
                             <button class="btn btn-default" 
                             *ngIf="follows.indexOf(user._id) < 0"
-                            (click)="followUser(user._id)">
+                            (click)="followUser(user._id, user)">
                                 <i class="fa fa-user-plus"></i><span class="button-text">Seguir</span>
                             </button>
     
@@ -48,7 +48,7 @@
         <div class="d-flex justify-content-center">
             <ul class="pagination">
                 <li *ngIf="page > 1"><a [routerLink]="['/users', prev_page]" class="btn btn-sm btn-default">Anterior</a></li>
-                <li *ngIf="pages != page"><a [routerLink]="['/users', next_page]" class="btn btn-sm btn-default">Siguiente</a></li>
+                <li *ngIf="pages != page && pages > 1"><a [routerLink]="['/users', next_page]" class="btn btn-sm btn-default">Siguiente</a></li>
             </ul>
         </div>
     </div>

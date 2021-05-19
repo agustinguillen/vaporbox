@@ -27,6 +27,19 @@
                         <img src="{{ url + 'get-image-pub/' + publication.file}}" alt="Imagen de publicación"/>
                     </div>
                 </div>
+                <div class="likes-save d-flex justify-content-around">
+                    <div (click)="likePublication(publication)">
+                        <i class="fa fa-thumbs-up like" *ngIf="publication.likes.includes(identity._id)"></i>
+                        <i class="fa fa-thumbs-up dislike" *ngIf="!publication.likes.includes(identity._id)"></i>
+                        <span class="likes-number" *ngIf="publication.likes.length < 1">Da el primer like!</span>
+                        <span class="likes-number" *ngIf="publication.likes.length === 1">Le gusta a {{publication.likes.length}} persona</span>
+                        <span class="likes-number" *ngIf="publication.likes.length > 1">Le gusta a {{publication.likes.length}} personas</span>
+                    </div>
+                    <div (click)="savePublication(publication)">
+                        <i class="fa fa-bookmark saved" *ngIf="publication.saves.includes(identity._id)"></i>
+                        <i class="fa fa-bookmark unsaved" *ngIf="!publication.saves.includes(identity._id)"></i><br>        
+                    </div>
+                </div>
             </div>
         </div>   
     </div>
@@ -37,7 +50,7 @@
             Ver más
         </button>
     </div>
-    <div class="text-center mt-3" *ngIf="!savedPublications">
+    <div class="text-center mt-3" *ngIf="savedPublications && savedPublications.length < 1">
         <p>No hay publicaciones para mostrar</p>
     </div>
 </div>

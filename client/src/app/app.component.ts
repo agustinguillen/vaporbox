@@ -23,4 +23,8 @@ export class AppComponent implements OnInit, DoCheck {
   ngDoCheck(){
       this.identity = this._userService.getIdentity();
   }
+
+  onActivate(event) {
+    window.scroll(0,0);
+  }
 }

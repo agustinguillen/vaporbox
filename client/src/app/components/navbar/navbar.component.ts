@@ -1,25 +1,41 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { NotificationService } from '../../services/notification.service';
 import { GLOBAL } from '../../services/global';
+import { io } from 'socket.io-client';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit{
+  private socket = io("ws://localhost:3000");
   public identity;
+  public token;
   public url:string;
+  public newNotifications: Observable<boolean>;
+  public myNotifications;
 
-  constructor( public user: UserService,
-    private _route: ActivatedRoute,
-    private _router: Router ) { 
+  constructor(  public user: UserService,
+                private _notificationService: NotificationService,
+                private _route: ActivatedRoute,
+                private _router: Router) { 
       this.identity = user.identity;
+      this.token = user.getToken();
       this.url = GLOBAL.url;
+      this.checkIfNewNotifications();
   }
 
   ngOnInit(): void {
+    this.socket.emit("addUser", this.identity._id);
+    this.socket.on("newNotification", newNotification =>{
+        console.log(newNotification);
+        this.newNotifications = new Observable(observer=>observer.next(true));
+        this.checkIfNewNotifications();
+    });
   }
 
   logout(){
@@ -28,6 +44,41 @@ export class NavbarComponent implements OnInit {
       console.log();
       this._router.navigate(['/register']);
       
+  }
+
+  toTop(event){
+    window.scroll(0,0);
+  }
+
+  seeNotifications(){
+    this.newNotifications = new Observable(observer=>observer.next(false));
+    this.setViewedNotifications(this.token, this.identity._id);
+  }
+
+  checkIfNewNotifications(){
+    this._notificationService.getNotifications(this.token).subscribe(
+      response => {
+        this.myNotifications = response.notifications.filter(notification => notification.viewed == false);
+        console.log(this.myNotifications)
+        if(this.myNotifications.length >= 1){
+          this.newNotifications = new Observable(observer=>observer.next(true));
+        }
+      },
+      error => {
+        console.log(<any>error);
+      }
+    )
+  }
+
+  setViewedNotifications(token, id){
+    this._notificationService.setViewedNotifications(token, id).subscribe(
+      response =>{
+        console.log(response);
+      },
+      error =>{
+        console.log(<any>error);
+      }
+    )
   }
 
 }

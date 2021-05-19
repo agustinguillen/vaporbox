@@ -6,8 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { MomentModule } from 'angular2-moment';
 
-import { MessagesModule } from './messages/messages.module';
-
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components//register/register.component';
@@ -20,13 +18,13 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { PublicationsComponent } from './components/publications/publications.component';
 import { FollowingComponent } from './components/following/following.component';
 import { FollowersComponent } from './components/followers/followers.component';
+import { SavedPublicationsComponent } from './components/saved-publications/saved-publications.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 import { UserGuard } from './services/user.guard';
 import { UserService } from './services/user.service';
-import { SavedPublicationsComponent } from './components/saved-publications/saved-publications.component';
-
-
-
+import { NotificationService } from './services/notification.service';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +40,9 @@ import { SavedPublicationsComponent } from './components/saved-publications/save
     PublicationsComponent,
     FollowingComponent,
     FollowersComponent,
-    SavedPublicationsComponent
+    SavedPublicationsComponent,
+    ChatComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,
@@ -50,11 +50,10 @@ import { SavedPublicationsComponent } from './components/saved-publications/save
     HttpClientModule,
     AppRoutingModule,
     MomentModule,
-    MessagesModule,
     BrowserAnimationsModule
   ],
   exports: [],
-  providers: [ UserService, UserGuard ],
+  providers: [ NotificationService, UserService, UserGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

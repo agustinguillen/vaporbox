@@ -47,6 +47,9 @@ $orange: #E68E36;
                             color: $pink;
                             font-family: 'Raleway';
                         }
+                        .bio{
+                            font-size: small;
+                        }
                     }
                     .btn{
                         @media (max-width:576px){

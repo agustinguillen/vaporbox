@@ -4,6 +4,7 @@ import { User } from '../../models/user';
 import { Follow } from '../../models/follow';
 import { UserService } from '../../services/user.service';
 import { FollowService } from '../../services/follow.service';
+import { NotificationService } from '../../services/notification.service';
 import { GLOBAL } from '../../services/global';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
@@ -19,7 +20,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
       ])
     ])
    ],
-  providers: [ UserService, FollowService ]
+  providers: [ UserService, FollowService, NotificationService ]
 })
 export class ProfileComponent implements OnInit {
   public user: User;
@@ -37,7 +38,8 @@ export class ProfileComponent implements OnInit {
     private _route:ActivatedRoute,
     private _router:Router,
     private _userService:UserService,
-    private _followService:FollowService
+    private _followService:FollowService,
+    private _notificationService:NotificationService
   ) { 
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
@@ -100,12 +102,13 @@ export class ProfileComponent implements OnInit {
     )
   }
 
-  followUser(followed){
+  followUser(followed, user){
     let follow = new Follow('', this.identity._id, followed);
 
     this._followService.addFollow(this.token, follow).subscribe(
       response => {
         this.following = true;
+        this.saveNotification(user);
       },
       error => {
         console.log(<any>error);
@@ -139,6 +142,17 @@ export class ProfileComponent implements OnInit {
      }else{
         this.savedPublications = false;
      }
+  }
+
+  saveNotification(follower){
+    this._notificationService.saveNotification(this.token, follower, 'new-follow').subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.log(<any>error);
+      }
+    );
   }
 
 }

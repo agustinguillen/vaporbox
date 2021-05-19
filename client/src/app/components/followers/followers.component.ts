@@ -4,13 +4,14 @@ import { User } from '../../models/user';
 import { Follow } from '../../models/follow';
 import { UserService } from '../../services/user.service';
 import { FollowService } from '../../services/follow.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { GLOBAL } from '../../services/global';
 
 @Component({
   selector: 'app-followers',
   templateUrl: './followers.component.html',
   styleUrls: ['./followers.component.scss'],
-  providers: [ UserService, FollowService ]
+  providers: [ UserService, FollowService, NotificationService ]
 })
 export class FollowersComponent implements OnInit {
   public url = GLOBAL.url;
@@ -33,7 +34,8 @@ export class FollowersComponent implements OnInit {
   constructor(  private _route:ActivatedRoute,
                 private _router:Router,
                 private _userService:UserService,
-                private _followService:FollowService ) 
+                private _followService:FollowService,
+                private _notificationService:NotificationService ) 
     { 
       this.identity = this._userService.getIdentity();
       this.token = this._userService.getToken();
@@ -81,8 +83,6 @@ export class FollowersComponent implements OnInit {
           this.pages = response.pages;
           this.follows = response.users_following;
 
-          
-
           if(page > this.pages){
             this._router.navigate(['/users/', 1])
           }
@@ -129,7 +129,7 @@ export class FollowersComponent implements OnInit {
     this.followMouseOver = 0;
   }
 
-  followUser(followed){
+  followUser(followed, user){
     let follow = new Follow('', this.identity._id, followed);
 
     this._followService.addFollow(this.token, follow).subscribe(
@@ -143,6 +143,7 @@ export class FollowersComponent implements OnInit {
           localStorage.removeItem('stats');
           this.getCounters();
           this._userService.getStats();
+          this.saveNotification(user);
         },
         error=>{
           let errorMessage = <any>error;
@@ -190,6 +191,17 @@ export class FollowersComponent implements OnInit {
         }
         
     )
+  }
+
+  saveNotification(follower){
+    this._notificationService.saveNotification(this.token, follower, 'new-follow').subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.log(<any>error);
+      }
+    );
   }
 
 }

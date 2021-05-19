@@ -70,28 +70,37 @@ $orange: #E68E36;
                     }
                     .likes-save{
                         padding: 15px 80px;
-                        .likes{
-                            i{
-                                color: $violet;
-                                &:hover{
-                                    cursor: pointer;
-                                    color: $pink;
-                                }
+                        .like{
+                            color: $pink;
+                            &:hover{
+                                cursor: pointer;
+                                color: $blue;
                             }
                         }
+                        .dislike{
+                            color: $violet;
+                            &:hover{
+                                cursor: pointer;
+                                color: $blue;
+                            }
+                        }
+                        .likes-number{
+                            color: $violet;
+                            margin-left: 5px;
+                        }
                         .saved{
-                                color: $pink;
-                                &:hover{
-                                    cursor: pointer;
-                                    color: $blue;
-                                }
+                            color: $pink;
+                            &:hover{
+                            cursor: pointer;
+                            color: $blue;
+                            }
                         }
                         .unsaved{
-                                color: $violet;
-                                &:hover{
-                                    cursor: pointer;
-                                    color: $blue;
-                                }
+                            color: $violet;
+                            &:hover{
+                                cursor: pointer;
+                                color: $blue;
+                            }
                         }
 
                     }
@@ -101,7 +110,7 @@ $orange: #E68E36;
         }
         .message-saved{
             background-color: $pink;
-            position: absolute;
+            position: fixed;
             bottom: 5%;
             left: 35%;
             width: 35%;

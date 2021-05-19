@@ -43,7 +43,7 @@ function getPublications(req, res){
         page = req.params.page;
     }
 
-    let itemsPerPage = 4;
+    let itemsPerPage = 1000;
 
     Follow.find({user: req.user.sub}).populate('followed').exec((err, follows)=>{
         if(err) return res.status(500).send({message: "Error al devolver el seguimiento"});
@@ -104,7 +104,7 @@ function getPublication(req, res){
     let publicationId = req.params.id;
 
     Publication.findById(publicationId, (err, publication)=>{
-        if(err) return res.status(500).send({message: "Error al devolver publicaciones"});
+        if(err) return res.status(500).send({message: "Error al devolver publicación"});
 
         if(!publication) return res.status(404).send({message: "No existe la publicación"});
 
@@ -261,6 +261,38 @@ function getSavedPublications(req, res){
     });
 }
 
+
+function likePublication(req, res){
+    let userId = req.user.sub;
+    let publicationId = req.params.id;
+
+    Publication.findOne({ $and: [
+        {_id: publicationId},
+        {likes: userId}
+    ]}).exec((err, like)=>{
+        if(like){
+
+            Publication.findByIdAndUpdate({'_id': publicationId}, {$pull: {likes: {$in: [userId.toString()]} }}, {new: true}, (err, publicationDislike) =>{
+                if(err) return res.status(500).send({message:'Error en la petición'});
+        
+                if(!publicationDislike) return res.status(404).send({message: "No se pudieron guardar los cambios en la base de datos"});
+                
+                return res.status(200).send({message: "Dislike"});
+            });
+
+        }else{
+            
+            Publication.findByIdAndUpdate({'_id': publicationId}, {$push: {likes: userId}}, {new: true}, (err, publicationLiked) =>{
+                if(err) return res.status(500).send({message:'Error en la petición'});
+        
+                if(!publicationLiked) return res.status(404).send({message: "No se ha podido dar like a la publicación"});
+                
+                return res.status(200).send({message: "Like"});
+            });
+        }
+    });
+}
+
 module.exports = {
     probando,
     savePublication,
@@ -271,5 +303,6 @@ module.exports = {
     uploadImage,
     getImageFile,
     savedPublication,
-    getSavedPublications
+    getSavedPublications,
+    likePublication
 }

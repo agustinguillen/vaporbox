@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GLOBAL } from '../../services/global';
 import { UploadService } from '../../services/upload.service';
 import { UserService } from '../../services/user.service';
 import { PublicationService } from '../../services/publication.service';
+import { NotificationService } from '../../services/notification.service';
 import { Publication } from '../../models/publication';
+import { io } from 'socket.io-client';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
@@ -19,14 +21,17 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
       ])
     ])
    ],
-  providers: [ UserService, UploadService, PublicationService ]
+  providers: [ UserService, UploadService, PublicationService, NotificationService ]
 })
 export class TimelineComponent implements OnInit{
+  private socket = io("ws://localhost:3000");
   public identity;
   public token;
   public url: string;
   public status: string;
+  public stats;
   public statusSaved: boolean;
+  public statusLiked: boolean;
   public page;
   public total;
   public pages;
@@ -34,13 +39,15 @@ export class TimelineComponent implements OnInit{
   public publications: Publication[];
   public isDisabled: boolean;
   public showMessageSaved: boolean;
+
   
 
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
     private _userService: UserService,
-    private _publicationService: PublicationService
+    private _publicationService: PublicationService,
+    private _notificationService: NotificationService
   ) {  
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
@@ -54,10 +61,14 @@ export class TimelineComponent implements OnInit{
     this.getPublications(this.page);
   }
 
-  getPublications(page, adding = false){
+  
+
+  getPublications(page?, adding = false){
+    
     this._publicationService.getPublications(this.token, page).subscribe(
       response => {
         if(response.publications){
+          console.log(response)
           this.total = response.total_items;
           this.pages = response.pages;
           this.itemsPerPage = response.items_per_page;
@@ -105,7 +116,9 @@ export class TimelineComponent implements OnInit{
     this._publicationService.deletePublication(this.token, id).subscribe(
       response => {
         this.isDisabled = false;
+        this.getCounters();
         this.refresh();
+        this.deleteNotification(id);
       },
       error => {
         console.log(<any>error);
@@ -126,6 +139,7 @@ export class TimelineComponent implements OnInit{
           this.statusSaved = true;
           this.isDisabled = true;
           this.getPublications(this.page);
+
         }
         else if(response && response.message === "Unsaved"){
           this.statusSaved = false;
@@ -138,5 +152,66 @@ export class TimelineComponent implements OnInit{
       }
     )
   }
+  
+  likePublication(publication){
+
+    this._publicationService.likePublication(publication).subscribe(
+      response => {
+        if(response && response.message === "Like"){
+          this.statusLiked = true;
+          this.isDisabled = true;
+          this.getPublications(publication);
+          this.saveNotification(publication);
+        }
+        else if(response && response.message === "Dislike"){
+          this.statusLiked = false;
+          this.isDisabled = true;
+          this.getPublications(publication);
+        }
+      },
+      error => {
+        console.log(<any>error);
+      }
+    );
+
+    
+  }
+
+  getCounters(){
+    this._userService.getCounters().subscribe(
+      response => {
+        localStorage.setItem('stats', JSON.stringify(response));
+        this.status = 'success'; 
+        this._router.navigate(['/timeline']);
+        this.stats = this._userService.getStats();
+        
+      },
+      error => {
+        console.log(<any>error);
+      }
+    )
+  }
+
+  saveNotification(publication){
+    this._notificationService.saveNotification(this.token, publication, 'like-publication').subscribe(
+      response => {
+        console.log(response);
+        this.socket.emit("notificationPublication", response);
+      },
+      error => {
+        console.log(<any>error);
+      }
+    );
+  }
+
+  deleteNotification(id){
+    this._notificationService.deleteNotification(this.token, id).subscribe(
+      response =>{},
+      error=>{
+        console.log(<any>error);
+      }
+    )
+  }
+
 
 }

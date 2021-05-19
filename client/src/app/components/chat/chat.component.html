@@ -1,0 +1,63 @@
+<app-navbar></app-navbar>
+<div @fade class="chat-container col-xl-12 col-lg-12">
+    <div class="mt-5">
+        <h3 class="mb-3 text-center section-title">Chat</h3>
+    </div>
+    <div class="row">
+        <div class="col-xl-4 col-lg-4" *ngIf="followers">
+            <div class="subtitle text-center">
+                <h5>Tus seguidores</h5>
+            </div>
+            <div id="followers-list">
+                <ul *ngFor="let follower of followers">
+                    <li >
+                        <a (click)="setReceiver(follower.user._id, follower.user.name + ' ' + follower.user.surname)">
+                            <i class="fa fa-globe" *ngIf="!onlineUsers.includes(follower.user._id)"></i>
+                            <i class="fa fa-globe online" *ngIf="onlineUsers.includes(follower.user._id)"></i>
+                            {{follower.user.name + ' ' + follower.user.surname + ' '}}
+                        </a><small>{{'@' + follower.user.nick}}</small>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="chat" class="col-xl-8 col-lg-8">
+            <div class="text-center">
+                <h5 *ngIf="message.receiver != ''">Conversación con {{chatname}}</h5>
+                <h5 *ngIf="message.receiver == ''">Elige un usuario para chatear!</h5>
+            </div>
+            <div #chatScreen id="chat-screen" >
+                <div class="d-flex flex-column">
+                    <div id="illustration-chat" *ngIf="message.receiver == ''">
+                        <img  src="../../../assets/img/chat.svg">
+                    </div>
+                    <div *ngFor="let msg of messages">
+                        <div class="received-messages pull-left" *ngIf="msg.emitter._id != identity._id">
+                            <p class="emitter-name">{{msg.emitter.name}}</p>
+                            <p>{{msg.text}}</p>
+                            <small class="pull-right">{{ (msg.created_at | amFromUnix) | amLocale: 'es' | amTimeAgo }}</small>
+                        </div>
+                        <div class="sent-messages pull-right" *ngIf="msg.emitter._id === identity._id">
+                            <p class="emitter-name">{{msg.emitter.name}}</p>
+                            <p>{{msg.text}}</p>
+                            <small class="pull-right">{{ (msg.created_at | amFromUnix) | amLocale: 'es' | amTimeAgo }}</small>
+                        </div>              
+                    </div>
+                </div>
+            </div>
+            <form #formAdd="ngForm" (ngSubmit)="onSubmit(formAdd)">
+                <div id="chat-input" class="text-center d-flex">
+                    <textarea name="text" 
+                    #text="ngModel" 
+                    [(ngModel)]="message.text"
+                    class="form-control"
+                    placeholder="Escribe aquí tu mensaje"
+                    cols="30" 
+                    rows="5" required>
+                    </textarea>
+                    <button type="submit" value="Enviar" class="btn btn-default">Enviar</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>

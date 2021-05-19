@@ -35,6 +35,14 @@ nav{
                 &:hover{
                         color: $orange !important;
                 }
+                .new-notifications{
+                    color: $pink;
+                    small{
+                        position: relative;
+                        z-index: 1;
+                        bottom: 10px;
+                    }
+                }
             }
         }
     

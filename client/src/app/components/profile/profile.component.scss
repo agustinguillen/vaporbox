@@ -101,11 +101,14 @@ $orange: #E68E36;
         }
     }
 
-    .form-check-input:checked {
-        background-color: $pink;
-        border-color: $violet;
-        &:focus, &:active{
-            outline: none;
+    .form-check-input{
+        cursor: pointer;
+        &:checked {
+            background-color: $pink;
+            border-color: $violet;
+            &:focus, &:active{
+                outline: none;
+            }
         }
     }
 }

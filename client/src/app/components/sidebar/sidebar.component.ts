@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, AfterViewInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { UploadService } from '../../services/upload.service';
 import { PublicationService } from '../../services/publication.service';
@@ -22,7 +22,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
   providers: [ UserService, UploadService, PublicationService ]
 })
 
-export class SidebarComponent implements OnInit{
+export class SidebarComponent implements OnInit, AfterViewInit{
   public identity;
   public token;
   public stats;
@@ -31,6 +31,8 @@ export class SidebarComponent implements OnInit{
   public publication:Publication;
   public filesToUpload: Array<File>;
   public showNewPublication:boolean;
+
+  private _listener:any;
 
   @Output() sent = new EventEmitter();
 
@@ -46,11 +48,20 @@ export class SidebarComponent implements OnInit{
     this.token = this._userService.getToken();
     this.stats = this._userService.getStats();
     this.url = GLOBAL.url;
-    this.publication = new Publication( '', '', '', '', this.identity._id, [] );
+    this.publication = new Publication( '', '', '', '', this.identity._id, [], [] );
     this.showNewPublication = false;
    }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit(): void {
+    if (window.addEventListener) {
+      window.addEventListener("storage", this._listener, false);
+      this._listener = () => {
+        this.getCounters();
+     }
+    }
   }
 
   onSubmit(form, event){
@@ -71,7 +82,7 @@ export class SidebarComponent implements OnInit{
           }else{
             this.status = 'success';
             form.reset();
-            this.stats = this._userService.getStats();
+            this.getCounters();
             this._router.navigate(['/timeline']);
             this.sent.emit({sent: 'true'});
             
@@ -101,6 +112,21 @@ export class SidebarComponent implements OnInit{
     }else{
       this.showNewPublication = true;
     }
+  }
+
+  getCounters(){
+    this._userService.getCounters().subscribe(
+      response => {
+        localStorage.setItem('stats', JSON.stringify(response));
+        this.status = 'success'; 
+        this._router.navigate(['/timeline']);
+        this.stats = this._userService.getStats();
+        
+      },
+      error => {
+        console.log(<any>error);
+      }
+    )
   }
 
 }
