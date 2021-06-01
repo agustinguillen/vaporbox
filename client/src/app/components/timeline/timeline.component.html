@@ -1,14 +1,14 @@
 <app-navbar></app-navbar>
 <div class="timeline-container row">
     <div class="mt-5 col-xl-8 col-lg-8 col-md-8 offset-lg-0 offset-md-2">
-        <h3 class="text-center section-title">Timeline</h3>
+        <h3 class="text-center section-title">Inicio</h3>
         <div class="text-center">
             <button class="btn btn-sm btn-info" (click)="refresh($event)">Mostrar nuevas</button><br>
         </div>
         <div class="publications">
             <div class="text-center mt-5" *ngIf="publications && publications.length < 1">
                 <p>No hay publicaciones para mostrar,<br> sigue algunos usuarios para ver sus publicaciones! <br><br>
-                    Podés encontrar usuarios <a [routerLink]="['/users']">aquí</a></p>
+                    Podés encontrar otros usuarios <a [routerLink]="['/users']">aquí</a></p>
             </div>
             <div *ngFor="let publication of publications" class="item-publication">
                 <div [@.disabled]="isDisabled" class="card card-default" *ngIf="publications">

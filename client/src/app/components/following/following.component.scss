@@ -6,6 +6,31 @@ $orange: #E68E36;
 
 .following-container{
     margin-top: 14vh;
+    .searchInput{
+        width: fit-content;
+        align-self: center;
+        input{
+            width: 70vw;
+            max-width: 400px;
+            border-radius: 50px;
+            border: none;
+            opacity: 0.3;
+            padding: 5px 10px;
+            align-self: center;
+            &:active, &:focus{
+                border: none;
+                outline: none;
+            }
+        }
+        i{
+            display: inline;
+            width: fit-content;
+            position: relative;
+            right: 25px;
+            color: $pink;
+            opacity: 0.9;
+        }
+    }
     .people{
         .item-user{
             .card-default{
@@ -17,6 +42,9 @@ $orange: #E68E36;
                 box-shadow: 10px 10px 9px 0px rgba(0,0,0,0.22);
                 -webkit-box-shadow: 10px 10px 9px 0px rgba(0,0,0,0.22);
                 -moz-box-shadow: 10px 10px 9px 0px rgba(0,0,0,0.22);
+                @media (max-width: 992px){
+                    width: 90vw;
+                }
                 .card-body{
                     .image-user{
                         width: 7em;

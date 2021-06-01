@@ -16,6 +16,9 @@ $orange: #E68E36;
                 border-bottom: 1px solid $pink;
                 .card-body{
                     padding: 1rem 3rem;
+                    @media (max-width: 992px){
+                        padding: 1rem 2rem;
+                    }
                     p{
                         padding: 0;
                         margin: 0;

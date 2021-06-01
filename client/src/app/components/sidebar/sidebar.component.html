@@ -13,20 +13,20 @@
             <h3 class="mb-3 section-title">Crear publicación</h3>
         </div>
         <div class="col-xl-10 col-lg-10 col-md-10">
-            <div class="alert alert-danger" *ngIf="status == 'error'">
-                Publicación no enviada.
+            <div class="alert alert-danger text-center" *ngIf="status == 'error'">
+                La publicación no puede estar vacía!
             </div>
         </div>
-        <div class="form-container text-center mb-3">
-            <form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm, $event)" class="col-xl-10 col-lg-10 col-md-10">
+        <div class="form-container mb-3">
+            <form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm, $event)" class="col-xl-10 col-lg-10 col-md-10 text-center">
                 <textarea name="text" 
                 placeholder="¿Qué estás pensando hoy?" 
                 #text='ngModel' 
                 [(ngModel)]="publication.text" 
-                class="form-control" required>
+                class="form-control">
                 </textarea>
         
-                <input type="file" class="form-control" (change)="fileChangeEvent($event)"/>
+                <input #fileInput type="file" class="form-control" (change)="fileChangeEvent($event)"/>
         
                 <button type="submit" class="btn btn-default" [disabled]="!newPubForm.form.valid">Publicar</button>
             </form>

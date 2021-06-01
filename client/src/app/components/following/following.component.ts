@@ -6,11 +6,20 @@ import { UserService } from '../../services/user.service';
 import { FollowService } from '../../services/follow.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { GLOBAL } from '../../services/global';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-following',
   templateUrl: './following.component.html',
   styleUrls: ['./following.component.scss'],
+  animations: [ 
+    trigger('fade', [
+      state('void', style({ opacity: 0 })),
+      transition(':enter, :leave', [
+        animate(1000)
+      ])
+    ])
+   ],
   providers: [ UserService, FollowService, NotificationService ]
 })
 export class FollowingComponent implements OnInit {
@@ -29,6 +38,7 @@ export class FollowingComponent implements OnInit {
   public following;
   public followMouseOver;
   public userPageId;
+
 
 
   constructor(  private _route:ActivatedRoute,

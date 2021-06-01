@@ -47,7 +47,6 @@ io.on('connection', (socket)=>{
     let user = getUser(notification.notification.author);
     if(user){
       io.to(user.socketId).emit("newNotification", notification);
-      console.log(user.userId);
     }
   })
 

@@ -47,7 +47,7 @@ function getFollowingUsers(req, res){
         page = req.params.id;
     }
 
-    let itemsPerPage = 4;
+    let itemsPerPage = 100;
 
     Follow.find({user: userId}).populate({path: 'followed'}).paginate(page, itemsPerPage, (err, follows, total)=>{
         if(err) return res.status(200).send({message: "Error en el servidor"});
@@ -119,7 +119,7 @@ function getFollowedUsers(req, res){
         page = req.params.id;
     }
 
-    let itemsPerPage = 4;
+    let itemsPerPage = 100;
 
     Follow.find({followed: userId}).populate('user').paginate(page, itemsPerPage, (err, follows, total)=>{
         if(err) return res.status(200).send({message: "Error en el servidor"});

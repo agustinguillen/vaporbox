@@ -1,82 +1,102 @@
 <div class="navigation col-lg-12">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class= "container-fluid">
+      <div class="container-fluid">
         <div class="navbar-header mx-xl-5 mx-lg-5">
           <a [routerLink]="['/timeline']" (click)="toTop($event)" class="navbar-brand">Vaporbox</a>
         </div>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <div class="d-flex">
-                <li class="nav-item mx-xl-3 mx-lg-3 mobile-avatar">
-                  <!--Imagen de usuario-->
-                  <a [routerLink]="['/profile', identity._id]"><img src="{{ url + 'get-image-user/' + identity.image }}" alt="Avatar de usuario logueado" *ngIf="identity && identity.image">
-                    <img src="../../../assets/img/default-user.jpg" class="default-img" alt="Imagen de usuario" *ngIf="!identity.image || identity.image == null">      
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <div class="d-flex">
+              <li class="nav-item mx-xl-3 mx-lg-3 mobile-avatar">
+                <!--Imagen de usuario-->
+                <a [routerLink]="['/profile', identity._id]"><img src="{{ url + 'get-image-user/' + identity.image }}"
+                    alt="Avatar de usuario logueado" *ngIf="identity && identity.image">
+                  <img src="../../../assets/img/default-user.jpg" class="default-img" alt="Imagen de usuario"
+                    *ngIf="!identity.image || identity.image == null">
                   </a>
-                </li>
-              </div>
-
-                <li class="nav-item mx-xl-3 mx-lg-3">
-                  <a [routerLink]="['/timeline']" (click)="toTop($event)" class="nav-link">
-                    <i class="fa fa-home fa-lg mx-lg-2"></i>
-                    Inicio
-                  </a>
-                </li>
-                
-                <li class="nav-item mx-xl-3 mx-lg-3">
-                  <a [routerLink]="['/users/']" class="nav-link">
-                    <i class="fa fa-users mx-lg-2"></i>
-                    Usuarios
-                  </a>
-                </li>
+              </li>
+              <a [routerLink]="['/profile', identity._id]" class="mobile-name">
+                <strong>{{identity.name}}</strong>
+              </a>
+            </div>
   
-                <li class="nav-item mx-xl-3 mx-lg-3">
-                  <a [routerLink]="['/chat']" class="nav-link">
-                    <i class="fa fa-comments fa-lg mx-lg-2"></i>
-                    Chat
-                  </a>
-                </li>
+            <li class="nav-item mx-xl-3 mx-lg-3">
+              <a [routerLink]="['/timeline']" (click)="toTop($event)" class="nav-link">
+                <i class="fa fa-home fa-lg mx-lg-2"></i>
+                Inicio
+              </a>
+            </li>
   
-                <li id="log-out" class="nav-item mx-xl-3 mx-lg-3">
-                  <a href="#" (click)="logout()" class="nav-link">
-                    <i class="fa fa-times fa-lg"></i>
-                    Cerrar Sesión
-                  </a>
+            <li class="nav-item mx-xl-3 mx-lg-3">
+              <a [routerLink]="['/users/']" class="nav-link">
+                <i class="fa fa-users fa-lg mx-lg-2"></i>
+                Gente
+              </a>
+            </li>
+  
+            <li class="nav-item mx-xl-3 mx-lg-3">
+              <a [routerLink]="['/chat']" class="nav-link" *ngIf="unviewedMessages">
+                <i class="fa fa-comments fa-lg mx-lg-2" *ngIf="unviewedMessages.length < 1"></i>
+                <i class="fa fa-comments fa-lg mx-lg-2 new-unviewed" *ngIf="unviewedMessages.length >= 1">
+                  <small>{{unviewedMessages.length}}</small>
+                </i>
+                Chat
+              </a>
+            </li>
+  
+            <li class="nav-item" id="mobile-notifications">
+              <a (click)="seeNotifications()" [routerLink]="['/notifications']" class="nav-link">
+                <i class="fa fa-bell fa-lg" *ngIf="!newNotifications$"></i>
+                <i class="fa fa-bell fa-lg new-unviewed" *ngIf="newNotifications$"><small>{{myNotifications}}</small></i>
+                Notificaciones
+              </a>
+            </li>
+  
+            <li id="log-out" class="nav-item mx-xl-3 mx-lg-3">
+              <a href="#" (click)="logout()" class="nav-link">
+                <i class="fa fa-times fa-lg"></i>
+                Cerrar Sesión
+              </a>
+            </li>
+          </ul>
+          <ul class="nav navbar navbar-right mx-lg-5" *ngIf="identity">
+            <li class="avatar">
+              <!--Imagen de usuario-->
+              <a [routerLink]="['/profile', identity._id]"><img src="{{ url + 'get-image-user/' + identity.image }}"
+                  alt="Avatar de usuario logueado" *ngIf="identity && identity.image">
+                <img src="../../../assets/img/default-user.jpg" class="default-img" alt="Imagen de usuario"
+                  *ngIf="!identity.image || identity.image == null"></a>
+            </li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#">
+                <strong>{{identity.name}}</strong>
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a [routerLink]="['/profile/'+identity._id]"><i class="fa fa-user mx-2"></i>Perfil</a>
                 </li>
-            </ul>
-            <ul class="nav navbar navbar-right mx-lg-5" *ngIf="identity">
-                  <li class="nav-item mx-xl-5 mx-lg-5">
-                    <a (click)="seeNotifications($event)" [routerLink]="['/notifications']" class="nav-link">
-                      <i class="fa fa-bell fa-lg" *ngIf="!newNotifications"></i>
-                      <i class="fa fa-bell fa-lg new-notifications" *ngIf="(newNotifications | async) === true"><small>{{myNotifications.length}}</small></i>
-                    </a>
-                  </li>
-                  <li class="avatar">
-                      <!--Imagen de usuario-->
-                      <a [routerLink]="['/profile', identity._id]"><img src="{{ url + 'get-image-user/' + identity.image }}" alt="Avatar de usuario logueado" *ngIf="identity && identity.image">
-                      <img src="../../../assets/img/default-user.jpg" class="default-img" alt="Imagen de usuario" *ngIf="!identity.image || identity.image == null"></a>
-                  </li>
-                  <li class="dropdown">
-                      <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#">
-                          {{identity.name}} <span class="caret"></span>
-                      </a>
-                      <ul class="dropdown-menu">
-                          <li>
-                              <a [routerLink]="['/profile/'+identity._id]"><i class="fa fa-user mx-2"></i>Perfil</a>
-                          </li>
-                          <li>
-                            <a [routerLink]="['/user-edit']"><i class="fa fa-cog mx-2"></i>Configuración</a>
-                          </li>
-                          <li>
-                            <a href="#" (click)="logout()"><i class="fa fa-times mx-2"></i>Cerrar Sesión</a>
-                          </li>
-                      </ul>
-                  </li>
-            </ul>
+                <li>
+                  <a [routerLink]="['/user-edit']"><i class="fa fa-cog mx-2"></i>Configuración</a>
+                </li>
+                <li>
+                  <a href="#" (click)="logout()"><i class="fa fa-times mx-2"></i>Cerrar Sesión</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item notifications">
+              <a (click)="seeNotifications()" [routerLink]="['/notifications']" class="nav-link">
+                <i class="fa fa-bell fa-lg" *ngIf="!newNotifications$"></i>
+                <i class="fa fa-bell fa-lg new-unviewed" *ngIf="newNotifications$"><small>{{myNotifications}}</small></i>
+              </a>
+            </li>
+          </ul>
         </div>
-        
+  
       </div>
     </nav>
   </div>

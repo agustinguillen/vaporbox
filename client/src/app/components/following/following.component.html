@@ -1,8 +1,8 @@
 <app-navbar></app-navbar>
-<div class="following-container col-xl-12 col-lg-12">
-    <div class="mt-5">
+<div @fade class="following-container col-xl-12 col-lg-12">
+    <div class="mt-5 d-flex flex-column justify-content-center">
         <h3 class="mb-3 text-center section-title" *ngIf="user">Usuarios seguidos por {{user.name}}</h3>
-        <div class="people mt-5" *ngIf="following">
+        <div class="people mt-3" *ngIf="following">
             <div *ngFor="let follow of following" class="item-user d-flex justify-content-center">
                 <div class="card card-default mb-3">
                     <div class="card-body">

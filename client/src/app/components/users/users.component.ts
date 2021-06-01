@@ -16,7 +16,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
     trigger('fade', [
       state('void', style({ opacity: 0 })),
       transition(':enter, :leave', [
-        animate(500)
+        animate(1000)
       ])
     ])
    ],
@@ -35,6 +35,7 @@ export class UsersComponent implements OnInit {
   public status:string;
   public follows;
   public followMouseOver;
+  public searchText = '';
 
 
   constructor(  private _route:ActivatedRoute,

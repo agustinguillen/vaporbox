@@ -10,45 +10,65 @@ nav{
     position: fixed;
     top: 0;
     z-index: 1;
+    background-color: rgb(248, 248, 248, 0.9) !important;
     .navbar-header{
         .navbar-brand{
             font-size: 1.7rem;
             margin-left: 2vw;
-            color: $violet !important;
-            font-weight: 900;
-            font-style: italic;
-            text-shadow: $pink;
+            letter-spacing: 10px;
+            color: $pink;
+            font-weight:bolder;
+            background: #DD517F;
+            background: -webkit-linear-gradient(to left, #DD517F 33%, #6E2E81 100%);
+            background: -moz-linear-gradient(to left, #DD517F 33%, #6E2E81 100%);
+            background: linear-gradient(to left, #DD517F 33%, #6E2E81 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             &:hover{
                 color: $orange !important;
             }
         }
     }
+
+    .navbar-toggler{
+        border: none;
+        &:active, &:focus{
+            outline: none;
+            box-shadow: none;
+        }
+        .navbar-toggler-icon{
+            color: $pink;
+        }
+    }
+
     #navbarSupportedContent{
         .nav-item{
             margin-top: auto;
             @media (max-width: 992px){
                 margin-top: 2vh;
             }
-            a{
+            .nav-link{
                 text-decoration: none;
                 color: $violet !important;
+                text-shadow: 4px 4px 3px -1px $pink;
                 &:hover{
                         color: $orange !important;
                 }
-                .new-notifications{
+                .new-unviewed{
                     color: $pink;
                     small{
                         position: relative;
                         z-index: 1;
                         bottom: 10px;
+                        font-size: x-small;
                     }
                 }
             }
         }
     
         .mobile-avatar{    
-                width: 6vh;
-                height: 6vh;
+                width: 5vh;
+                height: 5vh;
                 border-radius: 100%;
                 overflow: hidden;
                 @media (min-width: 992px){
@@ -62,6 +82,24 @@ nav{
                     width: 100%;
                 }
         }
+
+        .mobile-name{
+            margin-left: 1vh;
+            margin-top: 2.5vh;
+            letter-spacing: 5px;
+            strong{
+                @media (min-width: 993px){
+                    display: none;
+                } 
+            }
+        }
+
+        #mobile-notifications{
+            @media (min-width: 993px){
+                display: none;
+            }
+        }
+
         #log-out{
             @media (min-width: 993px){
                 display: none;
@@ -70,6 +108,7 @@ nav{
         a{
             text-decoration: none;
             color: $violet !important;
+            letter-spacing: 3px;
             &:hover{
                 color: $orange !important;
             }
@@ -93,13 +132,15 @@ nav{
         }
         .dropdown{
             margin-right: 2vw;
+            
             @media (max-width:992px){
                 display: none;
             }
             .dropdown-menu{
-                background-color: rgb(248, 248, 248);
+                background-color: rgb(248, 248, 248, 0.9);
                 border: none;
                 border-radius: 5px;
+                margin-top: 12px;
                 li{
                     margin-top: 10px;
                     &:hover{
@@ -109,7 +150,16 @@ nav{
                             color: white !important;
                         }
                     }
+                    a{
+                        letter-spacing: normal;
+                    }
                 }
+            }
+        }
+        
+        .notifications{
+            @media (max-width:992px){
+                display: none;
             }
         }
     }

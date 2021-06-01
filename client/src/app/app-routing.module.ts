@@ -72,17 +72,14 @@ const routes: Routes = [
       path: 'notifications',
       component: NotificationsComponent,
       canActivate: [UserGuard]
-    }
-    /*{
-      path: '**',
-      component: HomeComponent
-    }*/
+    }  
 ];
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    
   ],
   exports: [RouterModule]
 })

@@ -53,19 +53,22 @@ function getMessages(req, res){
 function getUnviewedMessages(req, res){
     let userId = req.user.sub;
 
-    Message.count({receiver: userId, viewed: "false"}).exec((err, count)=>{
+    Message.find({receiver: userId, viewed: "false"}).exec((err, msg)=>{
         if(err) return res.status(500).send({message: "Error en la petición"});
 
         return res.status(200).send({
-            'unviewed': count
+            'unviewed': msg
         })
     });
 }
 
 function setViewedMessages(req, res){
     let userId = req.user.sub;
+    let params = req.body;
+    let otherId = params.receiver;
+    console.log(otherId);
 
-    Message.updateMany({receiver: userId, viewed: "false"}, {viewed: "true"}, (err, messagesUpdated)=>{
+    Message.updateMany({emitter: otherId ,receiver: userId, viewed: "false"}, {viewed: "true"}, (err, messagesUpdated)=>{
         if(err) return res.status(500).send({message: "Error en la petición"});
         
         return res.status(200).send({

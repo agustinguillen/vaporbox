@@ -1,49 +1,63 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { AfterViewInit, Component, OnInit} from '@angular/core';
+import { Router, ActivatedRoute} from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { NotificationService } from '../../services/notification.service';
+import { MessageService } from '../../services/message.service';
 import { GLOBAL } from '../../services/global';
 import { io } from 'socket.io-client';
-import { Observable } from 'rxjs';
+import { Observable} from 'rxjs';
+import { Message } from 'src/app/models/message';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.scss'],
+  providers: [ MessageService ]
 })
 export class NavbarComponent implements OnInit{
   private socket = io("ws://localhost:3000");
   public identity;
   public token;
   public url:string;
-  public newNotifications: Observable<boolean>;
+  public newNotifications$: Observable<boolean>;
   public myNotifications;
+  public unviewedMessages: Message[];
 
   constructor(  public user: UserService,
                 private _notificationService: NotificationService,
+                private _messageService: MessageService,
                 private _route: ActivatedRoute,
-                private _router: Router) { 
-      this.identity = user.identity;
-      this.token = user.getToken();
-      this.url = GLOBAL.url;
-      this.checkIfNewNotifications();
+                private _router: Router
+              ) { 
+                this.identity = user.identity;
+                this.unviewedMessages = [];
+                this.token = user.getToken();
+                this.url = GLOBAL.url;
+                this.checkIfNewNotifications();
+                this.checkUnviewedMessages();
+              }
+              
+  ngOnInit(): void{
+    this.sockets();
   }
 
-  ngOnInit(): void {
+  sockets(){
     this.socket.emit("addUser", this.identity._id);
     this.socket.on("newNotification", newNotification =>{
-        console.log(newNotification);
-        this.newNotifications = new Observable(observer=>observer.next(true));
-        this.checkIfNewNotifications();
+      this.checkIfNewNotifications();
+      console.log("nueva notificacion")
     });
+    this.socket.on("getMessage", msg =>{
+      this.checkUnviewedMessages();
+      console.log("nuevo mensaje")
+    })   
   }
 
   logout(){
       localStorage.clear();
       this.identity = null;
       console.log();
-      this._router.navigate(['/register']);
-      
+      this._router.navigate(['/register']);     
   }
 
   toTop(event){
@@ -51,23 +65,24 @@ export class NavbarComponent implements OnInit{
   }
 
   seeNotifications(){
-    this.newNotifications = new Observable(observer=>observer.next(false));
+    new Observable(observer=>observer.next(false));
     this.setViewedNotifications(this.token, this.identity._id);
   }
 
   checkIfNewNotifications(){
+     
     this._notificationService.getNotifications(this.token).subscribe(
       response => {
-        this.myNotifications = response.notifications.filter(notification => notification.viewed == false);
+        this.myNotifications = response.notifications.filter(notification => notification.viewed == false).length;
         console.log(this.myNotifications)
-        if(this.myNotifications.length >= 1){
-          this.newNotifications = new Observable(observer=>observer.next(true));
+        if(this.myNotifications > 0){
+          this.newNotifications$ = new Observable(observer=>observer.next(true));
         }
       },
       error => {
         console.log(<any>error);
       }
-    )
+    );
   }
 
   setViewedNotifications(token, id){
@@ -76,6 +91,17 @@ export class NavbarComponent implements OnInit{
         console.log(response);
       },
       error =>{
+        console.log(<any>error);
+      }
+    )
+  }
+
+  checkUnviewedMessages(){
+    this._messageService.getUnviewedMessages(this.token).subscribe(
+      response => {
+        this.unviewedMessages = response.unviewed;
+      },
+      error => {
         console.log(<any>error);
       }
     )

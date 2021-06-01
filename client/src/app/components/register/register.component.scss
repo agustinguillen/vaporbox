@@ -4,6 +4,14 @@ $lightblue: #7998EE;
 $blue: #556DC8;
 $orange: #E68E36;
 
+@mixin glitchCopy { 
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
 
 .register-container{
     @media (min-width: 992px){
@@ -12,18 +20,23 @@ $orange: #E68E36;
     }
 
     .brand{
-        color: $violet;
-        font-weight: 900;
-        font-style: italic;
-        text-shadow: #DD517F;
-    }
-
-    @media (max-width: 1300px){
-        .brand{
-            height: fit-content;
-            margin-top: 10vh;
+        letter-spacing: 10px;
+        color: $pink;
+        font-weight:bolder;
+        font-size: 4rem;
+        background: #DD517F;
+        background: -webkit-linear-gradient(to left, #DD517F 33%, #6E2E81 100%);
+        background: -moz-linear-gradient(to left, #DD517F 33%, #6E2E81 100%);
+        background: linear-gradient(to left, #DD517F 33%, #6E2E81 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        @media (max-width: 1300px){
+                height: fit-content;
+                margin-top: 10vh;
+                font-size: 3rem;
         }
     }
+
     
    
     #illustration-slogan{
@@ -34,12 +47,92 @@ $orange: #E68E36;
             width: 50vw;
             margin: 0 auto;
             padding: 0 0;
+            opacity: 0.7;
+            filter: drop-shadow(5px 0 5px $violet);
+            @media (max-width: 991.9px){
+                display: none;
+            }
         }
 
-        h5{
-            color: $blue;
+        .glitch{
+            color: $violet;
             font-weight: bold;
             font-style: italic;
+            font-size: x-large;
+            position: fixed;
+            left: 7%;
+            bottom: 50%;
+            opacity: 0.8;
+            animation: glitch-skew 2s infinite linear alternate-reverse;
+
+            @media (max-width: 991.9px){
+                position: inherit;
+                margin: 0;
+                padding: 0;
+                font-size: x-large;
+            }
+
+            &::before{
+                @include glitchCopy;
+                left: 2px;
+                text-shadow: -1px 0 $pink;
+                clip: rect(44px, 450px, 56px, 0);
+                animation: glitch-anim 7s infinite linear alternate-reverse;
+            }
+            
+            &::after {
+                @include glitchCopy;
+                left: -2px;
+                text-shadow: -2px 0 $lightblue, -2px -2px $orange;
+                opacity: 0.7;
+                animation: glitch-anim2 2s infinite linear alternate-reverse;
+            }
+
+
+            @keyframes glitch-anim {
+                $steps: 10;
+                @for $i from 0 through $steps {
+                  #{percentage($i*(1/$steps))} {
+                    clip: rect(random(100)+px, 9999px, random(100)+px, 0);
+                          transform: skew((random(100) / 100) + deg);
+                  }
+                }
+              }
+              
+              @keyframes glitch-anim2 {
+                $steps: 10;
+                @for $i from 0 through $steps {
+                  #{percentage($i*(1/$steps))} {
+                    clip: rect(random(100)+px, 9999px, random(100)+px, 0);
+                          transform: skew((random(100) / 100) + deg);
+                  }
+                }
+              }
+              
+              @keyframes glitch-skew {
+                $steps: 5;
+                @for $i from 0 through $steps {
+                  #{percentage($i*(1/$steps))} {
+                    transform: skew((random(10) - 5) + deg);
+                  }
+                }
+              }
+        }
+
+        #bgVideo {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            min-height: 100%;
+            z-index: -100;    
+            object-fit: cover;
+            filter: saturate(70%);
+            -webkit-filter: saturate(70%);
+            -moz-filter: saturate(70%);
+            opacity: 0.3;
         }
 
         @media (max-width: 991.9px){

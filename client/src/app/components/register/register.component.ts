@@ -12,7 +12,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
     trigger('fade', [
       state('void', style({ opacity: 0 })),
       transition(':enter, :leave', [
-        animate(500)
+        animate(1000)
       ])
     ])
    ],
@@ -33,6 +33,7 @@ export class RegisterComponent implements OnInit {
    }
 
   ngOnInit(): void {
+
   }
   
   onSubmit(form){
@@ -41,6 +42,7 @@ export class RegisterComponent implements OnInit {
             if(response.user && response.user._id){
               this.status = 'success';
               form.reset();
+              this._router.navigate(['/login'])
             }else{
               this.status = 'error';
             }

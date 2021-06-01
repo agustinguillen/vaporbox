@@ -4,14 +4,38 @@ $lightblue: #7998EE;
 $blue: #556DC8;
 $orange: #E68E36;
 
-.login-container{
+#bgVideo {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -100;
+    width: 150vw;
+    height: 150vh;
+    filter: saturate(70%);
+    -webkit-filter: saturate(70%);
+    -moz-filter: saturate(70%);
+    opacity: 0.3;
+    object-fit:cover;
+}
 
+.login-container{
     .brand{
-            color: $violet;
-            font-weight: 900;
-            font-style: italic;
-            text-shadow: $pink;
+        letter-spacing: 10px;
+        color: $pink;
+        font-weight:bolder;
+        font-size: 4rem;
+        background: #DD517F;
+        background: -webkit-linear-gradient(to left, #DD517F 33%, #6E2E81 100%);
+        background: -moz-linear-gradient(to left, #DD517F 33%, #6E2E81 100%);
+        background: linear-gradient(to left, #DD517F 33%, #6E2E81 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        @media (max-width: 1300px){
+            height: fit-content;
+            font-size: 3rem;
+        }
     }
+
     
     .section-title{
         color: $pink;
@@ -28,7 +52,7 @@ $orange: #E68E36;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin: 0 auto 0 auto;
+        margin: 0 auto;
     
         @media (max-width:380px){
             padding: 0 10vw;

@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, AfterViewInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { UploadService } from '../../services/upload.service';
 import { PublicationService } from '../../services/publication.service';
@@ -35,7 +35,8 @@ export class SidebarComponent implements OnInit, AfterViewInit{
   private _listener:any;
 
   @Output() sent = new EventEmitter();
-
+  @ViewChild('fileInput')
+  fileInputVariable: ElementRef;
 
   constructor(
     private _userService:UserService,
@@ -48,7 +49,7 @@ export class SidebarComponent implements OnInit, AfterViewInit{
     this.token = this._userService.getToken();
     this.stats = this._userService.getStats();
     this.url = GLOBAL.url;
-    this.publication = new Publication( '', '', '', '', this.identity._id, [], [] );
+    this.publication = new Publication( '', null, '', '', this.identity._id, [], [] );
     this.showNewPublication = false;
    }
 
@@ -65,41 +66,46 @@ export class SidebarComponent implements OnInit, AfterViewInit{
   }
 
   onSubmit(form, event){
-    this._publicationService.addPublication(this.token, this.publication).subscribe(
-      response => {
-        if(response.publication){
-          if(this.filesToUpload && this.filesToUpload.length){
-            //subir imagen
-            this._uploadService.makeFileRequest(this.url + 'upload-image-pub/' + response.publication._id, [], this.filesToUpload, this.token, 'image')
-                                .then((result:any) => {
-                                    this.publication.file = result.image;
-                                    this.status = 'success';
-                                    this.stats = this._userService.getStats();
-                                    form.reset();
-                                    this._router.navigate(['/timeline']);
-                                    this.sent.emit({sent: 'true'});
-                                });
-          }else{
-            this.status = 'success';
-            form.reset();
-            this.getCounters();
-            this._router.navigate(['/timeline']);
-            this.sent.emit({sent: 'true'});
+    if( (this.publication.text != null) || this.fileInputVariable.nativeElement.value != '' ){
+      this._publicationService.addPublication(this.token, this.publication).subscribe(
+        response => {
+          if(response.publication){
+            if(this.filesToUpload && this.filesToUpload.length){
+              //subir imagen
+              this._uploadService.makeFileRequest(this.url + 'upload-image-pub/' + response.publication._id, [], this.filesToUpload, this.token, 'image')
+                                  .then((result:any) => {
+                                      this.status = 'success';
+                                      this.stats = this._userService.getStats();
+                                      form.reset();
+                                      this.resetFileInput();
+                                      this._router.navigate(['/timeline']);
+                                      this.sent.emit({sent: 'true'});
+                                  });
+            }else{
+              this.status = 'success';
+              form.reset();
+              this.resetFileInput();
+              this.getCounters();
+              this._router.navigate(['/timeline']);
+              this.sent.emit({sent: 'true'});
+              
+            }
             
+          }else{
+            this.status = 'error';
           }
-          
-        }else{
-          this.status = 'error';
-        }
-      },
-      error => {
-        let errorMessage = <any>error;
-        console.log(errorMessage);
-        if(errorMessage != null){
-          this.status = 'error';
-        }
-      }
-    )
+        },
+        error => {
+          let errorMessage = <any>error;
+          console.log(errorMessage);
+          if(errorMessage != null){
+            this.status = 'error';
+          }
+        });
+    }
+    else{
+      this.status = 'error';
+    }
   }
 
   fileChangeEvent(fileInput: any){
@@ -127,6 +133,10 @@ export class SidebarComponent implements OnInit, AfterViewInit{
         console.log(<any>error);
       }
     )
+  }
+
+  resetFileInput() {
+    this.fileInputVariable.nativeElement.value = '';
   }
 
 }

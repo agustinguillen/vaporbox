@@ -8,56 +8,95 @@
             <div class="subtitle text-center">
                 <h5>Tus seguidores</h5>
             </div>
-            <div id="followers-list">
+            <div id="followers-list" *ngIf="followers.length > 0">
                 <ul *ngFor="let follower of followers">
-                    <li >
+                    <li>
                         <a (click)="setReceiver(follower.user._id, follower.user.name + ' ' + follower.user.surname)">
+                            <img src="{{url + 'get-image-user/' + follower.user.image}}" *ngIf="follower.user.image">
+                            <img src="assets/img/default-user.jpg" *ngIf="!follower.user.image">
                             <i class="fa fa-globe" *ngIf="!onlineUsers.includes(follower.user._id)"></i>
                             <i class="fa fa-globe online" *ngIf="onlineUsers.includes(follower.user._id)"></i>
                             {{follower.user.name + ' ' + follower.user.surname + ' '}}
-                        </a><small>{{'@' + follower.user.nick}}</small>
+                            <small>{{'@' + follower.user.nick}} </small>
+                            <span class="pull-right"
+                                *ngIf="unviewedMessages && unviewedMessages.includes(follower.user._id)">
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                        </a>
                     </li>
                 </ul>
             </div>
-        </div>
-        <div id="chat" class="col-xl-8 col-lg-8">
-            <div class="text-center">
-                <h5 *ngIf="message.receiver != ''">Conversación con {{chatname}}</h5>
-                <h5 *ngIf="message.receiver == ''">Elige un usuario para chatear!</h5>
+            <div *ngIf="followers.length < 1" class="followers-default text-center">
+                <p>Contactá con otras personas para poder chatear!</p>
             </div>
-            <div #chatScreen id="chat-screen" >
+            <div id="followers-mobile">
+                <li class="dropdown">
+                    <a data-bs-toggle="dropdown" href="#">
+                        <div class="d-flex selector">
+                            <p *ngIf="message.receiver != ''">Conversación con {{chatname}}</p>
+                            <p *ngIf="message.receiver == ''">Elige alguien para chatear!</p> 
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li value="follower.user._id" *ngFor="let follower of followers">
+                            <a (click)="setReceiver(follower.user._id, follower.user.name + ' ' + follower.user.surname)">
+                                <img src="{{url + 'get-image-user/' + follower.user.image}}" *ngIf="follower.user.image">
+                                <img src="assets/img/default-user.jpg" *ngIf="!follower.user.image">
+                                {{follower.user.name + ' ' + follower.user.surname + ' '}}
+                                <small>{{'@' + follower.user.nick}} </small>
+                                <span class="pull-right"
+                                *ngIf="unviewedMessages && unviewedMessages.includes(follower.user._id)">
+                                <i class="fa fa-envelope"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </div>
+        </div>
+        <div id="chat" class="col-xl-8 col-lg-8" *ngIf="followers">
+            <div class="text-center chat-title">
+                <h5 *ngIf="message.receiver != ''">
+                    Conversación con 
+                    {{chatname}}
+                </h5>
+                <h5 *ngIf="message.receiver == ''">Elige alguien para chatear!</h5>
+            </div>
+            <div #chatScreen id="chat-screen">
                 <div class="d-flex flex-column">
                     <div id="illustration-chat" *ngIf="message.receiver == ''">
-                        <img  src="../../../assets/img/chat.svg">
+                        <img src="../../../assets/img/chat.svg">
                     </div>
                     <div *ngFor="let msg of messages">
                         <div class="received-messages pull-left" *ngIf="msg.emitter._id != identity._id">
-                            <p class="emitter-name">{{msg.emitter.name}}</p>
-                            <p>{{msg.text}}</p>
-                            <small class="pull-right">{{ (msg.created_at | amFromUnix) | amLocale: 'es' | amTimeAgo }}</small>
+                            <div class="d-flex">
+                                <img src="{{url + 'get-image-user/' + msg.emitter.image}}" *ngIf="msg.emitter.image">
+                                <img src="assets/img/default-user.jpg" *ngIf="!msg.emitter.image">
+                                <p>{{msg.text}}</p>
+                            </div>
+                            <small class="pull-right">{{ (msg.created_at | amFromUnix) | amLocale: 'es' | amTimeAgo
+                                }}</small>
                         </div>
                         <div class="sent-messages pull-right" *ngIf="msg.emitter._id === identity._id">
-                            <p class="emitter-name">{{msg.emitter.name}}</p>
-                            <p>{{msg.text}}</p>
+                            <div class="d-flex">
+                                <img src="{{url + 'get-image-user/' + msg.emitter.image}}" *ngIf="msg.emitter.image">
+                                <img src="assets/img/default-user.jpg" *ngIf="!msg.emitter.image">
+                                <p>{{msg.text}}</p>
+                            </div>
                             <small class="pull-right">{{ (msg.created_at | amFromUnix) | amLocale: 'es' | amTimeAgo }}</small>
-                        </div>              
+                        </div>
                     </div>
                 </div>
             </div>
             <form #formAdd="ngForm" (ngSubmit)="onSubmit(formAdd)">
                 <div id="chat-input" class="text-center d-flex">
-                    <textarea name="text" 
-                    #text="ngModel" 
-                    [(ngModel)]="message.text"
-                    class="form-control"
-                    placeholder="Escribe aquí tu mensaje"
-                    cols="30" 
-                    rows="5" required>
+                    <textarea name="text" #text="ngModel" [(ngModel)]="message.text" class="form-control"
+                        placeholder="Escribe aquí tu mensaje" cols="30" rows="5" required>
                     </textarea>
                     <button type="submit" value="Enviar" class="btn btn-default">Enviar</button>
                 </div>
             </form>
-            
+
         </div>
     </div>
 </div>

@@ -6,11 +6,20 @@ import { UserService } from '../../services/user.service';
 import { FollowService } from '../../services/follow.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { GLOBAL } from '../../services/global';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-followers',
   templateUrl: './followers.component.html',
   styleUrls: ['./followers.component.scss'],
+  animations: [ 
+    trigger('fade', [
+      state('void', style({ opacity: 0 })),
+      transition(':enter, :leave', [
+        animate(1000)
+      ])
+    ])
+   ],
   providers: [ UserService, FollowService, NotificationService ]
 })
 export class FollowersComponent implements OnInit {

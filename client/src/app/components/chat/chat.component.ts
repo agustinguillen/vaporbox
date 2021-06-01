@@ -4,7 +4,7 @@ import { User } from '../../models/user';
 import { Message } from '../../models/message';
 import { UserService } from '../../services/user.service';
 import { FollowService } from '../../services/follow.service';
-import { MessageService } from '../../services/message.service'
+import { MessageService } from '../../services/message.service';
 import { GLOBAL } from '../../services/global';
 import { io } from 'socket.io-client';
 import { trigger, state, style, animate, transition } from '@angular/animations';
@@ -33,6 +33,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   public identity;
   public eventName:string;
   public messages: Message[];
+  public unviewedMessages: Message[];
   public message: Message;
   public chatname;
   public onlineUsers;
@@ -54,12 +55,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit(): void {
+    this.checkUnviewedMessages();
     this.socket.on("getUsers", users=>{
        this.onlineUsers = users.map(user => user.userId);
     });
 
     this.socket.on("getMessage", msg =>{
         this.getMessages();
+        this.checkUnviewedMessages();
     });
 
     this.scrollToBottom();
@@ -71,9 +74,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   onSubmit(form){
     this._messageService.addMessage(this.token, this.message).subscribe(
-      response => {
-        console.log(response.message);
-            
+      response => {         
         this.socket.emit("sendMessage", response.message);
       },
       error =>{
@@ -102,13 +103,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.chatname = name;
     //Mensajes del chat entre usuario y 'receiver'
     this.getMessages();
-    
+    this.setViewedMessages();   
   }
   
   getMessages(){ 
     this._messageService.getMessages(this.token, this.message.receiver).subscribe(
     response => {
       this.messages = response.messages;
+
     },
     error =>{
       console.log(<any>error);
@@ -117,9 +119,31 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   scrollToBottom(): void {
-    try {
-        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-    } catch(err) { }                 
+      try {
+          this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+      } catch(err) { }                 
+  }
+
+  checkUnviewedMessages(){
+    this._messageService.getUnviewedMessages(this.token).subscribe(
+      response => {
+        this.unviewedMessages = response.unviewed.map(msg => msg.emitter).sort();
+      },
+      error => {
+        console.log(<any>error);
+      }
+    )
+  }
+
+  setViewedMessages(){
+    this._messageService.setViewedMessages(this.token, this.message).subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.log(<any>error);
+      }
+    )
   }
 
   
