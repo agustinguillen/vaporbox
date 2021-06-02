@@ -1,4 +1,3 @@
-<app-navbar></app-navbar>
 <div @fade class="chat-container col-xl-12 col-lg-12">
     <div class="mt-5">
         <h3 class="mb-3 text-center section-title">Chat</h3>
@@ -16,7 +15,9 @@
                             <img src="assets/img/default-user.jpg" *ngIf="!follower.user.image">
                             <i class="fa fa-globe" *ngIf="!onlineUsers.includes(follower.user._id)"></i>
                             <i class="fa fa-globe online" *ngIf="onlineUsers.includes(follower.user._id)"></i>
-                            {{follower.user.name + ' ' + follower.user.surname + ' '}}
+                            <span>
+                                {{follower.user.name + ' ' + follower.user.surname + ' '}}
+                            </span>
                             <small>{{'@' + follower.user.nick}} </small>
                             <span class="pull-right"
                                 *ngIf="unviewedMessages && unviewedMessages.includes(follower.user._id)">

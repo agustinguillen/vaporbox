@@ -29,16 +29,17 @@ export class NavbarComponent implements OnInit{
                 private _route: ActivatedRoute,
                 private _router: Router
               ) { 
-                this.identity = user.identity;
-                this.unviewedMessages = [];
-                this.token = user.getToken();
-                this.url = GLOBAL.url;
-                this.checkIfNewNotifications();
-                this.checkUnviewedMessages();
+                  this.identity = this.user.getIdentity();
+                  this.unviewedMessages = [];
+                  this.token = user.getToken();
+                  this.url = GLOBAL.url;
+                  this.checkIfNewNotifications();
+                  this.checkUnviewedMessages();                 
+                
               }
               
   ngOnInit(): void{
-    this.sockets();
+      this.sockets();
   }
 
   sockets(){

@@ -1,1 +1,2 @@
+<app-navbar *ngIf="!(router === '/register' || router === '/login' || router === '/')"></app-navbar>
 <router-outlet (activate)="onActivate($event)"></router-outlet>

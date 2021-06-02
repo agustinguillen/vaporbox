@@ -51,13 +51,13 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.getFollows(this.token);
     this.message = new Message('','','','',this.identity._id,'');
     this.onlineUsers = [];
-  
   }
 
   ngOnInit(): void {
     this.checkUnviewedMessages();
     this.socket.on("getUsers", users=>{
-       this.onlineUsers = users.map(user => user.userId);
+        console.log("hay usuaries nuevos conectades pelotude")
+        this.onlineUsers = users.map(user => user.userId);
     });
 
     this.socket.on("getMessage", msg =>{
