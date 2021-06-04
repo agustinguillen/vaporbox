@@ -12,7 +12,7 @@ $orange: #E68E36;
         justify-content: center;
         align-items: center;
         margin: 0 auto 0 auto;
-        @media (max-width:430px){
+        @media (max-width:768px){
             padding: 0 10vw;
         }
         label{
@@ -22,7 +22,9 @@ $orange: #E68E36;
         }
         .form-control{
             border-radius: 50px;
-            background-color: whitesmoke;
+            color: $pink;
+            background: transparent;
+            border: rgba(235, 235, 235, 0.8) 1px groove;
         }
         span{
             color: $pink;
@@ -31,7 +33,7 @@ $orange: #E68E36;
         }
     
         .loaded-img{
-            width: 200px;
+            width: 150px;
         }
         .btn-default{
             background-color: $violet;
@@ -42,9 +44,11 @@ $orange: #E68E36;
         }
         .btn-light{
             border-radius: 50px;
+            margin-left: 5%;
+            color: $pink;
             &:hover{
-                background-color: rgb(212, 212, 212);
-                border-color: rgb(212, 212, 212);
+                background-color: rgb(200, 200, 200);
+                border-color: rgb(200, 200, 200);
             }
             i{
                 margin-right: 5px;

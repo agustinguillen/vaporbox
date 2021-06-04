@@ -1,4 +1,3 @@
-import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { User } from '../../models/user';
@@ -24,18 +23,26 @@ export class LoginComponent implements OnInit {
   public status:string;
   public identity;
   public token;
+  public loading: boolean;
 
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
     private _userService: UserService
   ) {
-
+    this.loading = true;
     this.user = new User( "", "", "", "", "", "", "ROLE_USER", "", ""); 
-
    }
 
   ngOnInit(): void {
+    if(localStorage['firstTimeLoad'] ==='TRUE'){
+      this.loading = false;
+    }else{
+      setTimeout(() => {
+        this.loading = false;  
+        localStorage['firstTimeLoad']='TRUE'; 
+      }, 3000)
+    }
   }
 
   onSubmit(){

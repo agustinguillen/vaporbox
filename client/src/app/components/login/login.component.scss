@@ -9,16 +9,17 @@ $orange: #E68E36;
     left: 0;
     top: 0;
     z-index: -100;
-    width: 150vw;
-    height: 150vh;
+    width: 100vw;
+    height: 100vh;
     filter: saturate(70%);
     -webkit-filter: saturate(70%);
     -moz-filter: saturate(70%);
     opacity: 0.3;
     object-fit:cover;
 }
-
 .login-container{
+    overflow: hidden;
+    padding: 0;
     .brand{
         letter-spacing: 10px;
         color: $pink;
@@ -39,6 +40,13 @@ $orange: #E68E36;
     
     .section-title{
         color: $pink;
+    }
+
+    .alert{
+        background: linear-gradient(to left, #DD517F 0%, #6E2E81 100%);
+        color: whitesmoke;
+        border: none;
+        border-radius: 50px;
     }
     
     #illustration-register{

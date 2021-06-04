@@ -36,6 +36,8 @@ export class UsersComponent implements OnInit {
   public follows;
   public followMouseOver;
   public searchText = '';
+  public mobile:boolean;
+  public loading: boolean;
 
 
   constructor(  private _route:ActivatedRoute,
@@ -45,12 +47,18 @@ export class UsersComponent implements OnInit {
                 private _notificationService: NotificationService
               ) 
     { 
+      this.loading = true;
       this.identity = this._userService.getIdentity();
       this.token = this._userService.getToken();
      }
 
   ngOnInit(): void {
     this.actualPage();
+    if (window.screen.width <= 992) { 
+      this.mobile = true;
+    }else{
+      this.mobile = false;
+    }
   }
 
   actualPage(){
@@ -73,8 +81,6 @@ export class UsersComponent implements OnInit {
         }
       }
         
-      
-
       //Devolver listado de usuarios
       this.getUsers( page );
     });
@@ -86,6 +92,7 @@ export class UsersComponent implements OnInit {
         if(!response.users){
           this.status = "error";
         }else{
+          this.loading = false;
           this.total = response.total;
           this.users = response.users;
           this.pages = response.pages;
@@ -167,7 +174,6 @@ export class UsersComponent implements OnInit {
   getCounters(){
     this._userService.getCounters().subscribe(
         response =>{
-            //Guardamos en stats la respuesta JSON
             localStorage.setItem('stats', JSON.stringify(response));
             this.status = 'success';
  
@@ -181,9 +187,7 @@ export class UsersComponent implements OnInit {
 
   saveNotification(follower){
     this._notificationService.saveNotification(this.token, follower, 'new-follow').subscribe(
-      response => {
-        console.log(response);
-      },
+      response => {},
       error => {
         console.log(<any>error);
       }

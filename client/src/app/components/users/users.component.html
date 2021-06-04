@@ -1,5 +1,8 @@
 <div @fade class="users-container col-xl-12 col-lg-12">
-    <div class="mt-5 d-flex flex-column justify-content-center">
+    <div class="mt-5 d-flex flex-column justify-content-center" *ngIf="loading">
+        <app-loading></app-loading>
+    </div>
+    <div class="mt-5 d-flex flex-column justify-content-center" *ngIf="!loading">
         <h3 class="mb-3 text-center section-title">Gente</h3>
         <div class="searchInput">
             <input #searchInput [(ngModel)]="searchText" placeholder="Buscar..." type="text">
@@ -34,7 +37,7 @@
                                 (mouseleave)="mouseLeave(user._id)"
                                 (click)="unfollowUser(user._id)"
                                 >
-                                <span *ngIf="user._id == followMouseOver; else following">
+                                <span *ngIf="user._id == followMouseOver && !mobile; else following">
                                     <i class="fa fa-user-times"></i><span class="button-text">Dejar de seguir</span>
                                 </span>
                                 <ng-template #following>

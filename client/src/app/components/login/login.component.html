@@ -1,17 +1,17 @@
-<video id="bgVideo" preload="true" autoplay loop muted oncanplay="this.play()" onloadedmetadata="this.muted = true">
+<div class="loading-container" *ngIf="loading">
+    <app-loading></app-loading>
+</div>
+<video id="bgVideo" preload="true" autoplay loop muted oncanplay="this.play()" onloadedmetadata="this.muted = true" *ngIf="!loading">
     <source src="../../../assets/video/video1.mp4" type="video/mp4" > 
 </video>
-<div @fade class="row login-container mt-5">
+<div @fade class="row login-container" *ngIf="!loading">
 
-    <h1 class="text-center brand">Vaporbox</h1>
+    <h1 class="text-center brand mt-3">Vaporbox</h1>
 
     <div class="mb-5 mt-5 form-container">
         <h3 class="mb-3 mt-5 section-title">Ingresá a tu cuenta</h3>
 
-        <div class="alert alert-success" *ngIf="status == 'success'">
-            Te has identificado correctamente
-        </div>
-        <div class="alert alert-danger" *ngIf="status == 'error'">
+        <div class="alert" *ngIf="status == 'error'">
             No has podido iniciar sesión, intentalo nuevamente.
         </div>
 

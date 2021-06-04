@@ -9,6 +9,7 @@ let Notification = require('../models/notifications');
 
 function saveNotification(req, res){
     let params = req.body;
+    let userId = params.user._id;
 
     let notification = new Notification();
     notification.type = req.params.type;
@@ -16,7 +17,7 @@ function saveNotification(req, res){
     notification.viewed = false;
     notification.created_at = moment().unix();
     if(notification.type === "like-publication"){
-        notification.author = params.user._id;
+        notification.author = userId;
         notification.publication = params;
     }else{
         notification.user = params;

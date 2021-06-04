@@ -33,6 +33,8 @@ export class ProfileComponent implements OnInit {
   public followed;
   public savedPublications;
   public isSaved:boolean;
+  public mobile:boolean;
+  public loading:boolean;
 
   constructor(
     private _route:ActivatedRoute,
@@ -41,6 +43,7 @@ export class ProfileComponent implements OnInit {
     private _followService:FollowService,
     private _notificationService:NotificationService
   ) { 
+    this.loading = true;
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.url = GLOBAL.url;
@@ -51,6 +54,11 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadPage();
+    if (window.screen.width <= 992) { 
+      this.mobile = true;
+    }else{
+      this.mobile = false;
+    }
   }
 
   loadPage(){
@@ -67,7 +75,6 @@ export class ProfileComponent implements OnInit {
       response => { 
         if(response.user){
           this.user = response.user;
-
           if(response && response.following && response.following._id){
             this.following = true;
           }else{
@@ -79,9 +86,10 @@ export class ProfileComponent implements OnInit {
           }else{
             this.followed = false;
           }
-
+          this.loading = false;
         }else{
           this.status = 'error';
+          this.loading = false;
         }
       },
       error => {
@@ -147,7 +155,6 @@ export class ProfileComponent implements OnInit {
   saveNotification(follower){
     this._notificationService.saveNotification(this.token, follower, 'new-follow').subscribe(
       response => {
-        console.log(response);
       },
       error => {
         console.log(<any>error);

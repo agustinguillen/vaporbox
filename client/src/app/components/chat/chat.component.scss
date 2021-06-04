@@ -8,18 +8,18 @@ $orange: #E68E36;
     margin-top: 14vh;
     .row{
         .subtitle{
-            margin-bottom: 2rem;
             @media (max-width: 992px){
                 display: none;
             }
         }
         
         #followers-list{
-            margin: 5%;
+            margin: 0 5%;
             border-radius: 25px;
             width: 100%;
             height: 65vh;
             overflow: scroll;
+            overflow-x: hidden;
             @media (max-width: 992px){
                 display: none;
             }
@@ -38,11 +38,18 @@ $orange: #E68E36;
                 background: -webkit-linear-gradient(to left, $pink 0%, $violet 100%);
                 background: -moz-linear-gradient(to left, $pink 0%, $violet 100%);
                 background: linear-gradient(to left, $pink 0%, $violet 100%);
+                box-shadow: 3px 10px 9px 0px rgba(0,0,0,0.22);
+                -webkit-box-shadow: 3px 10px 9px 0px rgba(0,0,0,0.22);
+                -moz-box-shadow: 3px 10px 9px 0px rgba(0,0,0,0.22);
                 border-radius: 50px;
-                margin: 3% 1%;
+                margin: 3% 4% 3% 1%;
                 &:hover{
                     cursor: pointer;
-                    
+                    box-shadow: 5px 15px 9px 0px rgba(0,0,0,0.18);
+                    -webkit-box-shadow: 5px 15px 9px 0px rgba(0,0,0,0.18);
+                    -moz-box-shadow: 5px 15px 9px 0px rgba(0,0,0,0.18);
+                    position: relative;
+                    bottom: 1%;
                 }
                 li{
                     padding: 2% 0;
@@ -64,6 +71,7 @@ $orange: #E68E36;
                             height: 20px;
                             border-radius: 100%;
                             margin-right: 3%;
+                            
                         }
                         i{
                             padding-right: 5px;
@@ -74,7 +82,7 @@ $orange: #E68E36;
                         }
                         span{
                             i{
-                                color: $pink;
+                                color: rgba(255, 255, 0, 0.7);
                                 margin-right: 1rem;
                             }
                         }
@@ -89,7 +97,8 @@ $orange: #E68E36;
             }
         }
         #followers-mobile{
-            margin-bottom: 2%;
+            margin-bottom: 3%;
+            border-radius: 50px;
             @media (min-width: 993px){
                 display: none;
             }
@@ -99,6 +108,9 @@ $orange: #E68E36;
                 background: -webkit-linear-gradient(to left, $pink 0%, $violet 100%);
                 background: -moz-linear-gradient(to left, $pink 0%, $violet 100%);
                 background: linear-gradient(to left, $pink 0%, $violet 100%);
+                box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.12);
+                -webkit-box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.12);
+                -moz-box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.12);
                 width: 90%;
                 padding: 1%;
                 margin-left: 5%;
@@ -124,15 +136,17 @@ $orange: #E68E36;
                     border: none;
                     li{
                         padding: 1%;
+                        border-bottom: 0.5px solid $lightblue;
                         a{
                             text-decoration: none;
                             img{
                                 width: 30px;
                                 height: 30px;
                                 border-radius: 100%;
+                                margin-right: 2%;
                             }
-                            small{
-                                color: $blue;
+                            span{
+                                margin: 1%
                             }
                         }
                     }
@@ -145,6 +159,9 @@ $orange: #E68E36;
                 background: -webkit-linear-gradient(to left, $pink 0%, $violet 100%);
                 background: -moz-linear-gradient(to left, $pink 0%, $violet 100%);
                 background: linear-gradient(to left, $pink 0%, $violet 100%);
+                box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.22);
+                -webkit-box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.22);
+                -moz-box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.22);
                 border-radius: 50px;
                 width: 95%;
                 height: 10vh;
@@ -155,26 +172,33 @@ $orange: #E68E36;
                     margin-bottom: 5vh;
                 }
                 textarea{
-                    background-color: rgba(243, 243, 243, 0.7);
+                    background: rgba(212, 212, 212, 0.1);
                     border-radius: 50px;
-                    border: none;
+                    border: rgba(111, 0, 155, 0.7) 1px groove;
                     margin: 2vh;
+                    padding: 0.5% 0 0 2%;
                     width: 90%;
                     height: 6vh;
-                    color: $violet;
+                    color: whitesmoke;
                     overflow: hidden;
-                    &:active, &:focus{
-                        border: none;
-                        outline: none;
+                    @media (max-width: 450px){
+                        padding: 2% 0 0 4%;
                     }
+                    &:active, &:focus{
+                        outline: none;
+                        text-shadow: none;
+                    }
+                    &::placeholder {
+                        color: rgba(255, 255, 0, 0.7);
+                      }
                 }
                 button{
                     width: 30%;
                     height: 6vh;
                     margin: 2vh;
                     &:hover{
-                        background-color: $orange;
-                        color: whitesmoke;
+                        background-color: rgba(255, 255, 0, 0.7);
+                        color: $violet;
                     }
                 }
             }
@@ -195,6 +219,7 @@ $orange: #E68E36;
                 width: 90%;
                 height: 57vh;
                 overflow: scroll;
+                overflow-x: hidden;
                 &::-webkit-scrollbar{
                     border-radius: 50px;
                     background-color: rgba(202, 202, 202, 0.3);
@@ -218,7 +243,9 @@ $orange: #E68E36;
                     }
                 }
                 .received-messages{
-                    background-color: $violet;
+                    background: -webkit-linear-gradient(to right, #370047 0%, $violet 100%);
+                    background: -moz-linear-gradient(to right, #370047 0%, $violet 100%);
+                    background: linear-gradient(to right, #370047 0%, $violet 100%);
                     width: 35vw;
                     height: fit-content;
                     padding: 0.5vw;
@@ -244,7 +271,9 @@ $orange: #E68E36;
                     }
                 }
                 .sent-messages{
-                    background-color: $pink;
+                    background: -webkit-linear-gradient(to right, $blue 0%, $lightblue 100%);
+                    background: -moz-linear-gradient(to right, $blue 0%, $lightblue 100%);
+                    background: linear-gradient(to right, $blue 0%, $lightblue 100%);
                     width: 35vw;
                     height: fit-content;
                     padding: 1%;

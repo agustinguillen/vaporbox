@@ -1,11 +1,12 @@
-<div @fade class="chat-container col-xl-12 col-lg-12">
+<app-loading *ngIf="loading"></app-loading>
+<div @fade class="chat-container col-xl-12 col-lg-12" *ngIf="!loading">
     <div class="mt-5">
         <h3 class="mb-3 text-center section-title">Chat</h3>
     </div>
     <div class="row">
-        <div class="col-xl-4 col-lg-4" *ngIf="followers">
+        <div class="col-xl-5 col-lg-5" *ngIf="followers">
             <div class="subtitle text-center">
-                <h5>Tus seguidores</h5>
+                <h5>Contactos</h5>
             </div>
             <div id="followers-list" *ngIf="followers.length > 0">
                 <ul *ngFor="let follower of followers">
@@ -16,7 +17,7 @@
                             <i class="fa fa-globe" *ngIf="!onlineUsers.includes(follower.user._id)"></i>
                             <i class="fa fa-globe online" *ngIf="onlineUsers.includes(follower.user._id)"></i>
                             <span>
-                                {{follower.user.name + ' ' + follower.user.surname + ' '}}
+                                    {{follower.user.name + ' ' + follower.user.surname | truncate:[30, '...']}}
                             </span>
                             <small>{{'@' + follower.user.nick}} </small>
                             <span class="pull-right"
@@ -43,8 +44,9 @@
                             <a (click)="setReceiver(follower.user._id, follower.user.name + ' ' + follower.user.surname)">
                                 <img src="{{url + 'get-image-user/' + follower.user.image}}" *ngIf="follower.user.image">
                                 <img src="assets/img/default-user.jpg" *ngIf="!follower.user.image">
+                                <i class="fa fa-globe" *ngIf="!onlineUsers.includes(follower.user._id)"></i>
+                                <i class="fa fa-globe online" *ngIf="onlineUsers.includes(follower.user._id)"></i>
                                 {{follower.user.name + ' ' + follower.user.surname + ' '}}
-                                <small>{{'@' + follower.user.nick}} </small>
                                 <span class="pull-right"
                                 *ngIf="unviewedMessages && unviewedMessages.includes(follower.user._id)">
                                 <i class="fa fa-envelope"></i>
@@ -55,7 +57,7 @@
                 </li>
             </div>
         </div>
-        <div id="chat" class="col-xl-8 col-lg-8" *ngIf="followers">
+        <div id="chat" class="col-xl-7 col-lg-7" *ngIf="followers">
             <div class="text-center chat-title">
                 <h5 *ngIf="message.receiver != ''">
                     Conversación con 
@@ -91,7 +93,7 @@
             </div>
             <form #formAdd="ngForm" (ngSubmit)="onSubmit(formAdd)">
                 <div id="chat-input" class="text-center d-flex">
-                    <textarea name="text" #text="ngModel" [(ngModel)]="message.text" class="form-control"
+                    <textarea name="text" #text="ngModel" [(ngModel)]="message.text"
                         placeholder="Escribe aquí tu mensaje" cols="30" rows="5" required>
                     </textarea>
                     <button type="submit" value="Enviar" class="btn btn-default">Enviar</button>

@@ -30,7 +30,7 @@
                                 (mouseleave)="mouseLeave(follow.followed._id)"
                                 (click)="unfollowUser(follow.followed._id)"
                                 >
-                                <span *ngIf="follow.followed._id == followMouseOver; else following">
+                                <span *ngIf="follow.followed._id == followMouseOver && !mobile; else following">
                                     <i class="fa fa-user-times"></i><span class="button-text">Dejar de seguir</span>
                                 </span>
                                 <ng-template #following>

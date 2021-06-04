@@ -37,6 +37,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   public message: Message;
   public chatname;
   public onlineUsers;
+  public loading: boolean;
 
   constructor(
     private _route:ActivatedRoute,
@@ -45,6 +46,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     private _followService:FollowService,
     private _messageService:MessageService
   ) { 
+    this.loading = true;
     this.url = GLOBAL.url;
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
@@ -54,34 +56,37 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit(): void {
-    this.checkUnviewedMessages();
-    this.socket.on("getUsers", users=>{
-        console.log("hay usuaries nuevos conectades pelotude")
-        this.onlineUsers = users.map(user => user.userId);
-    });
-
-    this.socket.on("getMessage", msg =>{
-        this.getMessages();
-        this.checkUnviewedMessages();
-    });
-
-    this.scrollToBottom();
-  }
-
-  ngAfterViewChecked() {        
-    this.scrollToBottom();        
+      this.checkUnviewedMessages();
+      this.sockets();
+      this.scrollToBottom();
+    }
+    
+    ngAfterViewChecked() {        
+      this.scrollToBottom();        
+    }
+    
+  sockets(){  
+      this.socket.emit("addUser", this.identity._id);
+      this.socket.on("getUsers", users=>{
+          this.onlineUsers = users.map(user => user.userId);
+      });
+      this.socket.on("getMessage", msg =>{
+          console.log(msg)
+          this.getMessages();
+          this.checkUnviewedMessages();
+      });
   }
 
   onSubmit(form){
     this._messageService.addMessage(this.token, this.message).subscribe(
       response => {         
         this.socket.emit("sendMessage", response.message);
+        this.getMessages();
       },
       error =>{
         console.log(<any>error);
       }
     )
-    this.getMessages();
     form.reset();
   }
 
@@ -103,14 +108,15 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.chatname = name;
     //Mensajes del chat entre usuario y 'receiver'
     this.getMessages();
-    this.setViewedMessages();   
+    this.setViewedMessages(); 
+    this.checkUnviewedMessages();  
   }
   
   getMessages(){ 
     this._messageService.getMessages(this.token, this.message.receiver).subscribe(
     response => {
       this.messages = response.messages;
-
+      this.loading = false;
     },
     error =>{
       console.log(<any>error);
@@ -128,6 +134,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this._messageService.getUnviewedMessages(this.token).subscribe(
       response => {
         this.unviewedMessages = response.unviewed.map(msg => msg.emitter).sort();
+        this.loading = false;
       },
       error => {
         console.log(<any>error);
@@ -138,7 +145,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   setViewedMessages(){
     this._messageService.setViewedMessages(this.token, this.message).subscribe(
       response => {
-        console.log(response);
       },
       error => {
         console.log(<any>error);

@@ -10,16 +10,19 @@ $orange: #E68E36;
         width: fit-content;
         align-self: center;
         input{
+            color: $violet;
             width: 70vw;
             max-width: 400px;
             border-radius: 50px;
-            border: none;
-            opacity: 0.3;
+            background: transparent;
+            border: rgba(235, 235, 235, 0.8) 1px groove;
             padding: 5px 10px;
             align-self: center;
             &:active, &:focus{
-                border: none;
                 outline: none;
+            }
+            &::placeholder{
+                color: $pink;
             }
         }
         i{

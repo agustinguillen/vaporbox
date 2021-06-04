@@ -66,7 +66,6 @@ function setViewedMessages(req, res){
     let userId = req.user.sub;
     let params = req.body;
     let otherId = params.receiver;
-    console.log(otherId);
 
     Message.updateMany({emitter: otherId ,receiver: userId, viewed: "false"}, {viewed: "true"}, (err, messagesUpdated)=>{
         if(err) return res.status(500).send({message: "Error en la petición"});

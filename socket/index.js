@@ -34,7 +34,6 @@ io.on('connection', (socket)=>{
 
   //Enviar y recibir mensaje
   socket.on("sendMessage", (message)=>{
-    console.log(message);
     sentMessage = message;
     let user = getUser(sentMessage.receiver);
     if(user){
@@ -43,7 +42,6 @@ io.on('connection', (socket)=>{
   });
 
   socket.on("notificationPublication", (notification)=>{
-    console.log(notification);
     let user = getUser(notification.notification.author);
     if(user){
       io.to(user.socketId).emit("newNotification", notification);
@@ -53,7 +51,6 @@ io.on('connection', (socket)=>{
 
   //Usuario Desconectado
   socket.on("disconnect", ()=>{
-    console.log('Usuario desconectados')
     removeUser(socket.id);
     io.emit("getUsers", users);
   })

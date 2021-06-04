@@ -13,17 +13,17 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
   selector: 'app-timeline',
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.scss'],
-  animations: [ 
+  animations: [
     trigger('fade', [
       state('void', style({ opacity: 0 })),
       transition(':enter, :leave', [
         animate(1000)
       ])
     ])
-   ],
-  providers: [ UserService, UploadService, PublicationService, NotificationService ]
+  ],
+  providers: [UserService, UploadService, PublicationService, NotificationService]
 })
-export class TimelineComponent implements OnInit{
+export class TimelineComponent implements OnInit {
   private socket = io("ws://localhost:3000");
   public identity;
   public token;
@@ -39,8 +39,7 @@ export class TimelineComponent implements OnInit{
   public publications: Publication[];
   public isDisabled: boolean;
   public showMessageSaved: boolean;
-
-  
+  public loading: boolean;
 
   constructor(
     private _route: ActivatedRoute,
@@ -48,71 +47,68 @@ export class TimelineComponent implements OnInit{
     private _userService: UserService,
     private _publicationService: PublicationService,
     private _notificationService: NotificationService
-  ) {  
+  ) {
+    this.loading = true;
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.url = GLOBAL.url;
     this.page = 1;
     this.isDisabled = false;
     this.showMessageSaved = false;
-   }
-
-  ngOnInit(): void {
-    this.getPublications(this.page);
   }
 
-  
+  ngOnInit(): void {
+      this.getPublications(this.page);
+  }
 
-  getPublications(page?, adding = false){
-    
+  getPublications(page?, adding = false) {
     this._publicationService.getPublications(this.token, page).subscribe(
       response => {
-        if(response.publications){
-          console.log(response)
+        if (response.publications) {
           this.total = response.total_items;
           this.pages = response.pages;
           this.itemsPerPage = response.items_per_page;
-          if(!adding){
+          this.loading = false;
+          if (!adding) {
             this.publications = response.publications;
-          }else{
+          } else {
             let arrayA = this.publications;
             let arrayB = response.publications;
 
             this.publications = arrayA.concat(arrayB);
           }
-          
-        }else{
+        } else {
           this.status = 'error';
+          this.loading = false;
         }
       },
       error => {
         let errorMessage = <any>error;
-          console.log(errorMessage);
+        console.log(errorMessage);
 
-          if(errorMessage != null){
-            this.status = "error";
-          }
+        if (errorMessage != null) {
+          this.status = "error";
+        }
       }
     )
   }
-  
+
   public noMore = false;
-  viewMore(){
-     this.page += 1;
-     if(this.page == this.pages){
-         this.noMore = true;
-     }
-     this.getPublications(this.page, true);
+  viewMore() {
+    this.page += 1;
+    if (this.page == this.pages) {
+      this.noMore = true;
+    }
+    this.getPublications(this.page, true);
   }
 
-  refresh(event = null){
+  refresh(event = null) {
     this.page = 1
     this.isDisabled = false;
     this.getPublications(this.page);
   }
-  
 
-  deletePublication(id){
+  deletePublication(id) {
     this._publicationService.deletePublication(this.token, id).subscribe(
       response => {
         this.isDisabled = false;
@@ -126,22 +122,21 @@ export class TimelineComponent implements OnInit{
     )
   }
 
-  savePublication(publication){
+  savePublication(publication) {
 
-    if(!publication.saves.includes(this.identity._id)){
+    if (!publication.saves.includes(this.identity._id)) {
       this.showMessageSaved = true;
-      setTimeout(()=>{ this.showMessageSaved = false }, 3000)
+      setTimeout(() => { this.showMessageSaved = false }, 3000)
     }
 
     this._publicationService.savePublication(publication).subscribe(
       response => {
-        if(response && response.message === "Saved"){
+        if (response && response.message === "Saved") {
           this.statusSaved = true;
           this.isDisabled = true;
           this.getPublications(this.page);
-
         }
-        else if(response && response.message === "Unsaved"){
+        else if (response && response.message === "Unsaved") {
           this.statusSaved = false;
           this.isDisabled = true;
           this.getPublications(this.page);
@@ -152,18 +147,18 @@ export class TimelineComponent implements OnInit{
       }
     )
   }
-  
-  likePublication(publication){
+
+  likePublication(publication) {
 
     this._publicationService.likePublication(publication).subscribe(
       response => {
-        if(response && response.message === "Like"){
+        if (response && response.message === "Like") {
           this.statusLiked = true;
           this.isDisabled = true;
           this.getPublications(publication);
           this.saveNotification(publication);
         }
-        else if(response && response.message === "Dislike"){
+        else if (response && response.message === "Dislike") {
           this.statusLiked = false;
           this.isDisabled = true;
           this.getPublications(publication);
@@ -174,17 +169,16 @@ export class TimelineComponent implements OnInit{
       }
     );
 
-    
+
   }
 
-  getCounters(){
+  getCounters() {
     this._userService.getCounters().subscribe(
       response => {
         localStorage.setItem('stats', JSON.stringify(response));
-        this.status = 'success'; 
+        this.status = 'success';
         this._router.navigate(['/timeline']);
         this.stats = this._userService.getStats();
-        
       },
       error => {
         console.log(<any>error);
@@ -192,10 +186,9 @@ export class TimelineComponent implements OnInit{
     )
   }
 
-  saveNotification(publication){
+  saveNotification(publication) {
     this._notificationService.saveNotification(this.token, publication, 'like-publication').subscribe(
       response => {
-        console.log(response);
         this.socket.emit("notificationPublication", response);
       },
       error => {
@@ -204,10 +197,10 @@ export class TimelineComponent implements OnInit{
     );
   }
 
-  deleteNotification(id){
+  deleteNotification(id) {
     this._notificationService.deleteNotification(this.token, id).subscribe(
-      response =>{},
-      error=>{
+      response => { },
+      error => {
         console.log(<any>error);
       }
     )

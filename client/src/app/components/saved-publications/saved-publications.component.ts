@@ -29,6 +29,7 @@ export class SavedPublicationsComponent implements OnInit {
   public itemsPerPage;
   public isDisabled: boolean;
   public showMessageSaved: boolean;
+  public loading: boolean;
   public savedPublications: Publication[];
   @Input() user:string;
   
@@ -40,6 +41,7 @@ export class SavedPublicationsComponent implements OnInit {
     private _publicationService: PublicationService,
     private _notificationService: NotificationService
   ) {  
+    this.loading = true;
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.url = GLOBAL.url;
@@ -60,19 +62,18 @@ export class SavedPublicationsComponent implements OnInit {
           this.pages = response.pages;
           this.itemsPerPage = response.items_per_page;
           this.savedPublications = response.saved_publications;
-          console.log(response.saved_publications);
+          this.loading = false;
 
           if(!adding){
             this.savedPublications = response.saved_publications;
           }else{
             let arrayA = this.savedPublications;
             let arrayB = response.saved_publications;
-
             this.savedPublications = arrayA.concat(arrayB);
-          }
-          
+          }         
         }else{
           this.status = 'error';
+          this.loading = false;
         }
       },
       error => {
@@ -127,14 +128,12 @@ export class SavedPublicationsComponent implements OnInit {
     this._publicationService.likePublication(publication).subscribe(
       response => {
         if(response && response.message === "Like"){
-          console.log(response);
           this.statusLiked = true;
           this.isDisabled = true;
           this.getSavedPublications(this.user, this.page);
           this.saveNotification(publication);
         }
         else if(response && response.message === "Dislike"){
-          console.log(response);
           this.statusLiked = false;
           this.isDisabled = true;
           this.getSavedPublications(this.user, this.page);
@@ -149,7 +148,6 @@ export class SavedPublicationsComponent implements OnInit {
   saveNotification(publication){
     this._notificationService.saveNotification(this.token, publication, 'like-publication').subscribe(
       response => {
-        console.log(response);
         this.socket.emit("notificationPublication", response);
       },
       error => {

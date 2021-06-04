@@ -26,6 +26,8 @@ import { UserService } from './services/user.service';
 import { NotificationService } from './services/notification.service';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { FilterPipe } from './pipes/filter.pipe';
+import { LoadingComponent } from './components/loading/loading.component';
+import { TruncatePipe } from './pipes/truncate.pipe';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { FilterPipe } from './pipes/filter.pipe';
     SavedPublicationsComponent,
     ChatComponent,
     NotificationsComponent,
-    FilterPipe
+    FilterPipe,
+    LoadingComponent,
+    TruncatePipe
   ],
   imports: [
     BrowserModule,

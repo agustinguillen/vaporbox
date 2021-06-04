@@ -38,6 +38,7 @@ export class FollowersComponent implements OnInit {
   public followers;
   public followMouseOver;
   public userPageId;
+  public mobile:boolean;
 
 
   constructor(  private _route:ActivatedRoute,
@@ -52,6 +53,11 @@ export class FollowersComponent implements OnInit {
 
   ngOnInit(): void {
     this.actualPage();
+    if (window.screen.width <= 992) { 
+      this.mobile = true;
+    }else{
+      this.mobile = false;
+    }
   }
 
   actualPage(){
@@ -86,7 +92,6 @@ export class FollowersComponent implements OnInit {
         if(!response.follows){
           this.status = "error";
         }else{
-          console.log(response.follows);
           this.total = response.total;
           this.followers = response.follows;
           this.pages = response.pages;
@@ -205,7 +210,6 @@ export class FollowersComponent implements OnInit {
   saveNotification(follower){
     this._notificationService.saveNotification(this.token, follower, 'new-follow').subscribe(
       response => {
-        console.log(response);
       },
       error => {
         console.log(<any>error);

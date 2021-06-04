@@ -21,19 +21,26 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 export class RegisterComponent implements OnInit {
   public user: User;
   public status: string;
+  public loading: boolean;
 
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
     private _userService: UserService
   ) {
-
+    this.loading = true;
     this.user = new User( "", "", "", "", "", "", "ROLE_USER", "", "");
-
    }
 
   ngOnInit(): void {
-
+    if(localStorage['firstTimeLoad'] ==='TRUE'){
+      this.loading = false;
+    }else{
+      setTimeout(() => {
+        this.loading = false;  
+        localStorage['firstTimeLoad']='TRUE'; 
+      }, 3000)
+    }
   }
   
   onSubmit(form){

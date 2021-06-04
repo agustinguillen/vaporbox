@@ -38,6 +38,7 @@ export class PublicationsComponent implements OnInit {
   public publications: Publication[];
   public isDisabled: boolean;
   public showMessageSaved: boolean;
+  public loading: boolean;
   @Input() user:string;
 
   constructor(
@@ -47,6 +48,7 @@ export class PublicationsComponent implements OnInit {
     private _publicationService: PublicationService,
     private _notificationService: NotificationService
   ) {  
+    this.loading = true;
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.url = GLOBAL.url;
@@ -64,6 +66,7 @@ export class PublicationsComponent implements OnInit {
           this.total = response.total_items;
           this.pages = response.pages;
           this.itemsPerPage = response.items_per_page;
+          this.loading = false;
           if(!adding){
             this.publications = response.publications;
           }else{
@@ -75,6 +78,7 @@ export class PublicationsComponent implements OnInit {
           
         }else{
           this.status = 'error';
+          this.loading = false;
         }
       },
       error => {
@@ -83,6 +87,7 @@ export class PublicationsComponent implements OnInit {
 
           if(errorMessage != null){
             this.status = "error";
+            this.loading = false;
           }
       }
     )
@@ -149,14 +154,12 @@ export class PublicationsComponent implements OnInit {
     this._publicationService.likePublication(publication).subscribe(
       response => {
         if(response && response.message === "Like"){
-          console.log(response);
           this.statusLiked = true;
           this.isDisabled = true;
           this.getPublications(this.user, this.page);
           this.saveNotification(publication);
         }
         else if(response && response.message === "Dislike"){
-          console.log(response);
           this.statusLiked = false;
           this.isDisabled = true;
           this.getPublications(this.user, this.page);
@@ -171,7 +174,6 @@ export class PublicationsComponent implements OnInit {
   saveNotification(publication){
     this._notificationService.saveNotification(this.token, publication, 'like-publication').subscribe(
       response => {
-        console.log(response);
         this.socket.emit("notificationPublication", response)
       },
       error => {

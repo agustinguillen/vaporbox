@@ -1,0 +1,136 @@
+$violet: #6e2e81;
+$pink: #DD517F;
+$lightblue: #7998EE;
+$blue: #556DC8;
+$orange: #E68E36;
+
+@mixin glitchCopy { 
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.loading-container{
+    height: 100vh;
+    align-items:center;
+    overflow: hidden;
+      .brand{
+        letter-spacing: 10px;
+        color: $pink;
+        font-weight:bolder;
+        font-size: 5rem;
+        margin: 0 auto 10vh auto;
+        background: #DD517F;
+        background: -webkit-linear-gradient(to left, #DD517F 33%, #6E2E81 100%);
+        background: -moz-linear-gradient(to left, #DD517F 33%, #6E2E81 100%);
+        background: linear-gradient(to left, #DD517F 33%, #6E2E81 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        @media (max-width: 1300px){
+                height: fit-content;
+                margin-top: 10vh;
+                font-size: 3rem;
+        }
+        animation: glitch-skew 2s infinite linear;
+
+        &::before{
+          @include glitchCopy;
+          left: 1px;
+          text-shadow: -1px 0 $pink;
+          opacity: 0.3;
+          clip: rect(44px, 450px, 56px, 0);
+          animation: glitch-anim 7s infinite linear;
+      }
+      
+      &::after {
+          @include glitchCopy;
+          left: -1px;
+          text-shadow: -1px 0 $violet, -1px -1px $orange;
+          opacity: 0.3;
+          animation: glitch-anim2 2s infinite linear alternate-reverse;
+      }
+
+
+      @keyframes glitch-anim {
+          $steps: 10;
+          @for $i from 0 through $steps {
+            #{percentage($i*(1/$steps))} {
+              clip: rect(random(100)+px, 9999px, random(100)+px, 0);
+                    transform: skew((random(10) / 10) + deg);
+            }
+          }
+        }
+        
+        @keyframes glitch-anim2 {
+          $steps: 10;
+          @for $i from 0 through $steps {
+            #{percentage($i*(1/$steps))} {
+              clip: rect(random(100)+px, 9999px, random(100)+px, 0);
+                    transform: skew((random(10) / 10) + deg);
+            }
+          }
+        }
+        
+        @keyframes glitch-skew {
+          $steps: 5;
+          @for $i from 0 through $steps {
+            #{percentage($i*(1/$steps))} {
+              transform: skew((random(5) - 5) + deg);
+            }
+          }
+        }
+      }    
+      .loading-logo {
+        filter: invert(48%) sepia(79%) saturate(500%) hue-rotate(250deg) brightness(40%) contrast(119%);
+        opacity: 0.8;
+        width: 4vw;
+        @media (max-width: 768px){
+          width: 10vw;
+          margin-top: 5vh;
+        }
+        -webkit-animation: rotating 2s linear infinite;
+        -moz-animation: rotating 2s linear infinite;
+        -ms-animation: rotating 2s linear infinite;
+        -o-animation: rotating 2s linear infinite;
+        animation: rotating 2s linear infinite;
+        display: inline-block;
+        @-webkit-keyframes rotating /* Safari and Chrome */ {
+          from {
+            -webkit-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+          }
+          to {
+            -webkit-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+          }
+        }
+        @keyframes rotating {
+          from {
+            -ms-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+          }
+          to {
+            -ms-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+          }
+        }
+      }
+      .loading-text{
+          color: $violet;
+          font-size: x-large;
+          text-align: center;
+          margin-top: 3vh;
+      }
+}   
+

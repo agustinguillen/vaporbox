@@ -46,19 +46,18 @@ export class NavbarComponent implements OnInit{
     this.socket.emit("addUser", this.identity._id);
     this.socket.on("newNotification", newNotification =>{
       this.checkIfNewNotifications();
-      console.log("nueva notificacion")
     });
     this.socket.on("getMessage", msg =>{
+      console.log(msg)
       this.checkUnviewedMessages();
-      console.log("nuevo mensaje")
     })   
   }
 
   logout(){
       localStorage.clear();
+      localStorage['firstTimeLoad']='FALSE';    
       this.identity = null;
-      console.log();
-      this._router.navigate(['/register']);     
+      this._router.navigate(['/login']);  
   }
 
   toTop(event){
@@ -75,7 +74,6 @@ export class NavbarComponent implements OnInit{
     this._notificationService.getNotifications(this.token).subscribe(
       response => {
         this.myNotifications = response.notifications.filter(notification => notification.viewed == false).length;
-        console.log(this.myNotifications)
         if(this.myNotifications > 0){
           this.newNotifications$ = new Observable(observer=>observer.next(true));
         }
@@ -89,7 +87,6 @@ export class NavbarComponent implements OnInit{
   setViewedNotifications(token, id){
     this._notificationService.setViewedNotifications(token, id).subscribe(
       response =>{
-        console.log(response);
       },
       error =>{
         console.log(<any>error);

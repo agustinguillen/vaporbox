@@ -55,16 +55,16 @@ $orange: #E68E36;
                         color: $lightblue;
                     }
                     .publication-text{
-                        padding-left: 80px;
+                        padding-left: 70px;
                         padding-right: 5vw;
                     }
                     .publication-img{
                         width: 100%;                    
                         img{
                             max-width: 100%;
-                            padding: 5px 80px;
+                            padding: 5px 70px;
                             @media (max-width: 576px){
-                                padding-right: 15px;
+                                padding-right: 5vw;
                             }
                         }
                     }
@@ -165,6 +165,10 @@ $orange: #E68E36;
                 border-radius: 70px;
                 border: 5px solid $pink;
                 overflow: hidden;
+                margin-top: 15vh;
+                @media (max-width: 600px){
+                    margin: 10vw;
+                }
                 .modal-content{
                     padding: 1rem;
                     .modal-header{
