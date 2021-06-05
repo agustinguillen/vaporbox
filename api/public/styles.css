@@ -1,0 +1,55 @@
+/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: "Raleway";
+  src: local("Raleway"), url('Raleway-VariableFont_wght.ttf') format("truetype");
+}
+html {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+html body {
+  max-width: 100vw;
+  min-height: 100vh;
+  background: #dfdede;
+  background: linear-gradient(53deg, rgba(121, 152, 238, 0.6) 23%, rgba(230, 142, 54, 0.5) 100%) no-repeat;
+  background-attachment: fixed;
+}
+html body h1, html body h2, html body h3, html body h4, html body h5, html body p, html body .navbar-brand, html body label, html body a {
+  font-family: "Raleway";
+  color: #6e2e81;
+}
+html body .btn:focus, html body .btn:active {
+  outline: none !important;
+  box-shadow: none;
+}
+html body .btn-default {
+  background-color: #6e2e81;
+  color: whitesmoke;
+  border-radius: 50px;
+}
+html body .btn-light {
+  border-radius: 50px;
+}
+::-webkit-scrollbar {
+  background: #f8f8f8;
+  width: 0.7vw;
+  height: 0;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #DD517F;
+  border-radius: 10px;
+}
+::-moz-scrollbar {
+  background: #f8f8f8;
+  width: 0.7vw;
+  height: 0;
+}
+::-moz-scrollbar-thumb {
+  background-color: #DD517F;
+  border-radius: 10px;
+}
+
+/*# sourceMappingURL=styles.css.map*/
