@@ -1,18 +1,19 @@
 'use strict'
 let app = require('./app');
-let port = 3800;
+let port = process.env.PORT || 8080;
 let mongoose = require('mongoose');
+const dotenv = require('dotenv').config();
 
 //Conexión DB
 mongoose.set('useFindAndModify', false);
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/vaporbox_db', {useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopology: true })
         .then(()=>{
-            console.log("La conexión a la base de datos vaporbox_db se realizó con éxito")
+            console.log("La conexión a la base de datos vaporboxdb se realizó con éxito")
 
             //Crear servidor
             app.listen(port, ()=>{
-                console.log("Servidor corriendo en http://localhost:3800")
+                console.log("Servidor corriendo en puerto 8080")
             });
         })
         .catch(err => console.log(err));

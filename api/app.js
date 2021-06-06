@@ -5,6 +5,7 @@ let app = express();
 let md_auth = require('./middlewares/authenticated');
 let MessageController = require('./controllers/message');
 let PublicationController = require('./controllers/publication');
+let path = require('path');
 
 //cargar rutas
 let user_routes = require('./routes/user');
@@ -35,6 +36,12 @@ app.use('/api', follow_routes);
 app.use('/api', publication_routes);
 app.use('/api', message_routes);
 app.use('/api', notifications_routes);
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('*', (req, res)=>{
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+});
 
 
 //exportar
