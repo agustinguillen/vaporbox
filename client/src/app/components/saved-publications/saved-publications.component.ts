@@ -1,12 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GLOBAL } from '../../services/global';
 import { UploadService } from '../../services/upload.service';
 import { UserService } from '../../services/user.service';
 import { PublicationService } from '../../services/publication.service';
 import { NotificationService } from '../../services/notification.service';
 import { Publication } from '../../models/publication';
-import { User } from 'src/app/models/user';
 import { io } from 'socket.io-client';
 
 @Component({
@@ -19,7 +17,6 @@ export class SavedPublicationsComponent implements OnInit {
   private socket = io("ws://localhost:3000");
   public identity;
   public token;
-  public url: string;
   public status: string;
   public statusSaved: boolean;
   public statusLiked: boolean;
@@ -44,7 +41,6 @@ export class SavedPublicationsComponent implements OnInit {
     this.loading = true;
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
-    this.url = GLOBAL.url;
     this.page = 1;
 
     this.getSavedPublications(this.identity._id, this.page);

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { GLOBAL } from '../../services/global';
 import { UserService } from '../../services/user.service';
 import { PublicationService } from '../../services/publication.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -27,7 +26,6 @@ export class NotificationsComponent implements OnInit {
   public identity;
   public token;
   public page;
-  public url: string;
   public notifications: Notification[];
   
 
@@ -41,7 +39,6 @@ export class NotificationsComponent implements OnInit {
     
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
-    this.url = GLOBAL.url;
     this.page = 1;
   }
   

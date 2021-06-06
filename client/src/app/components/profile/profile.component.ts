@@ -5,7 +5,6 @@ import { Follow } from '../../models/follow';
 import { UserService } from '../../services/user.service';
 import { FollowService } from '../../services/follow.service';
 import { NotificationService } from '../../services/notification.service';
-import { GLOBAL } from '../../services/global';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
@@ -46,7 +45,6 @@ export class ProfileComponent implements OnInit {
     this.loading = true;
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
-    this.url = GLOBAL.url;
     this.followed = false;
     this.following = false;
     this.savedPublications = false;

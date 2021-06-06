@@ -1,11 +1,10 @@
 import { Component, OnInit, AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { User } from '../../models/user';
 import { Message } from '../../models/message';
 import { UserService } from '../../services/user.service';
 import { FollowService } from '../../services/follow.service';
 import { MessageService } from '../../services/message.service';
-import { GLOBAL } from '../../services/global';
 import { io } from 'socket.io-client';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
@@ -25,7 +24,6 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 })
 export class ChatComponent implements OnInit, AfterViewChecked {
   @ViewChild('chatScreen') private myScrollContainer: ElementRef;
-  public url:string;
   private socket = io("ws://localhost:3000");
   public user:User;
   public followers;
@@ -47,7 +45,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     private _messageService:MessageService
   ) { 
     this.loading = true;
-    this.url = GLOBAL.url;
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.getFollows(this.token);

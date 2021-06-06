@@ -4,7 +4,6 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { UploadService } from '../../services/upload.service';
-import { GLOBAL } from '../../services/global';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
@@ -26,8 +25,6 @@ export class UserEditComponent implements OnInit {
   public identity;
   public token;
   public status:string;
-  public url:string;
-
 
   constructor(
       private _router:Router,
@@ -38,7 +35,6 @@ export class UserEditComponent implements OnInit {
     this.user = this._userService.getIdentity();
     this.identity = this.user;
     this.token = this._userService.getToken();
-    this.url = GLOBAL.url;
    }
 
   ngOnInit(): void {
@@ -56,7 +52,7 @@ export class UserEditComponent implements OnInit {
               this.identity = this.user;
 
               //Subir archivo de imagen usuario
-              this._uploadService.makeFileRequest(this.url+'upload-image-user/'+this.user._id, [], this.filesToUpload, this.token, 'image')
+              this._uploadService.makeFileRequest('api/upload-image-user/'+this.user._id, [], this.filesToUpload, this.token, 'image')
                                   .then((result:any)=>{
                                       this.user.image = result.user.image;
                                       localStorage.setItem('identity', JSON.stringify(this.user));

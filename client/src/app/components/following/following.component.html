@@ -7,7 +7,7 @@
                     <div class="card-body">
                         <div class="image-user pull-left">
                             <a [routerLink]="['/profile/', follow.followed._id]">
-                                <img src="{{url + 'get-image-user/' + follow.followed.image}}" alt="Imagen de usuario" *ngIf="follow.followed.image">
+                                <img src="{{'api/get-image-user/' + follow.followed.image}}" alt="Imagen de usuario" *ngIf="follow.followed.image">
                                 <img class="default-user-image" src="assets/img/default-user.jpg" alt="Imagen de usuario" *ngIf="!follow.followed.image">
                             </a>
                         </div>

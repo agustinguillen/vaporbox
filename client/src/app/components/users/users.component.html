@@ -14,7 +14,7 @@
                     <div class="card-body">
                         <div class="image-user pull-left">
                             <a [routerLink]="['/profile/',user._id]">
-                                <img src="{{url + 'get-image-user/' + user.image}}" alt="Imagen de usuario" *ngIf="user.image">
+                                <img src="{{'api/get-image-user/' + user.image}}" alt="Imagen de usuario" *ngIf="user.image">
                                 <img class="default-user-image" src="assets/img/default-user.jpg" alt="Imagen de usuario" *ngIf="!user.image">
                             </a>
                         </div>

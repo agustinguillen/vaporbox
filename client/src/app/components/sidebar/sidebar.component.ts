@@ -2,7 +2,6 @@ import { Component, OnInit, EventEmitter, Output, AfterViewInit, ViewChild, Elem
 import { UserService } from '../../services/user.service';
 import { UploadService } from '../../services/upload.service';
 import { PublicationService } from '../../services/publication.service';
-import { GLOBAL } from '../../services/global';
 import { Publication } from '../../models/publication';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { trigger, state, style, animate, transition } from '@angular/animations';
@@ -26,7 +25,6 @@ export class SidebarComponent implements OnInit, AfterViewInit{
   public identity;
   public token;
   public stats;
-  public url;
   public status:string;
   public publication:Publication;
   public filesToUpload: Array<File>;
@@ -48,7 +46,6 @@ export class SidebarComponent implements OnInit, AfterViewInit{
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.stats = this._userService.getStats();
-    this.url = GLOBAL.url;
     this.publication = new Publication( '', null, '', '', this.identity._id, [], [] );
     this.showNewPublication = false;
    }
@@ -72,7 +69,7 @@ export class SidebarComponent implements OnInit, AfterViewInit{
           if(response.publication){
             if(this.filesToUpload && this.filesToUpload.length){
               //subir imagen
-              this._uploadService.makeFileRequest(this.url + 'upload-image-pub/' + response.publication._id, [], this.filesToUpload, this.token, 'image')
+              this._uploadService.makeFileRequest('api/upload-image-pub/' + response.publication._id, [], this.filesToUpload, this.token, 'image')
                                   .then((result:any) => {
                                       this.status = 'success';
                                       this.stats = this._userService.getStats();

@@ -5,7 +5,6 @@ import { Follow } from '../../models/follow';
 import { UserService } from '../../services/user.service';
 import { FollowService } from '../../services/follow.service';
 import { NotificationService } from 'src/app/services/notification.service';
-import { GLOBAL } from '../../services/global';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
@@ -23,7 +22,6 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
   providers: [ UserService, FollowService, NotificationService ]
 })
 export class FollowersComponent implements OnInit {
-  public url = GLOBAL.url;
   public identity;
   public token;
   public user:User;

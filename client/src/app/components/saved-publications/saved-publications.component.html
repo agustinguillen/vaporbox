@@ -5,7 +5,7 @@
             <div class="card-body">
                 <div class="image-user pull-left">
                     <a href="#">
-                        <img src="{{url + 'get-image-user/' + publication.user.image}}" alt="Imagen de usuario" *ngIf="publication.user.image">
+                        <img src="{{'api/get-image-user/' + publication.user.image}}" alt="Imagen de usuario" *ngIf="publication.user.image">
                         <img class="default-user-image" src="assets/img/default-user.jpg" alt="Imagen de usuario" *ngIf="!publication.user.image">
                     </a>
                 </div>
@@ -25,7 +25,7 @@
                 </div><br>
                 <div class="d-flex flex-column justify-content-center">
                     <div class="publication-img d-flex justify-content-center" *ngIf="publication.file != 'null'">
-                        <img src="{{ url + 'get-image-pub/' + publication.file}}" alt="Imagen de publicación"/>
+                        <img src="{{ 'api/get-image-pub/' + publication.file}}" alt="Imagen de publicación"/>
                     </div>
                 </div>
                 <div class="likes-save d-flex justify-content-around">

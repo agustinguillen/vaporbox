@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GLOBAL } from '../../services/global';
 import { UploadService } from '../../services/upload.service';
 import { UserService } from '../../services/user.service';
 import { PublicationService } from '../../services/publication.service';
@@ -27,7 +26,6 @@ export class PublicationsComponent implements OnInit {
   private socket = io("ws://localhost:3000");
   public identity;
   public token;
-  public url: string;
   public status: string;
   public statusSaved: boolean;
   public statusLiked: boolean;
@@ -51,7 +49,6 @@ export class PublicationsComponent implements OnInit {
     this.loading = true;
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
-    this.url = GLOBAL.url;
     this.page = 1;
    }
 

@@ -37,8 +37,8 @@
 
     <div id="user-card" class="card card-default text-center mt-5">
         <div class="avatar pull-left">
-            <a [routerLink]="['/profile', identity._id]"><img src="{{url + 'get-image-user/' + identity.image}}" alt="Imagen de usuario" *ngIf="identity.image"></a>
-            <img src="../../../assets/img/default-user.jpg" class="default-img" alt="Imagen de usuario" *ngIf="!identity.image || identity.image == null">
+            <a [routerLink]="['/profile', identity._id]"><img src="{{'api/get-image-user/' + identity.image}}" alt="Imagen de usuario" *ngIf="identity.image"></a>
+            <img src="assets/img/default-user.jpg" class="default-img" alt="Imagen de usuario" *ngIf="!identity.image || identity.image == null">
         </div>
         <div class="name-surname pull-right">
             <a [routerLink]="['/profile', identity._id]">{{ identity.name + ' ' + identity.surname }}</a>

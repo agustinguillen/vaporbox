@@ -1,9 +1,8 @@
-import { AfterViewInit, Component, OnInit} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Router, ActivatedRoute} from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { NotificationService } from '../../services/notification.service';
 import { MessageService } from '../../services/message.service';
-import { GLOBAL } from '../../services/global';
 import { io } from 'socket.io-client';
 import { Observable} from 'rxjs';
 import { Message } from 'src/app/models/message';
@@ -18,7 +17,6 @@ export class NavbarComponent implements OnInit{
   private socket = io("ws://localhost:3000");
   public identity;
   public token;
-  public url:string;
   public newNotifications$: Observable<boolean>;
   public myNotifications;
   public unviewedMessages: Message[];
@@ -32,7 +30,6 @@ export class NavbarComponent implements OnInit{
                   this.identity = this.user.getIdentity();
                   this.unviewedMessages = [];
                   this.token = user.getToken();
-                  this.url = GLOBAL.url;
                   this.checkIfNewNotifications();
                   this.checkUnviewedMessages();                 
                 
