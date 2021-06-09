@@ -146,7 +146,6 @@ export class TimelineComponent implements OnInit {
   }
 
   likePublication(publication) {
-
     this._publicationService.likePublication(publication).subscribe(
       response => {
         if (response && response.message === "Like") {
@@ -165,8 +164,6 @@ export class TimelineComponent implements OnInit {
         console.log(<any>error);
       }
     );
-
-
   }
 
   getCounters() {

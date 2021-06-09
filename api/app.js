@@ -2,9 +2,6 @@
 
 let express = require('express');
 let app = express();
-let md_auth = require('./middlewares/authenticated');
-let MessageController = require('./controllers/message');
-let PublicationController = require('./controllers/publication');
 let path = require('path');
 
 //cargar rutas

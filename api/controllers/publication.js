@@ -132,20 +132,13 @@ function uploadImage(req,res){
 
     if(req.file){
         let file_path = req.file.path;
-        
-        let file_split = file_path.split('\\');
-        
-        let file_name = file_split[2];
-        
-        let ext_split = file_name.split('\.');
-        
+        let file_split = file_path.split('\\');  
+        let file_name = file_split[2]; 
+        let ext_split = file_name.split('\.'); 
         let file_ext = ext_split[1];
 
-
-        if(file_ext == 'png' || file_ext == 'jpg' || file_ext == 'jpeg' || file_ext == 'gif'){
-           
-           Publication.findOne({'user': req.user.sub, '_id': publicationId}).exec((err, publication)=>{
-               
+        if(file_ext == 'png' || file_ext == 'jpg' || file_ext == 'jpeg' || file_ext == 'gif'){          
+           Publication.findOne({'user': req.user.sub, '_id': publicationId}).exec((err, publication)=>{             
             if(publication){
                    //actualizar documento de la publicacion
                   Publication.findByIdAndUpdate(publicationId, {file: file_name}, {new:true}, (err, publicationUpdated)=>{
@@ -161,8 +154,7 @@ function uploadImage(req,res){
            });
         }else{
              return removeFilesOfUploads(res, file_path, "Extensión no válida");
-        }
-        
+        }        
     }else{
         return res.status(200).send({message: "No se han subido imágenes"})
     }

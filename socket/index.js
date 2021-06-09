@@ -1,4 +1,4 @@
-const io = require("socket.io")(process.env.SOCKETS, {
+const io = require("socket.io")(process.env.SOCKETS || 3000, {
     cors: {
       origin: "*",
       methods: ["GET", "POST"],

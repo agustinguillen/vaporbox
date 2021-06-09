@@ -4,6 +4,15 @@ let express = require('express');
 let PublicationController = require('../controllers/publication');
 let api = express.Router();
 let md_auth = require('../middlewares/authenticated');
+require("dotenv").config();
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+let cloudinary = require('cloudinary');
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 const multer = require('multer');
 
@@ -18,7 +27,9 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({storage: storage});
+const upload = multer({
+  storage: storage
+});
 
 api.get('/probando-pub', md_auth.ensureAuth, PublicationController.probando);
 api.post('/publication', md_auth.ensureAuth, PublicationController.savePublication);
