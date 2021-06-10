@@ -20,7 +20,7 @@ $orange: #e68e36;
       border-radius: 50px;
       margin: 5px;
       padding: 0 10px;
-      color: $orange;
+      color: $pink;
     }
     .alert-danger {
       background-color: transparent;
@@ -40,7 +40,11 @@ $orange: #e68e36;
       .form-control {
         margin-bottom: 15px;
         border-radius: 50px;
-        background-color: whitesmoke;
+        border: rgba(235, 235, 235, 0.2) 0.5px groove;
+        background-color: rgba($color: whitesmoke, $alpha: 0.2);
+        &::placeholder{
+          color: $blue;
+        }
       }
       span {
         color: whitesmoke;

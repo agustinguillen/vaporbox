@@ -35,19 +35,17 @@ $orange: #E68E36;
             }
             ul{
                 list-style: none;
-                background: -webkit-linear-gradient(to left, $pink 0%, $violet 100%);
-                background: -moz-linear-gradient(to left, $pink 0%, $violet 100%);
-                background: linear-gradient(to left, $pink 0%, $violet 100%);
-                box-shadow: 3px 10px 9px 0px rgba(0,0,0,0.22);
-                -webkit-box-shadow: 3px 10px 9px 0px rgba(0,0,0,0.22);
-                -moz-box-shadow: 3px 10px 9px 0px rgba(0,0,0,0.22);
+                background-color: rgb(248, 248, 248, 0.5);
+                box-shadow: 3px 10px 9px 0px rgba(0,0,0,0.12);
+                -webkit-box-shadow: 3px 10px 9px 0px rgba(0,0,0,0.12);
+                -moz-box-shadow: 3px 10px 9px 0px rgba(0,0,0,0.12);
                 border-radius: 50px;
                 margin: 3% 4% 3% 1%;
                 &:hover{
                     cursor: pointer;
-                    box-shadow: 5px 15px 9px 0px rgba(0,0,0,0.18);
-                    -webkit-box-shadow: 5px 15px 9px 0px rgba(0,0,0,0.18);
-                    -moz-box-shadow: 5px 15px 9px 0px rgba(0,0,0,0.18);
+                    box-shadow: 5px 15px 9px 0px rgba(0,0,0,0.10);
+                    -webkit-box-shadow: 5px 15px 9px 0px rgba(0,0,0,0.10);
+                    -moz-box-shadow: 5px 15px 9px 0px rgba(0,0,0,0.10);
                     position: relative;
                     bottom: 1%;
                 }
@@ -56,14 +54,14 @@ $orange: #E68E36;
                     a{
                         text-decoration: none;
                         padding: 5px;
-                        color: rgba(233, 233, 233, 0.8);
+                        color: $violet;
                         &:hover{
-                            color: yellow;
+                            color: $pink
                         }
                         .online{
-                            color: yellowgreen;
+                            color: $pink;
                             &:hover{
-                                color: yellow;
+                                color: $pink;
                             }
                         }
                         img{
@@ -78,11 +76,11 @@ $orange: #E68E36;
                         }
                         small{
                             margin-left: 5px;
-                            color: rgba(255, 255, 0, 0.7);
+                            color: $blue;
                         }
                         span{
                             i{
-                                color: rgba(255, 255, 0, 0.7);
+                                color: $blue;
                                 margin-right: 1rem;
                             }
                         }
@@ -105,9 +103,7 @@ $orange: #E68E36;
             .dropdown{
                 border-radius: 50px;
                 border: none;
-                background: -webkit-linear-gradient(to left, $pink 0%, $violet 100%);
-                background: -moz-linear-gradient(to left, $pink 0%, $violet 100%);
-                background: linear-gradient(to left, $pink 0%, $violet 100%);
+                background-color: rgb(248, 248, 248, 0.5);
                 box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.12);
                 -webkit-box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.12);
                 -moz-box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.12);
@@ -156,13 +152,9 @@ $orange: #E68E36;
         form{
             margin-left: 5%;
             #chat-input{
-                background: -webkit-linear-gradient(to left, $pink 0%, $violet 100%);
-                background: -moz-linear-gradient(to left, $pink 0%, $violet 100%);
-                background: linear-gradient(to left, $pink 0%, $violet 100%);
-                box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.22);
-                -webkit-box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.22);
-                -moz-box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.22);
+                background: rgba($color: whitesmoke, $alpha: 0.2);
                 border-radius: 50px;
+                border: none;
                 width: 95%;
                 height: 10vh;
                 margin: 2vh 0;
@@ -172,9 +164,9 @@ $orange: #E68E36;
                     margin-bottom: 5vh;
                 }
                 textarea{
-                    background: rgba(212, 212, 212, 0.1);
+                    background: rgba($color: whitesmoke, $alpha: 0.2);
                     border-radius: 50px;
-                    border: rgba(111, 0, 155, 0.7) 1px groove;
+                    border: rgba(235, 235, 235, 0.2) 0.5px groove;
                     margin: 2vh;
                     padding: 0.5% 0 0 2%;
                     width: 90%;
@@ -189,7 +181,7 @@ $orange: #E68E36;
                         text-shadow: none;
                     }
                     &::placeholder {
-                        color: rgba(255, 255, 0, 0.7);
+                        color: $blue;
                       }
                 }
                 button{
@@ -197,8 +189,8 @@ $orange: #E68E36;
                     height: 6vh;
                     margin: 2vh;
                     &:hover{
-                        background-color: rgba(255, 255, 0, 0.7);
-                        color: $violet;
+                        background-color: $pink;
+                        color: whitesmoke;
                     }
                 }
             }
@@ -214,21 +206,22 @@ $orange: #E68E36;
             }
             #chat-screen{
                 margin-left: 5%;
-                background-color: rgba(212, 212, 212, 0.5);
+                background: rgba($color: whitesmoke, $alpha: 0.2);
                 border-radius: 10px;
+                border: none;
                 width: 90%;
                 height: 57vh;
                 overflow: scroll;
                 overflow-x: hidden;
                 &::-webkit-scrollbar{
                     border-radius: 50px;
-                    background-color: rgba(202, 202, 202, 0.3);
+                    background-color: rgba(202, 202, 202, 0.1);
                 }
                 &::-webkit-scrollbar-track{
                     height: 30vh;
                 }
                 &::-webkit-scrollbar-thumb{
-                    background-color: $pink;
+                    background-color: $violet;
                 }
                 #illustration-chat{
                     display: flex;
@@ -243,9 +236,10 @@ $orange: #E68E36;
                     }
                 }
                 .received-messages{
-                    background: -webkit-linear-gradient(to right, #370047 0%, $violet 100%);
-                    background: -moz-linear-gradient(to right, #370047 0%, $violet 100%);
-                    background: linear-gradient(to right, #370047 0%, $violet 100%);
+                    background-color: rgb(248, 248, 248, 0.5);
+                    box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.12);
+                    -webkit-box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.12);
+                    -moz-box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.12);
                     width: 35vw;
                     height: fit-content;
                     padding: 0.5vw;
@@ -261,19 +255,20 @@ $orange: #E68E36;
                         border-radius: 100%;
                     }
                     p{
-                        color: whitesmoke;
+                        color: $violet;
                         padding: 0.2vw;
                         margin-left: 3%;
                     }
                     small{
-                        color: #e083a2;
+                        color: $violet;
                         padding: 0.5vw;
                     }
                 }
                 .sent-messages{
-                    background: -webkit-linear-gradient(to right, $blue 0%, $lightblue 100%);
-                    background: -moz-linear-gradient(to right, $blue 0%, $lightblue 100%);
-                    background: linear-gradient(to right, $blue 0%, $lightblue 100%);
+                    background-color: rgb(248, 248, 248, 0.5);
+                    box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.12);
+                    -webkit-box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.12);
+                    -moz-box-shadow: 5px 10px 9px 0px rgba(0,0,0,0.12);
                     width: 35vw;
                     height: fit-content;
                     padding: 1%;
@@ -289,7 +284,7 @@ $orange: #E68E36;
                         border-radius: 100%;
                     }
                     p{
-                        color: whitesmoke;
+                        color: $violet;
                         padding: 1%;
                         margin-left: 3%;
                     }

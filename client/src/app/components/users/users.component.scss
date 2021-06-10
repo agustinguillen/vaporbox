@@ -14,15 +14,15 @@ $orange: #E68E36;
             width: 70vw;
             max-width: 400px;
             border-radius: 50px;
-            background: transparent;
-            border: rgba(235, 235, 235, 0.8) 1px groove;
+            background: rgba($color: whitesmoke, $alpha: 0.2);
+            border: rgba(235, 235, 235, 0.2) 1px groove;
             padding: 5px 10px;
             align-self: center;
             &:active, &:focus{
                 outline: none;
             }
             &::placeholder{
-                color: $pink;
+                color: $blue;
             }
         }
         i{
@@ -30,7 +30,7 @@ $orange: #E68E36;
             width: fit-content;
             position: relative;
             right: 25px;
-            color: $pink;
+            color: $blue;
             opacity: 0.9;
         }
     }

@@ -22,12 +22,13 @@ $orange: #E68E36;
         }
         .form-control{
             border-radius: 50px;
-            color: $pink;
+            color: $blue;
             background: transparent;
-            border: rgba(235, 235, 235, 0.8) 1px groove;
+            border: rgba(235, 235, 235, 0.2) 1px groove;
+            background: rgba($color: whitesmoke, $alpha: 0.2);
         }
         span{
-            color: $pink;
+            color: $blue;
             font-size: smaller;
             margin-left: 15px;
         }

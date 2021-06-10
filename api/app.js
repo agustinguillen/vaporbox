@@ -25,8 +25,6 @@ app.use((req, res, next) => {
     next();
 });
 
-
-
 //rutas
 app.use('/api', user_routes);
 app.use('/api', follow_routes);
@@ -39,7 +37,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('*', (req, res)=>{
     res.sendFile(path.join(__dirname, 'public/index.html'));
 });
-
 
 //exportar
 module.exports = app;

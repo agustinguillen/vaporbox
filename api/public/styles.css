@@ -39,7 +39,7 @@ html body .btn-light {
   height: 0;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: #DD517F;
+  background-color: #6e2e81;
   border-radius: 10px;
 }
 ::-moz-scrollbar {
@@ -48,7 +48,7 @@ html body .btn-light {
   height: 0;
 }
 ::-moz-scrollbar-thumb {
-  background-color: #DD517F;
+  background-color: #6e2e81;
   border-radius: 10px;
 }
 
