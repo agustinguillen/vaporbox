@@ -5,6 +5,7 @@ let Schema = mongoose.Schema;
 
 let ImageSchema = Schema({
     publication_id: String,
+    user_id: String,
     url: String,
     cloudinary_id: String
 });

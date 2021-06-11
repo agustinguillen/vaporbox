@@ -7,6 +7,7 @@ let md_auth = require('../middlewares/authenticated');
 require('dotenv').config();
 let path = require('path');
 let Image = require('./../models/image');
+let Publication = require('./../models/publication');
 let cloudinary = require('cloudinary');
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -47,21 +48,34 @@ api.delete('/publication/:id', md_auth.ensureAuth, PublicationController.deleteP
 api.post('/upload-image-pub/:id', [md_auth.ensureAuth, upload.single('image'), async (req, res) => {
   try {
     const result = await cloudinary.uploader.upload(req.file.path);
-    // Create new user
+
     let image = new Image({
       publication_id: req.params.id,
+      user_id: null,
       url: result.secure_url,
       cloudinary_id: result.public_id
     });
-    // Save user
+
     await image.save();
-    res.json(image);
+
+    Publication.findOne({'_id': req.params.id}).exec((err, publication)=>{             
+      if(publication){
+          //actualizar documento de la publicacion
+          Publication.findByIdAndUpdate(req.params.id, {file: result.secure_url}, {new:true}, (err, publicationUpdated)=>{
+              if(err) return res.status(500).send({message:'Error en la petición'});
+              
+              if(!publicationUpdated) return res.status(404).send({message: "No se ha podido cargar el archivo"});
+              
+              return res.status(200).send({publication: publicationUpdated});             
+          });
+      }else{
+          return removeFilesOfUploads(res, file_path, "No tienes permiso para actualizar esta publicación");
+      }
+  });   
   } catch (err) {
     console.log(err);
   }
-}],
-PublicationController.uploadImage);
-api.get('/get-image-pub/:imageFile', PublicationController.getImageFile);
+}]);
 api.put('/saved-publication/:id', md_auth.ensureAuth, PublicationController.savedPublication);
 api.get('/get-saved-publications/:id/:page?', md_auth.ensureAuth, PublicationController.getSavedPublications);
 api.put('/like-publication/:id', md_auth.ensureAuth, PublicationController.likePublication);

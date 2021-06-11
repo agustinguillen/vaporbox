@@ -3,10 +3,16 @@ let bcrypt = require('bcrypt-nodejs');
 let mongoosePaginate = require('mongoose-pagination');
 let User = require('../models/user');
 let Publication = require('../models/publication');
+let Image = require('./../models/image');
 let Follow = require('../models/follow');
 let jwt = require('../services/jwt');
-let path = require('path');
-let fs = require('fs');
+let cloudinary = require('cloudinary');
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
 
 function home (req, res){
     res.status(200).send({
@@ -283,97 +289,46 @@ function updateUser(req, res){
 
 }
 
-//Subir archivos de imagen/avatar de usuario
-
-function uploadImage(req,res){
-    let userId =req.params.id;
-
-    if(req.file){
-        let file_path = req.file.path;
-        
-        let file_split = file_path.split('\\');
-        
-        let file_name = file_split[2];
-        
-        let ext_split = file_name.split('\.');
-        let file_ext = ext_split[1];
-
-        if(userId != req.user.sub){
-            return removeFilesOfUploads(res, file_path, "No tienes permiso para actualizar los datos del usuario");
-        }
-
-        if(file_ext == 'png' || file_ext == 'jpg' || file_ext == 'jpeg' || file_ext == 'gif'){
-            //actualizar documento de usuario logueado
-           User.findByIdAndUpdate(userId, {image: file_name}, {new:true}, (err, userUpdated)=>{
-                if(err) return res.status(500).send({message:'Error en la petición'});
-
-                if(!userUpdated) return res.status(404).send({message: "No se ha podido actualizar el usuario"});
-        
-               return res.status(200).send({user: userUpdated});             
-            })
-        }else{
-             return removeFilesOfUploads(res, file_path, "Extensión no válida");
-        }
-        
-    }else{
-        return res.status(200).send({message: "No se han subido imágenes"})
-    }
-}
-
-function removeFilesOfUploads(res, file_path, message){
-    fs.unlink(file_path, (err)=>{
-        return res.status(200).send({message: message})
-    });
-}
-
-function getImageFile(req, res){
-    let image_file = req.params.imageFile;
-    let path_file = './uploads/users/'+image_file;
-
-    fs.exists(path_file, (exists)=>{
-        if(exists){
-            res.sendFile(path.resolve(path_file));
-        }else{
-            res.status(200).send({message: "No existe la imagen"});
-        }
-    })
-}
-
 function deleteUser(req, res) {
     let userId = req.params.id;
 
     deleteFollows(userId);
- 
-    User.find({ '_id': userId })
-        .deleteOne((err, userRemoved) => {
-            if (err) return res.status(500).send({ message: 'Error al borrar publicaciones' });
-            if (!userRemoved) return res.status(404).send({ message: 'No se ha borrado la cuenta' });
- 
-            if (userRemoved.n == 1) {
-                return res.status(200).send({ message: 'Cuenta eliminada correctamente' });
-            } else {
-                return res.status(404).send({ message: 'Error al eliminar la cuenta' });
-            }
- 
-        });
-
     
+    User.find({ '_id': userId })
+    .deleteOne((err, userRemoved) => {
+        if (err) return res.status(500).send({ message: 'Error al borrar publicaciones' });
+        if (!userRemoved) return res.status(404).send({ message: 'No se ha borrado la cuenta' });
+        
+        if (userRemoved.n == 1) {
+            Image.findOne({'user_id': userId}).exec((err, image)=>{
+                if(image){
+                    removeFilesOfUploads(image.cloudinary_id);
+                }else if(err){
+                    console.log(err);
+                }
+            })
+            return res.status(200).send({ message: 'Cuenta eliminada correctamente' });
+        } else {
+            return res.status(404).send({ message: 'Error al eliminar la cuenta' });
+        }
+        
+    });   
 }
 
+function removeFilesOfUploads(file_id){
+    cloudinary.uploader.destroy(file_id, function(result) { console.log(result) });
+}
 function deleteFollows(id){
     Follow.find({ $or: [
         {user: id},
         {followed: id}
     ]}).deleteMany((err, followsRemoved) =>{
-        if (err) return res.status(500).send({ message: 'Error al borrar follows' });
-        if (!followsRemoved) return res.status(404).send({ message: 'No se han encontrado follows' });
-
         if(followsRemoved.n >= 1){
-            return res.status(200).send({ message: 'Follow eliminado correctamente' });
-        } else {
-            return res.status(404).send({ message: 'Error al eliminar follows' });
+            return console.log('Se borraron follows');
+        } else if(err){
+            return console.log(err);
         }
-    
+   
     });
 }
 
@@ -386,7 +341,5 @@ module.exports = {
     getUsers,
     getCounters,
     updateUser,
-    uploadImage,
-    getImageFile,
     deleteUser
 }

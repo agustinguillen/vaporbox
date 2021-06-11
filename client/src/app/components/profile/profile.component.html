@@ -2,7 +2,7 @@
 <div @fade class="row profile-container" *ngIf="!loading">
     <div class="mb-2 mt-5 profile-info" *ngIf="user">
         <div class="user-image">
-            <img src="{{ 'api/get-image-user/' + user.image }}" alt="Foto de perfil" *ngIf="user.image"/>
+            <img src="{{ user.image }}" alt="Foto de perfil" *ngIf="user.image"/>
             <img class="default-image-user" src="assets/img/default-user.jpg" alt="Foto de perfil" *ngIf="!user.image"/>
         </div>
         <div class="mb-2 mt-3 text-center">

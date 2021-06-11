@@ -2,14 +2,11 @@
 
 let mongoosePaginate = require('mongoose-pagination');
 let moment = require('moment');
-
-let User = require('../models/user');
-let Publication = require('../models/publication');
 let Notification = require('../models/notifications');
 
 function saveNotification(req, res){
     let params = req.body;
-    let userId = params.user._id;
+    let userId = params._id;
 
     let notification = new Notification();
     notification.type = req.params.type;

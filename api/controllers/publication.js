@@ -1,15 +1,17 @@
 'use strict'
 
-let path = require('path');
-let fs = require('fs');
 let moment = require('moment');
 let mongoosePaginate = require('mongoose-pagination');
-let Image = require('./../models/image');
 let Publication = require('../models/publication');
-let User = require('../models/user');
+let Image = require('../models/image');
 let Follow = require('../models/follow');
-const follow = require('../models/follow');
-const publication = require('../models/publication');
+let cloudinary = require('cloudinary');
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
 
 function probando(req, res){
     res.status(200).send({
@@ -125,54 +127,19 @@ function deletePublication(req, res) {
             }
  
         });
-}
-
-function uploadImage(req, res){
-    let image_url = "nono";
-    let publicationId=req.params.id;
     Image.findOne({'publication_id': publicationId}).exec((err, image)=>{
-            if(image){
-                image_url = image.url;
-                return image_url;
-            }else{
-                return res.status(404).send({message: "No se encontró imagen"});
-            }
-        })       
-    Publication.findOne({'user': req.user.sub, '_id': publicationId}).exec((err, publication)=>{             
-                if(publication){
-                    //actualizar documento de la publicacion
-                    Publication.findByIdAndUpdate(publicationId, {file: image_url}, {new:true}, (err, publicationUpdated)=>{
-                        if(err) return res.status(500).send({message:'Error en la petición'});
-                        
-                        if(!publicationUpdated) return res.status(404).send({message: "No se ha podido cargar el archivo"});
-                        
-                        return res.status(200).send({publication: publicationUpdated});             
-                    });
-                }else{
-                    return removeFilesOfUploads(res, file_path, "No tienes permiso para actualizar esta publicación");
-                }
-    });       
-    console.log(image_url)
-}
-
-function removeFilesOfUploads(res, file_path, message){
-    fs.unlink(file_path, (err)=>{
-        return res.status(200).send({message: message})
-    });
-}
-
-function getImageFile(req, res){
-    let image_file = req.params.imageFile;
-    let path_file = './uploads/publications/'+image_file;
-
-    fs.exists(path_file, (exists)=>{
-        if(exists){
-            res.sendFile(path.resolve(path_file));
-        }else{
-            res.status(200).send({message: "No existe la imagen"});
+        if(image){
+            removeFilesOfUploads(image.cloudinary_id);
+        }else if(err){
+            console.log(err);
         }
     })
 }
+
+function removeFilesOfUploads(file_id){
+    cloudinary.uploader.destroy(file_id, function(result) { console.log(result) });
+}
+
 
 function savedPublication(req, res){
     let userId = req.user.sub;
@@ -285,8 +252,6 @@ module.exports = {
     getPublicationsUser,
     getPublication,
     deletePublication,
-    uploadImage,
-    getImageFile,
     savedPublication,
     getSavedPublications,
     likePublication

@@ -7,7 +7,7 @@
                     <div class="card-body d-flex">
                         <div *ngIf="notification.type === 'like-publication'">
                             <p>
-                                A<img src="{{ 'api/get-image-user/' + notification.follower.image}}" *ngIf="notification.follower.image">
+                                A<img src="{{notification.follower.image}}" *ngIf="notification.follower.image">
                                 <img class="default-image-user" src="assets/img/default-user.jpg" alt="Foto de perfil" *ngIf="!notification.follower.image"/> 
                                 <strong>{{notification.follower.name + ' ' + notification.follower.surname}}</strong> le gustó tu publicación: <br>
                                 <small>{{notification.publication.text}}
@@ -18,7 +18,7 @@
                         </div>
                         <div *ngIf="notification.type === 'new-follow'">
                             <p>
-                                <img src="{{ 'api/get-image-user/' + notification.follower.image}}" *ngIf="notification.follower.image">
+                                <img src="{{notification.follower.image}}" *ngIf="notification.follower.image">
                                 <img class="default-image-user" src="assets/img/default-user.jpg" alt="Foto de perfil" *ngIf="!notification.follower.image"/>
                                 <strong>{{notification.follower.name + ' ' + notification.follower.surname}}</strong> a comenzado a seguirte.
                             </p>

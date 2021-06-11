@@ -13,7 +13,7 @@
             <div class="d-flex">
               <li class="nav-item mx-xl-3 mx-lg-3 mobile-avatar">
                 <!--Imagen de usuario-->
-                <a [routerLink]="['/profile', identity._id]"><img src="{{ 'api/get-image-user/' + identity.image }}"
+                <a [routerLink]="['/profile', identity._id]"><img src="{{ identity.image }}"
                     alt="Avatar de usuario logueado" *ngIf="identity && identity.image">
                   <img src="assets/img/default-user.jpg" class="default-img" alt="Imagen de usuario"
                     *ngIf="!identity.image || identity.image == null">
@@ -66,7 +66,7 @@
           <ul class="nav navbar navbar-right mx-xl-5" *ngIf="identity">
             <li class="avatar">
               <!--Imagen de usuario-->
-              <a [routerLink]="['/profile', identity._id]"><img src="{{ 'api/get-image-user/' + identity.image }}"
+              <a [routerLink]="['/profile', identity._id]"><img src="{{ identity.image }}"
                   alt="Avatar de usuario logueado" *ngIf="identity && identity.image">
                 <img src="assets/img/default-user.jpg" class="default-img" alt="Imagen de usuario"
                   *ngIf="!identity.image || identity.image == null"></a>

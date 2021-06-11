@@ -12,7 +12,7 @@
                 <ul *ngFor="let follower of followers">
                     <li>
                         <a (click)="setReceiver(follower.user._id, follower.user.name + ' ' + follower.user.surname)">
-                            <img src="{{'api/get-image-user/' + follower.user.image}}" *ngIf="follower.user.image">
+                            <img src="{{follower.user.image}}" *ngIf="follower.user.image">
                             <img src="assets/img/default-user.jpg" *ngIf="!follower.user.image">
                             <i class="fa fa-globe" *ngIf="!onlineUsers.includes(follower.user._id)"></i>
                             <i class="fa fa-globe online" *ngIf="onlineUsers.includes(follower.user._id)"></i>
@@ -29,7 +29,7 @@
                 </ul>
             </div>
             <div *ngIf="followers.length < 1" class="followers-default text-center">
-                <p>Contactá con otras personas para poder chatear!</p>
+                <p>Conseguí seguidores para poder chatear!</p>
             </div>
             <div id="followers-mobile">
                 <li class="dropdown">
@@ -42,7 +42,7 @@
                     <ul class="dropdown-menu">
                         <li value="follower.user._id" *ngFor="let follower of followers">
                             <a (click)="setReceiver(follower.user._id, follower.user.name + ' ' + follower.user.surname)">
-                                <img src="{{'api/get-image-user/' + follower.user.image}}" *ngIf="follower.user.image">
+                                <img src="{{follower.user.image}}" *ngIf="follower.user.image">
                                 <img src="assets/img/default-user.jpg" *ngIf="!follower.user.image">
                                 <i class="fa fa-globe" *ngIf="!onlineUsers.includes(follower.user._id)"></i>
                                 <i class="fa fa-globe online" *ngIf="onlineUsers.includes(follower.user._id)"></i>
@@ -73,7 +73,7 @@
                     <div *ngFor="let msg of messages">
                         <div class="received-messages pull-left" *ngIf="msg.emitter._id != identity._id">
                             <div class="d-flex">
-                                <img src="{{'api/get-image-user/' + msg.emitter.image}}" *ngIf="msg.emitter.image">
+                                <img src="{{msg.emitter.image}}" *ngIf="msg.emitter.image">
                                 <img src="assets/img/default-user.jpg" *ngIf="!msg.emitter.image">
                                 <p>{{msg.text}}</p>
                             </div>
@@ -82,7 +82,7 @@
                         </div>
                         <div class="sent-messages pull-right" *ngIf="msg.emitter._id === identity._id">
                             <div class="d-flex">
-                                <img src="{{'api/get-image-user/' + msg.emitter.image}}" *ngIf="msg.emitter.image">
+                                <img src="{{msg.emitter.image}}" *ngIf="msg.emitter.image">
                                 <img src="assets/img/default-user.jpg" *ngIf="!msg.emitter.image">
                                 <p>{{msg.text}}</p>
                             </div>
