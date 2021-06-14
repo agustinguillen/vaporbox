@@ -150,6 +150,9 @@ $orange: #e68e36;
             width: 90%;
             margin-top: 3vh;
             align-self: center;
+            &::placeholder{
+              color: whitesmoke;
+            }
           }
           .btn-default{
               width: 20vw;

@@ -6,8 +6,7 @@ let Notification = require('../models/notifications');
 
 function saveNotification(req, res){
     let params = req.body;
-    let userId = params._id;
-
+    let userId = params.user._id;
     let notification = new Notification();
     notification.type = req.params.type;
     notification.follower = req.user;

@@ -1,6 +1,6 @@
 'use strict'
 let app = require('./app');
-let port = process.env.PORT || 80;
+let port = process.env.PORT || 8080;
 let mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
 
@@ -13,7 +13,7 @@ mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopo
 
             //Crear servidor
             app.listen(port, ()=>{
-                console.log("Servidor corriendo en puerto 80")
+                console.log("Servidor corriendo en puerto 8080")
             });
         })
         .catch(err => console.log(err));
