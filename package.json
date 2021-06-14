@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node api/index.js",
-    "dev": "concurrently \"cd socket && npm run start \" \"npm run start\"",
+    "socket": "node socket/index.js",
+    "dev": "start npm run start & start npm run socket",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Agustin Guillen",
