@@ -23,7 +23,7 @@ import { io } from 'socket.io-client';
   providers: [ UserService, UploadService, PublicationService, NotificationService ]
 })
 export class PublicationsComponent implements OnInit {
-  private socket = io("ws://vaporbox.herokuapp.com:8080");
+  private socket = io("ws://vaporbox.herokuapp.com:80");
   public identity;
   public token;
   public status: string;

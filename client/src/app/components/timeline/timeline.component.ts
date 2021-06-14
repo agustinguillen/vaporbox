@@ -23,7 +23,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
   providers: [UserService, UploadService, PublicationService, NotificationService]
 })
 export class TimelineComponent implements OnInit {
-  private socket = io("ws://vaporbox.herokuapp.com:8080");
+  private socket = io("ws://vaporbox.herokuapp.com:80");
   public identity;
   public token;
   public status: string;
