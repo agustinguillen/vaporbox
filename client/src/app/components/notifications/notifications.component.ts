@@ -22,7 +22,7 @@ import { io } from 'socket.io-client';
   providers: [ UserService, PublicationService, NotificationService ]
 })
 export class NotificationsComponent implements OnInit {
-  private socket = io("ws://localhost:3000");
+  private socket = io("ws://vaporbox.herokuapp.com:3000");
   public identity;
   public token;
   public page;
