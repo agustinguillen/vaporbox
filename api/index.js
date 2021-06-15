@@ -11,7 +11,10 @@ mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopology: true })
         .then(()=>{
             console.log("La conexión a la base de datos vaporboxdb se realizó con éxito")
-
+            app.listen(port, ()=>{
+                console.log("Base de datos lista para usar")
+            })
+            
             //SOCKETS
             
             const server = require('http').Server(app);
