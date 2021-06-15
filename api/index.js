@@ -13,7 +13,7 @@ mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopo
 
             //Crear servidor
             app.listen(port, ()=>{
-                console.log("Servidor corriendo en puerto 8080")
+                console.log("Servidor corriendo en puerto: 8080")
             });
         })
         .catch(err => console.log(err));
