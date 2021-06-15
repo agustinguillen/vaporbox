@@ -19,9 +19,9 @@ mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopo
             
             const server = require('http').Server(app);
             const io = require('socket.io')(server);
-            server.listen(port, () => {
+            /*server.listen(port, () => {
                 console.log(`Server started: PORT`)
-            })
+            })*/
             
             let users = [];
             
