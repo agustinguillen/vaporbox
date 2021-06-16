@@ -6,6 +6,7 @@ let User = require('./../models/user');
 let Image = require('./../models/image');
 let api = express.Router();
 let md_auth = require('../middlewares/authenticated');
+const fs = require('fs');
 let path = require('path');
 let cloudinary = require('cloudinary');
 cloudinary.config({
@@ -70,7 +71,14 @@ api.post('/upload-image-user/:id', [md_auth.ensureAuth, upload.single('image'), 
               return res.status(200).send({user: userUpdated});             
           });
       }   
-    })
+    });
+
+    fs.unlink(req.file.path, (err) => {
+      if (err) {
+        console.error(err)
+        return
+      }
+    });
   } 
   catch (err) {
     console.log(err);

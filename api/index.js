@@ -1,7 +1,6 @@
 'use strict'
 let app = require('./app');
-const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, './.env') });
+require('dotenv').config();
 let port = process.env.PORT || 8080;
 let mongoose = require('mongoose');
 
@@ -11,17 +10,13 @@ mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopology: true })
         .then(()=>{
             console.log("La conexión a la base de datos vaporboxdb se realizó con éxito")
-            app.listen(port, ()=>{
-                console.log("Base de datos lista para usar")
-            })
             
-            //SOCKETS
-            
+            //SOCKETS 
             const server = require('http').Server(app);
             const io = require('socket.io')(server);
-            /*server.listen(port, () => {
+            server.listen(port, () => {
                 console.log(`Server started: PORT`)
-            })*/
+            })
             
             let users = [];
             

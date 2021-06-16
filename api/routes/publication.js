@@ -4,8 +4,9 @@ let express = require('express');
 let PublicationController = require('../controllers/publication');
 let api = express.Router();
 let md_auth = require('../middlewares/authenticated');
-require('dotenv').config();
+const fs = require('fs');
 let path = require('path');
+require('dotenv').config();
 let Image = require('./../models/image');
 let Publication = require('./../models/publication');
 let cloudinary = require('cloudinary');
@@ -71,7 +72,15 @@ api.post('/upload-image-pub/:id', [md_auth.ensureAuth, upload.single('image'), a
       }else{
           return removeFilesOfUploads(res, file_path, "No tienes permiso para actualizar esta publicación");
       }
-  });   
+    }); 
+    
+    fs.unlink(req.file.path, (err) => {
+      if (err) {
+        console.error(err)
+        return
+      }
+    });
+
   } catch (err) {
     console.log(err);
   }
