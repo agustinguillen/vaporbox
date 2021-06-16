@@ -71,7 +71,7 @@
                             <div (click)="likePublication(publication)">
                                 <i class="fa fa-thumbs-up like" *ngIf="publication.likes.includes(identity._id)"></i>
                                 <i class="fa fa-thumbs-up dislike" *ngIf="!publication.likes.includes(identity._id)"></i>
-                                <span class="likes-number" *ngIf="publication.likes.length < 1">Da el primer like!</span>
+                                <span class="likes-number" *ngIf="publication.likes.length < 1"></span>
                                 <span class="likes-number" *ngIf="publication.likes.length === 1">Le gusta a {{publication.likes.length}} persona</span>
                                 <span class="likes-number" *ngIf="publication.likes.length > 1">Le gusta a {{publication.likes.length}} personas</span>
                             </div>
