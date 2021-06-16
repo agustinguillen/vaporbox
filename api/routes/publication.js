@@ -8,7 +8,6 @@ let path = require('path');
 require('dotenv').config();
 let Image = require('./../models/image');
 let Publication = require('./../models/publication');
-
 let cloudinary = require('cloudinary');
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -32,6 +31,8 @@ const upload = multer({
   }
 });
 
+const dUri = new Datauri();
+const dataUri = req => dUri.format(path.extname(req.file.originalname).toString(),req.file.buffer);
 
 api.get('/probando-pub', md_auth.ensureAuth, PublicationController.probando);
 api.post('/publication', md_auth.ensureAuth, PublicationController.savePublication);
@@ -41,9 +42,8 @@ api.get('/publication/:id', md_auth.ensureAuth, PublicationController.getPublica
 api.delete('/publication/:id', md_auth.ensureAuth, PublicationController.deletePublication);
 api.post('/upload-image-pub/:id', [md_auth.ensureAuth, upload.single('image'), async (req, res) => {
   try {
-    let dUri = new Datauri();
-    dUri.format(path.extname(req.file.originalname).toString(),req.file.buffer);
-    const result = await cloudinary.uploader.upload(dUri.content);
+    const file = dataUri(req).content;
+    const result = await cloudinary.uploader.upload(file);
 
     let image = new Image({
       publication_id: req.params.id,
