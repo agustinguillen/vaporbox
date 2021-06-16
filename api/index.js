@@ -39,7 +39,6 @@ mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopo
                 socket.on("addUser", userId=>{
                     addUser(userId, socket.id);
                     io.emit("getUsers", users);
-                    console.log("alguien se conectooo")
                 });
                 
                 socket.on("sendMessage", (message)=>{

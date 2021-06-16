@@ -4,11 +4,11 @@ let express = require('express');
 let PublicationController = require('../controllers/publication');
 let api = express.Router();
 let md_auth = require('../middlewares/authenticated');
-const fs = require('fs');
 let path = require('path');
 require('dotenv').config();
 let Image = require('./../models/image');
 let Publication = require('./../models/publication');
+
 let cloudinary = require('cloudinary');
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -16,18 +16,10 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+const Datauri = require('datauri');
 const multer = require('multer');
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, './uploads/publications/')
-    },
-    filename: function (req, file, cb) {
-        let filename = "user" + Date.now() + file.originalname;
-        req.body.file = filename
-        cb(null, filename);
-    }
-});
+const storage = multer.memoryStorage();
 
 const upload = multer({
   storage: storage,
@@ -40,6 +32,8 @@ const upload = multer({
   }
 });
 
+let dUri = new Datauri();
+
 api.get('/probando-pub', md_auth.ensureAuth, PublicationController.probando);
 api.post('/publication', md_auth.ensureAuth, PublicationController.savePublication);
 api.get('/publications/:page?', md_auth.ensureAuth, PublicationController.getPublications);
@@ -48,7 +42,8 @@ api.get('/publication/:id', md_auth.ensureAuth, PublicationController.getPublica
 api.delete('/publication/:id', md_auth.ensureAuth, PublicationController.deletePublication);
 api.post('/upload-image-pub/:id', [md_auth.ensureAuth, upload.single('image'), async (req, res) => {
   try {
-    const result = await cloudinary.uploader.upload(req.file.path);
+    dUri.format(path.extname(req.file.originalname).toString(),req.file.buffer);
+    const result = await cloudinary.uploader.upload(dUri.content);
 
     let image = new Image({
       publication_id: req.params.id,
@@ -59,7 +54,7 @@ api.post('/upload-image-pub/:id', [md_auth.ensureAuth, upload.single('image'), a
 
     await image.save();
 
-    await Publication.findOne({'_id': req.params.id}).exec((err, publication)=>{             
+    Publication.findOne({'_id': req.params.id}).exec((err, publication)=>{             
       if(publication){
           //actualizar documento de la publicacion
           Publication.findByIdAndUpdate(req.params.id, {file: result.secure_url}, {new:true}, (err, publicationUpdated)=>{
@@ -73,13 +68,6 @@ api.post('/upload-image-pub/:id', [md_auth.ensureAuth, upload.single('image'), a
           return removeFilesOfUploads(res, file_path, "No tienes permiso para actualizar esta publicación");
       }
     }); 
-    
-    await fs.unlink(req.file.path, (err) => {
-      if (err) {
-        console.error(err)
-        return
-      }
-    });
 
   } catch (err) {
     console.log(err);
