@@ -32,7 +32,6 @@ const upload = multer({
   }
 });
 
-let dUri = new Datauri();
 
 api.get('/probando-pub', md_auth.ensureAuth, PublicationController.probando);
 api.post('/publication', md_auth.ensureAuth, PublicationController.savePublication);
@@ -42,6 +41,7 @@ api.get('/publication/:id', md_auth.ensureAuth, PublicationController.getPublica
 api.delete('/publication/:id', md_auth.ensureAuth, PublicationController.deletePublication);
 api.post('/upload-image-pub/:id', [md_auth.ensureAuth, upload.single('image'), async (req, res) => {
   try {
+    let dUri = new Datauri();
     dUri.format(path.extname(req.file.originalname).toString(),req.file.buffer);
     const result = await cloudinary.uploader.upload(dUri.content);
 
