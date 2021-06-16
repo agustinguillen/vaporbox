@@ -59,7 +59,7 @@ api.post('/upload-image-pub/:id', [md_auth.ensureAuth, upload.single('image'), a
 
     await image.save();
 
-    Publication.findOne({'_id': req.params.id}).exec((err, publication)=>{             
+    await Publication.findOne({'_id': req.params.id}).exec((err, publication)=>{             
       if(publication){
           //actualizar documento de la publicacion
           Publication.findByIdAndUpdate(req.params.id, {file: result.secure_url}, {new:true}, (err, publicationUpdated)=>{
@@ -74,7 +74,7 @@ api.post('/upload-image-pub/:id', [md_auth.ensureAuth, upload.single('image'), a
       }
     }); 
     
-    fs.unlink(req.file.path, (err) => {
+    await fs.unlink(req.file.path, (err) => {
       if (err) {
         console.error(err)
         return
