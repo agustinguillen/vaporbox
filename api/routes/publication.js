@@ -15,7 +15,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-const Datauri = require('datauri');
+const Datauri = require('datauri/parser');
 const multer = require('multer');
 
 const storage = multer.memoryStorage();
