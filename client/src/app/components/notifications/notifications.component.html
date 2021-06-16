@@ -11,7 +11,7 @@
                                 <img class="default-image-user" src="assets/img/default-user.jpg" alt="Foto de perfil" *ngIf="!notification.follower.image"/> 
                                 <strong>{{notification.follower.name + ' ' + notification.follower.surname}}</strong> le gustó tu publicación: <br>
                                 <small>{{notification.publication.text}}
-                                    <img src="{{ 'api/get-image-pub/' + notification.publication.file}}" *ngIf="notification && notification.publication.file != 'null'">
+                                    <img src="{{notification.publication.file}}" *ngIf="notification && notification.publication.file != 'null'">
                                 </small>
                             </p>
                             <small>{{ (notification.created_at | amFromUnix) | amLocale: 'es' | amTimeAgo }}</small>
