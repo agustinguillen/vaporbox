@@ -6,7 +6,6 @@ let User = require('./../models/user');
 let Image = require('./../models/image');
 let api = express.Router();
 let md_auth = require('../middlewares/authenticated');
-const fs = require('fs');
 let path = require('path');
 let cloudinary = require('cloudinary');
 cloudinary.config({
@@ -15,18 +14,10 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+const Datauri = require('datauri/parser');
 const multer = require('multer');
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, './uploads/users/')
-    },
-    filename: function (req, file, cb) {
-        let filename = "user" + Date.now() + file.originalname;
-        req.body.file = filename
-        cb(null, filename);
-    }
-  });
 
+const storage = multer.memoryStorage();
 
 const upload = multer({
   storage: storage,
@@ -39,6 +30,9 @@ const upload = multer({
   }
 });
 
+const dUri = new Datauri();
+const dataUri = req => dUri.format(path.extname(req.file.originalname).toString(),req.file.buffer);
+
 api.get('/home', UserController.home);
 api.get('/pruebas', md_auth.ensureAuth, UserController.pruebas);
 api.post('/register', UserController.saveUser);
@@ -49,7 +43,8 @@ api.get('/counters/:id?', md_auth.ensureAuth, UserController.getCounters);
 api.put('/update-user/:id', md_auth.ensureAuth, UserController.updateUser);
 api.post('/upload-image-user/:id', [md_auth.ensureAuth, upload.single('image'), async (req, res) => {
   try {
-    const result = await cloudinary.uploader.upload(req.file.path);
+    const file = dataUri(req).content;
+    const result = await cloudinary.uploader.upload(file);
 
     let image = new Image({
       publication_id: null,
@@ -73,12 +68,6 @@ api.post('/upload-image-user/:id', [md_auth.ensureAuth, upload.single('image'), 
       }   
     });
 
-    fs.unlink(req.file.path, (err) => {
-      if (err) {
-        console.error(err)
-        return
-      }
-    });
   } 
   catch (err) {
     console.log(err);
