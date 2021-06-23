@@ -2,7 +2,7 @@
 
 let jwt = require('jwt-simple');
 let moment = require('moment');
-let secret = 'clave_secreta_red_social_mean_stack';
+let secret = process.env.SECRET_PASSWORD;
 
 exports.ensureAuth = function(req, res, next){
     if(!req.headers.authorization){
