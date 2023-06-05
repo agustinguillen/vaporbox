@@ -26,7 +26,7 @@
                 class="form-control">
                 </textarea>
         
-                <input #fileInput type="file" class="form-control" (change)="fileChangeEvent($event)"/>
+                <input #fileInput type="file" placeholder="Adjuntar imagen" class="form-control" (change)="fileChangeEvent($event)"/>
         
                 <button type="submit" class="btn btn-default" [disabled]="!newPubForm.form.valid">Publicar</button>
             </form>
