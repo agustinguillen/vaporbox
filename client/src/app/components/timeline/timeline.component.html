@@ -9,7 +9,7 @@
         </div>
         <div class="publications">
             <div class="text-center mt-5" *ngIf="publications && publications.length < 1">
-                <p>No hay publicaciones para mostrar,<br> sigue algunos usuarios para ver sus publicaciones! <br><br>
+                <p style="font-size: 1rem;">No hay publicaciones para mostrar,<br> sigue algunos usuarios para ver sus publicaciones! <br><br>
                     Podés encontrar otros usuarios <a [routerLink]="['/users']">aquí</a></p>
             </div>
             <div *ngFor="let publication of publications" class="item-publication">

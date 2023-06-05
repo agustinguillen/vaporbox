@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
+import { GLOBAL } from './api';
 
 @Injectable()
 export class UploadService{
     public url:string;
 
     constructor(){
-        this.url = 'api/';
+        this.url = GLOBAL.url;
     }
-    
+
     makeFileRequest( url: string, params: Array<string>, files:Array<File>, token:string, name:string ){
         return new Promise(function(resolve, reject){
             let formData: any = new FormData();

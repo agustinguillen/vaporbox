@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Publication } from '../models/publication';
+import { GLOBAL } from './api';
 
 @Injectable()
 export class PublicationService{
+    public url: string;
     public token;
 
     constructor( private _http: HttpClient ){
+        this.url = GLOBAL.url;
     }
 
     getToken(){
@@ -27,7 +30,7 @@ export class PublicationService{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('Authorization', token);
         
-        return this._http.post('api/publication', params, {headers: headers})
+        return this._http.post(this.url + 'publication', params, {headers: headers})
                                      
     }
 
@@ -35,28 +38,28 @@ export class PublicationService{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('Authorization', token);
         
-        return this._http.get('api/publications/' + page, {headers: headers})
+        return this._http.get(this.url + 'publications/' + page, {headers: headers})
     }
 
     getPublication(publication: Publication):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('Authorization', this.getToken());
         
-        return this._http.get('api/publication/' + publication._id, {headers: headers})
+        return this._http.get(this.url + 'publication/' + publication._id, {headers: headers})
     }
 
     getPublicationsUser(token, user_id, page = 1):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('Authorization', token);
         
-        return this._http.get('api/publications-user/' + user_id + '/' + page, {headers: headers})
+        return this._http.get(this.url + 'publications-user/' + user_id + '/' + page, {headers: headers})
     }
 
     deletePublication(token, id):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('Authorization', token);
         
-        return this._http.delete('api/publication/' + id, {headers: headers})
+        return this._http.delete(this.url + 'publication/' + id, {headers: headers})
     }
 
     savePublication(publication: Publication):Observable<any>{
@@ -64,14 +67,14 @@ export class PublicationService{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('Authorization', this.getToken());
         
-        return this._http.put('api/saved-publication/' + publication._id, params, {headers: headers})
+        return this._http.put(this.url + 'saved-publication/' + publication._id, params, {headers: headers})
     }
 
     getSavedPublications(id, page = 1):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('Authorization', this.getToken());
         
-        return this._http.get('api/get-saved-publications/' + id + '/' + page, {headers: headers})
+        return this._http.get(this.url + 'get-saved-publications/' + id + '/' + page, {headers: headers})
     }
 
     likePublication(publication: Publication):Observable<any>{
@@ -79,7 +82,7 @@ export class PublicationService{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('Authorization', this.getToken());
         
-        return this._http.put('api/like-publication/' + publication._id, params, {headers: headers})
+        return this._http.put(this.url + 'like-publication/' + publication._id, params, {headers: headers})
     }
 
 }
