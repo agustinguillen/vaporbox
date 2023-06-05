@@ -1,5 +1,5 @@
 'use strict'
-
+require('dotenv').config();
 let jwt = require('jwt-simple');
 let moment = require('moment');
 

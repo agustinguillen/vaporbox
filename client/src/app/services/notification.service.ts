@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { GLOBAL } from './api';
 
 @Injectable()
 export class NotificationService{
+    public url: string;
     public token;
 
     constructor( private _http: HttpClient ){
+        this.url = GLOBAL.url;
     }
 
     getToken(){
@@ -26,7 +29,7 @@ export class NotificationService{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('Authorization', token);
         
-        return this._http.post('api/save-notification/' + type , params, {headers: headers})
+        return this._http.post(this.url + 'save-notification/' + type , params, {headers: headers})
                                      
     }
     
@@ -34,7 +37,7 @@ export class NotificationService{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('Authorization', token);
         
-        return this._http.get('api/get-notifications/' + page , {headers: headers})
+        return this._http.get(this.url + 'get-notifications/' + page , {headers: headers})
                                      
     }
 
@@ -42,14 +45,14 @@ export class NotificationService{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                         .set('Authorization', token);
         
-        return this._http.post('api/set-viewed-notifications/'+ id, {headers: headers})
+        return this._http.post(this.url + 'set-viewed-notifications/'+ id, {headers: headers})
     }
 
     deleteNotification(token, id):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('Authorization', token);
         
-        return this._http.delete('api/delete-notification/' + id, {headers: headers})
+        return this._http.delete(this.url + 'delete-notification/' + id, {headers: headers})
     }
 
 }
