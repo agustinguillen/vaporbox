@@ -62,6 +62,7 @@ $orange: #E68E36;
                         width: 100%;                    
                         img{
                             max-width: 100%;
+                            max-height: 500px;
                             padding: 5px 70px;
                             @media (max-width: 576px){
                                 padding-right: 5vw;
@@ -87,6 +88,7 @@ $orange: #E68E36;
                         .likes-number{
                             color: $violet;
                             margin-left: 5px;
+                            font-size: 0.7rem;
                         }
                         .saved{
                             color: $pink;
@@ -163,7 +165,7 @@ $orange: #E68E36;
             .modal-dialog{
                 background-color: rgb(223, 222, 222);
                 border-radius: 70px;
-                border: 5px solid $pink;
+                border: 2px solid $pink;
                 overflow: hidden;
                 margin-top: 15vh;
                 @media (max-width: 600px){

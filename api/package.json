@@ -20,7 +20,7 @@
     "jwt-simple": "^0.5.6",
     "moment": "^2.29.1",
     "mongoose": "^5.12.5",
-    "mongoose-pagination": "^1.0.0",
+    "mongoose-paginate-v22": "^1.7.1",
     "multer": "^1.4.2",
     "multer-storage-cloudinary": "^4.0.0",
     "path": "^0.12.7",

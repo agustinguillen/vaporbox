@@ -1,8 +1,5 @@
 'use strict'
 
-let mongoosePaginate = require('mongoose-pagination');
-
-let User = require('../models/user');
 let Follow = require('../models/follow');
 
 function saveFollow(req, res){

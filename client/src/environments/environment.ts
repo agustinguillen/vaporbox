@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url: 'https://vaporbox-api.netlify.app/'
+  url: 'http://localhost:8080/api/'
 };
 
 /*

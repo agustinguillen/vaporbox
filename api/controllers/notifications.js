@@ -1,10 +1,8 @@
 'use strict'
-
-let mongoosePaginate = require('mongoose-pagination');
 let moment = require('moment');
 let Notification = require('../models/notifications');
 
-function saveNotification(req, res){
+function saveNotification(req, res) {
     let params = req.body;
     let userId = params.user._id;
     let notification = new Notification();
@@ -12,74 +10,84 @@ function saveNotification(req, res){
     notification.follower = req.user;
     notification.viewed = false;
     notification.created_at = moment().unix();
-    if(notification.type === "like-publication"){
+    if (notification.type === "like-publication") {
         notification.author = userId;
         notification.publication = params;
-    }else{
+    } else {
         notification.user = params;
     }
 
-    notification.save((err, notificationStored)=>{
-        if(err) return res.status(500).send({message: "Error al guardar la notificación"});
+    notification.save((err, notificationStored) => {
+        if (err) return res.status(500).send({ message: "Error al guardar la notificación" });
 
-        if(!notificationStored) return res.status(404).send({message: "La notificación no ha sido guardada"});
+        if (!notificationStored) return res.status(404).send({ message: "La notificación no ha sido guardada" });
 
-        return res.status(200).send({notification: notificationStored});
+        return res.status(200).send({ notification: notificationStored });
     })
 }
 
 
-function getNotifications(req, res){
+function getNotifications(req, res) {
     let userId = req.user.sub;
     let page = 1;
-    if(req.params.page){
+    if (req.params.page) {
         page = req.params.page;
     }
 
     let itemsPerPage = 10000;
+    const options = {
+        page: page,
+        limit: itemsPerPage,
+        sort: { created_at: -1 },
+        populate: 'publication',
+    };
 
-    Notification.find({$or: [{'author': userId}, {'user._id': userId}]}).sort('-created_at').populate('publication').paginate(page, itemsPerPage, (err, notifications, total)=>{
-        if(err) return res.status(500).send({message: "Error al devolver publicaciones"});
+    Notification.paginate(
+        { $or: [{ author: userId }, { 'user._id': userId }] },
+        options,
+        (err, result) => {
+            if (err) return res.status(500).send({ message: 'Error al devolver notificaciones' });
 
-        if(!notifications) return res.status(404).send({message: "No hay publicaciones"});
+            if (result.docs.length === 0) return res.status(404).send({ message: 'No hay notificaciones' });
 
-        return res.status(200).send({
-            total_items: total,
-            pages: Math.ceil(total/itemsPerPage),
-            page: page,
-            items_per_page: itemsPerPage,
-            notifications
-        })
-    });
+            return res.status(200).send({
+                total_items: result.totalDocs,
+                pages: result.totalPages,
+                page: result.page,
+                items_per_page: result.limit,
+                notifications: result.docs,
+            });
+        }
+    );
 }
 
-function setViewedNotifications(req, res){
+function setViewedNotifications(req, res) {
     let userId = req.params.id;
 
-    Notification.updateMany({$or: [{'author': userId, viewed: false}, {'user._id': userId, viewed: false}]}, {viewed: true}, (err, notificationsUpdated)=>{
-        if(err) return res.status(500).send({message: "Error en la petición"});
-        
+    Notification.updateMany({ $or: [{ 'author': userId, viewed: false }, { 'user._id': userId, viewed: false }] }, { viewed: true }, (err, notificationsUpdated) => {
+        if (err) return res.status(500).send({ message: "Error en la petición" });
+
         return res.status(200).send({
             notifications: notificationsUpdated
-            });
+        });
     });
 
 }
 
-function deleteNotifications(req, res){
+function deleteNotifications(req, res) {
     let publicationId = req.params.publication;
 
     Notification.find({ 'publication': publicationId })
         .remove((err, notificationRemoved) => {
             if (err) return res.status(500).send({ message: 'Error al borrar notificaciones' });
             if (!notificationRemoved) return res.status(404).send({ message: 'No se ha borrado la notificación' });
- 
+
             if (notificationRemoved.n == 1) {
                 return res.status(200).send({ message: 'Notificación eliminada correctamente' });
             } else {
                 return res.status(404).send({ message: 'Error al borrar notificación' });
             }
- 
+
         });
 }
 

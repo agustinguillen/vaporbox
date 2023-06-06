@@ -10,6 +10,7 @@ export class UploadService{
     }
 
     makeFileRequest( url: string, params: Array<string>, files:Array<File>, token:string, name:string ){
+        
         return new Promise(function(resolve, reject){
             let formData: any = new FormData();
             let xhr = new XMLHttpRequest();
