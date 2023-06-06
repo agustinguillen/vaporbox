@@ -23,7 +23,7 @@ import { io } from 'socket.io-client';
   providers: [ UserService, UploadService, PublicationService, NotificationService ]
 })
 export class PublicationsComponent implements OnInit {
-  private socket = io("wss://vaporbox-api.onrender.com");
+  private socket = io("wss://vaporbox.onrender.com");
   public identity;
   public token;
   public status: string;
