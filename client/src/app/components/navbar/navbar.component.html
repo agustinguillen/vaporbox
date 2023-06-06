@@ -88,7 +88,7 @@
                 </li>
               </ul>
             </li>
-            <li class="nav-item notifications">
+            <li class="nav-item notifications mb-2">
               <a (click)="seeNotifications()" [routerLink]="['/notifications']" class="nav-link">
                 <i class="fa fa-bell fa-lg" *ngIf="!newNotifications$"></i>
                 <i class="fa fa-bell fa-lg new-unviewed" *ngIf="newNotifications$"><small>{{myNotifications}}</small></i>
