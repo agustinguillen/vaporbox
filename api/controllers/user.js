@@ -156,22 +156,27 @@ function getUsers(req, res){
     }
     let itemsPerPage = 100;
 
-    User.find().sort('_id').paginate(page, itemsPerPage, (err,users, total)=>{
-        if(err) return res.status(500).send({message:'Error en la petición'});
-
-        if(!users) return res.status(404).send({message: "No hay usuarios disponibles"});
-
-        followUsersIds(identity_user_id).then((value)=>{
-            
-            return res.status(200).send({
-                users,
-                users_following: value.following,
-                users_follow_me: value.followed,
-                total,
-                pages: Math.ceil(total/itemsPerPage)     
-            });
+    User.paginate({}, { page: page, limit: itemsPerPage, sort: '_id' }, (err, result) => {
+        if (err) {
+          return res.status(500).send({ message: 'Error en la petición' });
+        }
+      
+        const { docs: users, totalDocs: total } = result;
+      
+        if (users.length === 0) {
+          return res.status(404).send({ message: 'No hay usuarios disponibles' });
+        }
+      
+        followUsersIds(identity_user_id).then((value) => {
+          return res.status(200).send({
+            users,
+            users_following: value.following,
+            users_follow_me: value.followed,
+            total,
+            pages: Math.ceil(total / itemsPerPage)
+          });
         });
-    });
+      });
 }
 
 
