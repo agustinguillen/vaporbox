@@ -14,7 +14,7 @@ import { Message } from 'src/app/models/message';
   providers: [ MessageService ]
 })
 export class NavbarComponent implements OnInit{
-  private socket = io("wss://vaporbox.onrender.com:8080");
+  private socket = io("wss://vaporbox.onrender.com:443");
   public identity;
   public token;
   public newNotifications$: Observable<boolean>;
