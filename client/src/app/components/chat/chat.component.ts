@@ -24,7 +24,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 })
 export class ChatComponent implements OnInit, AfterViewChecked {
   @ViewChild('chatScreen') private myScrollContainer: ElementRef;
-  private socket = io("wss://vaporbox.onrender.com");
+  private socket = io("wss://vaporbox.onrender.com:8080");
   public user:User;
   public followers;
   public token;
