@@ -60,6 +60,14 @@ $orange: #e68e36;
           color: whitesmoke;
         }
       }
+      .custom-button {
+        font-size: 1.1rem;
+        display: flex;
+        justify-content: center;
+        align-self: center;
+        width: 130px; 
+        height: 35px;
+      }
     }
   }
 

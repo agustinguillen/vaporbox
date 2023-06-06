@@ -1,6 +1,7 @@
 'use strict'
 
 let mongoose = require('mongoose');
+let mongoosePaginate = require('mongoose-paginate-v2');
 let Schema = mongoose.Schema;
 
 let ImageSchema = Schema({
@@ -9,5 +10,7 @@ let ImageSchema = Schema({
     url: String,
     cloudinary_id: String
 });
+
+ImageSchema.plugin(mongoosePaginate)
 
 module.exports = mongoose.model('Image', ImageSchema);

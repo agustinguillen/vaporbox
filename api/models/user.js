@@ -1,6 +1,7 @@
 'use strict'
 
 let mongoose = require('mongoose');
+let mongoosePaginate = require('mongoose-paginate-v2');
 let Schema = mongoose.Schema;
 
 let UserSchema = Schema({
@@ -13,5 +14,7 @@ let UserSchema = Schema({
     image: String,
     bio: String
 });
+
+UserSchema.plugin(mongoosePaginate)
 
 module.exports = mongoose.model('User', UserSchema);

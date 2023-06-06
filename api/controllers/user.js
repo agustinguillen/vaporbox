@@ -1,6 +1,5 @@
 'use strict'
 let bcrypt = require('bcrypt-nodejs');
-let mongoosePaginate = require('mongoose-pagination');
 let User = require('../models/user');
 let Publication = require('../models/publication');
 let Image = require('./../models/image');

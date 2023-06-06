@@ -28,6 +28,7 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { FilterPipe } from './pipes/filter.pipe';
 import { LoadingComponent } from './components/loading/loading.component';
 import { TruncatePipe } from './pipes/truncate.pipe';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { TruncatePipe } from './pipes/truncate.pipe';
     NotificationsComponent,
     FilterPipe,
     LoadingComponent,
+    SpinnerComponent,
     TruncatePipe
   ],
   imports: [

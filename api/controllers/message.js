@@ -1,10 +1,7 @@
 'use strict'
 
 let moment = require('moment');
-let mongoosePaginate = require('mongoose-pagination');
 
-let User = require('../models/user');
-let Follow = require('../models/follow');
 let Message = require('../models/message');
 
 

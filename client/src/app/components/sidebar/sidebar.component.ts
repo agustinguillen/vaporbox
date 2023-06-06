@@ -5,6 +5,7 @@ import { PublicationService } from '../../services/publication.service';
 import { Publication } from '../../models/publication';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { GLOBAL } from 'src/app/services/api';
 
 @Component({
   selector: 'app-sidebar',
@@ -29,6 +30,8 @@ export class SidebarComponent implements OnInit, AfterViewInit{
   public publication:Publication;
   public filesToUpload: Array<File>;
   public showNewPublication:boolean;
+  public loading:boolean;
+  public url: string;
 
   private _listener:any;
 
@@ -48,6 +51,8 @@ export class SidebarComponent implements OnInit, AfterViewInit{
     this.stats = this._userService.getStats();
     this.publication = new Publication( '', null, '', '', this.identity._id, [], [] );
     this.showNewPublication = false;
+    this.loading = false;
+    this.url = GLOBAL.url;
    }
 
   ngOnInit(): void {
@@ -63,13 +68,15 @@ export class SidebarComponent implements OnInit, AfterViewInit{
   }
 
   onSubmit(form, event){
+    this.loading = true
     if( (this.publication.text != null) || this.fileInputVariable.nativeElement.value != '' ){
       this._publicationService.addPublication(this.token, this.publication).subscribe(
         response => {
           if(response.publication){
+            
             if(this.filesToUpload && this.filesToUpload.length){
               //subir imagen
-              this._uploadService.makeFileRequest('api/upload-image-pub/' + response.publication._id, [], this.filesToUpload, this.token, 'image')
+              this._uploadService.makeFileRequest(this.url + 'upload-image-pub/' + response.publication._id, [], this.filesToUpload, this.token, 'image')
                                   .then((result:any) => {
                                       this.status = 'success';
                                       this.stats = this._userService.getStats();
@@ -78,6 +85,7 @@ export class SidebarComponent implements OnInit, AfterViewInit{
                                       this._router.navigate(['/timeline']);
                                       this.sent.emit({sent: 'true'});
                                   });
+                                  this.loading = false
             }else{
               this.status = 'success';
               form.reset();
@@ -85,16 +93,18 @@ export class SidebarComponent implements OnInit, AfterViewInit{
               this.getCounters();
               this._router.navigate(['/timeline']);
               this.sent.emit({sent: 'true'});
-              
+              this.loading = false
             }
             
           }else{
             this.status = 'error';
+            this.loading = false
           }
         },
         error => {
           let errorMessage = <any>error;
           console.log(errorMessage);
+          this.loading = false
           if(errorMessage != null){
             this.status = 'error';
           }
@@ -102,11 +112,14 @@ export class SidebarComponent implements OnInit, AfterViewInit{
     }
     else{
       this.status = 'error';
+      this.loading = false
     }
   }
 
   fileChangeEvent(fileInput: any){
+    console.log('files', fileInput.target.files)
     this.filesToUpload = <Array<File>>fileInput.target.files;
+    console.log('filesTo', this.filesToUpload)
   }
 
   showForm(event){

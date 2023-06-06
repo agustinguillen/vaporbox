@@ -1,8 +1,8 @@
 <div class="sidebar-container" >
 
-    <button class="btn btn-default mt-lg-3" (click)="showForm($event)">
+    <button class="btn btn-default mt-lg-3" (click)="showForm($event)" style="font-size: 0.9rem;">
         <i class="fa fa-minus" *ngIf="showNewPublication"></i>
-        <span *ngIf="!showNewPublication">
+        <span *ngIf="!showNewPublication" style="font-size: 0.9rem;">
             <i class="fa fa-plus"></i>
              Nueva publicación
         </span>
@@ -13,7 +13,7 @@
             <div class="text-center">
                 <h5 class="mb-3 section-title">Crear publicación</h5>
             </div>
-            <div class="alert alert-danger text-center" *ngIf="status == 'error'">
+            <div class="alert alert-danger text-center" style="font-size: 0.7rem;" *ngIf="status == 'error'">
                 La publicación no puede estar vacía!
             </div>
         </div>
@@ -27,8 +27,15 @@
                 </textarea>
         
                 <input #fileInput type="file" placeholder="Adjuntar imagen" class="form-control" (change)="fileChangeEvent($event)"/>
-        
-                <button type="submit" class="btn btn-default" [disabled]="!newPubForm.form.valid">Publicar</button>
+                <div class="d-flex flex-column align-items-center">
+                    <button type="submit" class="btn btn-default custom-button" [disabled]="!newPubForm.form.valid">
+                        <span *ngIf="!loading" class="m-0">Publicar</span>
+                        <div class="d-flex justify-content-center" *ngIf="loading">
+                            <spinner></spinner>
+                        </div>
+                    </button>
+                </div>
+                
             </form>
         </div>
     </div>
