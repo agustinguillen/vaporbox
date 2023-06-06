@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url: 'https://vaporbox.onrender.com/'
+  url: 'https://vaporbox.onrender.com/api/'
 };
 
 /*
