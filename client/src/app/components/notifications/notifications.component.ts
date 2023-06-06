@@ -38,10 +38,16 @@ export class NotificationsComponent implements OnInit {
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.page = 1;
+    this.getNotifications(this.token, this.page);
+    this.sockets();
   }
 
   ngOnInit(): void {
     this.getNotifications(this.token, this.page);
+    this.sockets();
+  }
+
+  sockets(){
     this.socket.on("newNotification", newNotification => {
       this.getNotifications(this.token, this.page);
     });
