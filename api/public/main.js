@@ -718,7 +718,7 @@ class ChatComponent {
         this._userService = _userService;
         this._followService = _followService;
         this._messageService = _messageService;
-        this.socket = Object(socket_io_client__WEBPACK_IMPORTED_MODULE_4__["io"])("ws://vaporbox.herokuapp.com:80");
+        this.socket = Object(socket_io_client__WEBPACK_IMPORTED_MODULE_4__["io"])("wss://vaporbox-api.onrender.com");
         this.loading = true;
         this.identity = this._userService.getIdentity();
         this.token = this._userService.getToken();
@@ -1044,7 +1044,7 @@ class SavedPublicationsComponent {
         this._userService = _userService;
         this._publicationService = _publicationService;
         this._notificationService = _notificationService;
-        this.socket = Object(socket_io_client__WEBPACK_IMPORTED_MODULE_4__["io"])("ws://vaporbox.herokuapp.com:80");
+        this.socket = Object(socket_io_client__WEBPACK_IMPORTED_MODULE_4__["io"])("wss://vaporbox-api.onrender.com");
         this.noMore = false;
         this.loading = true;
         this.identity = this._userService.getIdentity();
@@ -1482,7 +1482,7 @@ class PublicationsComponent {
         this._userService = _userService;
         this._publicationService = _publicationService;
         this._notificationService = _notificationService;
-        this.socket = Object(socket_io_client__WEBPACK_IMPORTED_MODULE_5__["io"])("ws://vaporbox.herokuapp.com:80");
+        this.socket = Object(socket_io_client__WEBPACK_IMPORTED_MODULE_5__["io"])("wss://vaporbox-api.onrender.com");
         this.noMore = false;
         this.loading = true;
         this.identity = this._userService.getIdentity();
@@ -2846,7 +2846,7 @@ class TimelineComponent {
         this._userService = _userService;
         this._publicationService = _publicationService;
         this._notificationService = _notificationService;
-        this.socket = Object(socket_io_client__WEBPACK_IMPORTED_MODULE_4__["io"])("ws://vaporbox.herokuapp.com:80");
+        this.socket = Object(socket_io_client__WEBPACK_IMPORTED_MODULE_4__["io"])("wss://vaporbox-api.onrender.com");
         this.noMore = false;
         this.loading = true;
         this.identity = this._userService.getIdentity();
@@ -3267,7 +3267,7 @@ class NotificationsComponent {
         this._userService = _userService;
         this._publicationService = _publicationService;
         this._notificationService = _notificationService;
-        this.socket = Object(socket_io_client__WEBPACK_IMPORTED_MODULE_4__["io"])("ws://vaporbox.herokuapp.com:80");
+        this.socket = Object(socket_io_client__WEBPACK_IMPORTED_MODULE_4__["io"])("wss://vaporbox-api.onrender.com");
         this.identity = this._userService.getIdentity();
         this.token = this._userService.getToken();
         this.page = 1;
@@ -4466,7 +4466,7 @@ class NavbarComponent {
         this._messageService = _messageService;
         this._route = _route;
         this._router = _router;
-        this.socket = Object(socket_io_client__WEBPACK_IMPORTED_MODULE_1__["io"])("ws://vaporbox.herokuapp.com:80");
+        this.socket = Object(socket_io_client__WEBPACK_IMPORTED_MODULE_1__["io"])("wss://vaporbox-api.onrender.com");
         this.identity = this.user.getIdentity();
         this.unviewedMessages = [];
         this.token = user.getToken();
